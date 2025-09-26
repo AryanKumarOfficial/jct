@@ -19,7 +19,6 @@ enum PaperStatus {
   SUBMITTED
   REVIEWED
   PUBLISHED
-  ACCEPTED
   REJECTED
 }
 
@@ -57,7 +56,7 @@ model author {
   country      String
   phone        String
   paperId      String
-  paper        paper         @relation(fields: [paperId], references: [id])
+  paper        paper[]
   transaction  transaction[]
 
   createdAt DateTime @default(now())
@@ -78,8 +77,10 @@ model status {
 
 model employee {
   id               String       @id @unique @default(uuid(4))
-  name             String
+  firstName        String
+  lastName         String?
   email            String
+  password         String
   role             EmployeeRole @default(FRESHER)
   specailization   String?
   isActive         Boolean      @default(true)

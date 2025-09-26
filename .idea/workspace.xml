@@ -6,8 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="3fbf7134-2adf-435b-806d-6f4c015e4c97" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/prisma/schema.prisma" beforeDir="false" afterPath="$PROJECT_DIR$/prisma/schema.prisma" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -90,7 +89,7 @@
       <workItem from="1758254345448" duration="1358000" />
       <workItem from="1758820734269" duration="210000" />
       <workItem from="1758820967698" duration="1427000" />
-      <workItem from="1758859661220" duration="8662000" />
+      <workItem from="1758859661220" duration="10250000" />
     </task>
     <servers />
   </component>
