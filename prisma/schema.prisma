@@ -1,0 +1,122 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/genrated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum EmployeeRole {
+  EDITOR
+  ADMIN
+  FRESHER
+}
+
+enum PaperStatus {
+  DRAFT
+  SUBMITTED
+  REVIEWED
+  PUBLISHED
+  ACCEPTED
+  REJECTED
+}
+
+enum paymentStatus {
+  FAILED
+  PENDING
+  SUCCESS
+}
+
+model paper {
+  id            String        @id @unique @default(uuid(4))
+  name          String
+  keywords      String[]      @default(["cse"])
+  author        author[]
+  manuscriptId  String?
+  manuscriptUrl String?
+  publishId     String?
+  publishUrl    String?
+  paperStatuses status[]
+  archive       archive       @relation(fields: [archiveId], references: [id])
+  archiveId     String
+  transaction   transaction[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model author {
+  id           String        @id @unique @default(uuid(4))
+  firstName    String
+  lastName     String?
+  email        String
+  password     String
+  organisation String
+  country      String
+  phone        String
+  paperId      String
+  paper        paper         @relation(fields: [paperId], references: [id])
+  transaction  transaction[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model status {
+  id          String      @id @unique @default(uuid(4))
+  status      PaperStatus @default(SUBMITTED)
+  paperId     String
+  paper       paper       @relation(fields: [paperId], references: [id])
+  changedById String
+  changedBy   employee    @relation(fields: [changedById], references: [id])
+  comments    String[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+model employee {
+  id               String       @id @unique @default(uuid(4))
+  name             String
+  email            String
+  role             EmployeeRole @default(FRESHER)
+  specailization   String?
+  isActive         Boolean      @default(true)
+  createdById      String?
+  createdBy        employee?    @relation("EmployeeCreater", fields: [createdById], references: [id])
+  createdEmployees employee[]   @relation("EmployeeCreater")
+  status           status[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model archive {
+  id     String  @id @unique @default(uuid(4))
+  volume Int
+  issue  Int
+  month  String
+  year   Int
+  papers paper[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model transaction {
+  id                String        @id @unique @default(uuid(4))
+  razorpayOrderId   String        @unique
+  razorpayPaymentId String?
+  amount            Int
+  status            paymentStatus @default(PENDING)
+
+  paperId String
+  paper   paper  @relation(fields: [paperId], references: [id])
+
+  authorId String
+  author   author @relation(fields: [authorId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
