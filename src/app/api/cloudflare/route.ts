@@ -1,10 +1,11 @@
 import {getObjectUrl} from "@/utils/cloudflare";
-
-export const dynamic = "force-dynamic";
-
-import {DeleteObjectCommand, PutObjectCommand} from "@aws-sdk/client-s3";
+import {lookup} from "mime-types"
+import {DeleteObjectCommand} from "@aws-sdk/client-s3";
 import {bucketName, r2} from "@/lib/r2";
 import {NextRequest, NextResponse} from "next/server";
+import {fileUpload} from "@/utils/operations";
+
+export const dynamic = "force-dynamic";
 
 
 export async function GET(req: NextRequest) {
@@ -26,14 +27,18 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
     try {
         const formData = await req.formData();
-        console.log("form data", formData);
-        const file = formData.get("file") as File;
+        const data: Record<string, any> = {};
+        formData.forEach((value, key) => {
+            data[key] = value;
+        })
+        console.log("data: ", data);
+
+        const {file, paperName, keywords, authors, volume, issue, month, year} = data;
         const fileName = file.name;
-        const contentType = req.headers.get("Content-Type");
+        const contentType = lookup(fileName) || "application/octet-stream"
 
-        console.log("data: ", file, fileName, contentType);
 
-        if (!file || !fileName) {
+        if (!file || !fileName || !paperName || authors || !volume || !issue || !month || !year) {
             return NextResponse.json({error: "Missing file or fileName"}, {status: 400});
         }
 
@@ -41,14 +46,7 @@ export async function POST(req: NextRequest) {
         const fileBuffer = await file.arrayBuffer();
         const buffer = Buffer.from(fileBuffer);
 
-        await r2.send(
-            new PutObjectCommand({
-                Bucket: bucketName,
-                Key: objectKey,
-                Body: buffer,
-                ContentType: contentType || "application/octet-stream",
-            })
-        );
+        await fileUpload({key: objectKey, buffer, contentType});
 
 
         const fileUrl = await getObjectUrl(objectKey);

@@ -8,6 +8,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// ENUMS
 enum EmployeeRole {
   EDITOR
   ADMIN
@@ -28,44 +29,61 @@ enum paymentStatus {
   SUCCESS
 }
 
+enum ActivityType {
+  PAPER_SUBMITTED
+  STATUS_CHANGED
+  COMMENT_ADDED
+  PAYMENT_SUCCESS
+  PAPER_PUBLISHED
+  EDITOR_ASSIGNED
+}
+
+enum WalletTransactionType {
+  CREDIT
+  DEBIT
+}
+
+// MODELS
 model paper {
-  id            String        @id @unique @default(uuid(4))
-  name          String
-  keywords      String[]      @default(["cse"])
-  author        author[]
-  manuscriptId  String?
-  manuscriptUrl String?
-  publishId     String?
-  publishUrl    String?
-  paperStatuses status[]
-  archive       archive       @relation(fields: [archiveId], references: [id])
-  archiveId     String
-  transaction   transaction[]
+  id                 String              @id @unique @default(uuid(7))
+  name               String
+  keywords           String[]            @default(["cse"])
+  authors            author[]
+  manuscriptId       String?
+  manuscriptUrl      String?
+  publishId          String?
+  publishUrl         String?
+  paperStatuses      status[]
+  archive            archive             @relation(fields: [archiveId], references: [id])
+  archiveId          String
+  transactions       transaction[]
+  activityLogs       ActivityLog[]
+  walletTransactions WalletTransaction[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model author {
-  id           String        @id @unique @default(uuid(4))
+  id           String        @id @unique @default(uuid(7))
   firstName    String
   lastName     String?
-  email        String
+  email        String        @unique
   password     String
   organisation String
   country      String
   phone        String
-  paperId      String
-  paper        paper[]
-  transaction  transaction[]
+  papers       paper[]
+  transactions transaction[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model status {
-  id          String      @id @unique @default(uuid(4))
+  id          String      @id @unique @default(uuid(7))
   status      PaperStatus @default(SUBMITTED)
+  isApproved  Boolean     @default(false)
   paperId     String
   paper       paper       @relation(fields: [paperId], references: [id])
   changedById String
@@ -76,25 +94,28 @@ model status {
 }
 
 model employee {
-  id               String       @id @unique @default(uuid(4))
-  firstName        String
-  lastName         String?
-  email            String
-  password         String
-  role             EmployeeRole @default(FRESHER)
-  specailization   String?
-  isActive         Boolean      @default(true)
-  createdById      String?
-  createdBy        employee?    @relation("EmployeeCreater", fields: [createdById], references: [id])
-  createdEmployees employee[]   @relation("EmployeeCreater")
-  status           status[]
+  id                 String              @id @unique @default(uuid(7))
+  firstName          String
+  lastName           String?
+  email              String              @unique
+  password           String
+  role               EmployeeRole        @default(FRESHER)
+  specailization     String?
+  isActive           Boolean             @default(true)
+  createdById        String?
+  createdBy          employee?           @relation("EmployeeCreater", fields: [createdById], references: [id])
+  createdEmployees   employee[]          @relation("EmployeeCreater")
+  status             status[]
+  activities         ActivityLog[]
+  walletBalance      Float               @default(0.0)
+  walletTransactions WalletTransaction[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model archive {
-  id     String  @id @unique @default(uuid(4))
+  id     String  @id @unique @default(uuid(7))
   volume Int
   issue  Int
   month  String
@@ -106,18 +127,45 @@ model archive {
 }
 
 model transaction {
-  id                String        @id @unique @default(uuid(4))
+  id                String        @id @unique @default(uuid(7))
   razorpayOrderId   String        @unique
   razorpayPaymentId String?
   amount            Int
   status            paymentStatus @default(PENDING)
-
-  paperId String
-  paper   paper  @relation(fields: [paperId], references: [id])
-
-  authorId String
-  author   author @relation(fields: [authorId], references: [id])
+  paperId           String
+  paper             paper         @relation(fields: [paperId], references: [id])
+  authorId          String
+  author            author        @relation(fields: [authorId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model ActivityLog {
+  id        String       @id @default(uuid(7))
+  paper     paper        @relation(fields: [paperId], references: [id])
+  paperId   String
+  actor     employee     @relation(fields: [actorId], references: [id])
+  actorId   String
+  activity  ActivityType
+  details   String?
+  createdAt DateTime     @default(now())
+
+  @@index([paperId])
+  @@index([actorId])
+}
+
+model WalletTransaction {
+  id             String                @id @default(uuid(7))
+  employee       employee              @relation(fields: [employeeId], references: [id])
+  employeeId     String
+  type           WalletTransactionType
+  amount         Float
+  notes          String?
+  relatedPaper   paper?                @relation(fields: [relatedPaperId], references: [id])
+  relatedPaperId String?
+
+  createdAt DateTime @default(now())
+
+  @@index([employeeId])
 }
