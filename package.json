@@ -7,12 +7,17 @@
     "build": "next build --turbopack",
     "start": "next start",
     "lint": "biome check",
-    "format": "biome format --write"
+    "format": "biome format --write",
+    "postinstall": "prisma generate",
+    "format:check": "biome format",
+    "lint:fix": "biome check --write"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.890.0",
     "@aws-sdk/s3-request-presigner": "^3.890.0",
     "@prisma/client": "^6.16.2",
+    "bcryptjs": "^3.0.2",
+    "jsonwebtoken": "^9.0.2",
     "mime-types": "^3.0.1",
     "next": "15.5.3",
     "prisma": "^6.16.2",

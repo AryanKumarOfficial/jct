@@ -1,6 +1,5 @@
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/genrated/prisma"
 }
 
 datasource db {
@@ -86,8 +85,8 @@ model status {
   isApproved  Boolean     @default(false)
   paperId     String
   paper       paper       @relation(fields: [paperId], references: [id])
-  changedById String
-  changedBy   employee    @relation(fields: [changedById], references: [id])
+  changedById String?
+  changedBy   employee?   @relation(fields: [changedById], references: [id])
   comments    String[]
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
@@ -124,6 +123,8 @@ model archive {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([volume, issue, year])
 }
 
 model transaction {

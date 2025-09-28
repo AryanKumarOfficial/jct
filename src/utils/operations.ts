@@ -1,19 +1,19 @@
-import {bucketName, r2} from "@/lib/r2";
-import {PutObjectCommand} from "@aws-sdk/client-s3";
+import { bucketName, r2 } from "@/lib/r2";
+import { PutObjectCommand } from "@aws-sdk/client-s3";
 
 interface FileUpload {
-    key: string;
-    buffer: Buffer;
-    contentType: string;
+  key: string;
+  buffer: Buffer;
+  contentType: string;
 }
 
-export const fileUpload = async ({key, buffer, contentType}: FileUpload) => {
-    await r2.send(
-        new PutObjectCommand({
-            Bucket: bucketName,
-            Key: key,
-            Body: buffer,
-            ContentType: contentType
-        })
-    )
-}
+export const fileUpload = async ({ key, buffer, contentType }: FileUpload) => {
+  await r2.send(
+    new PutObjectCommand({
+      Bucket: bucketName,
+      Key: key,
+      Body: buffer,
+      ContentType: contentType,
+    }),
+  );
+};
