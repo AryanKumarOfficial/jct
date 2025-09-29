@@ -169,11 +169,24 @@ export async function POST(req: NextRequest) {
                 },
             });
 
+            const authorLogPromises = authorIdsToConnect.map((authorId) => {
+                return tx.activityLog.create({
+                    data: {
+                        activity: "PAPER_SUBMITTED",
+                        details: `A Paper Submitted by Author(s)`,
+                        actorId: authorId.id,
+                        paperId: paper.id,
+                    }
+                })
+            })
+            await Promise.all(authorLogPromises);
+
             return paper; // Return the created paper from the transaction
         });
 
         return NextResponse.json(newPaper, {status: 201});
-    } catch (err) {
+    } catch
+        (err) {
         console.error("Create Paper Error:", err);
         if (err instanceof Prisma.PrismaClientKnownRequestError) {
             return NextResponse.json(

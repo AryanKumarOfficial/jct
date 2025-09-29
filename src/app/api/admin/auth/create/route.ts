@@ -1,0 +1,48 @@
+import {NextRequest, NextResponse} from "next/server";
+import {prisma} from "@/lib/prisma";
+import bcryptjs from "bcryptjs";
+
+export const POST = async (req: NextRequest) => {
+    try {
+
+        // TODO: authenticate this route is only meant for the ADMIN employees rest of the users are inaccessible to it also extract their id to create activity LOG
+
+        const {firstName, lastName, email, password, specialization, role} = await req.json();
+        if (!firstName || !email || !password) {
+            return NextResponse.json({error: `Email or Password is required along with First Name`});
+        }
+
+        const empExists = await prisma.employee.findUnique({where: {email: email}});
+        if (empExists) {
+            return NextResponse.json({error: `Email is already in use`}, {status: 409});
+        }
+
+        const hashedPassword = await bcryptjs.hash(password, 10);
+
+        const newEmployee = await prisma.$transaction(async (tx) => {
+            const newEmployee = await tx.employee.create({
+                data: {
+                    firstName,
+                    lastName,
+                    email,
+                    password: hashedPassword,
+                    specialization,
+                    role
+                }
+            })
+            await tx.activityLog.create({
+                data: {
+                    activity: "EMPLOYEE_ADDED",
+                    details: `${newEmployee.firstName} ${newEmployee.lastName} ${newEmployee.email} is added by Admin`,
+                    actorId: `my-name-is-aryan`
+                }
+            })
+        })
+
+        return Response.json(newEmployee);
+
+    } catch
+        (_err) {
+        return NextResponse.json({error: `Failed to create the User`}, {status: 500})
+    }
+}

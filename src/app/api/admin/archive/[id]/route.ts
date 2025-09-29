@@ -7,6 +7,8 @@ interface RouteParams {
 }
 
 export const PATCH = async (req: NextRequest, { params }: RouteParams) => {
+  // TODO: authenticate this route is only meant for the ADMIN employees rest of the users are inaccessible to it also extract their id to create activity LOG
+
   const { id: archiveId } = await params;
   try {
     if (!archiveId) {
@@ -55,6 +57,8 @@ export const PATCH = async (req: NextRequest, { params }: RouteParams) => {
 };
 
 export const DELETE = async (_req: NextRequest, { params }: RouteParams) => {
+  // TODO: authenticate this route is only meant for the ADMIN employees rest of the users are inaccessible to it also extract their id to create activity LOG
+
   const { id: archiveId } = await params;
   try {
     if (!archiveId) {
