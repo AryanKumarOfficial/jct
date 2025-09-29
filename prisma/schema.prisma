@@ -45,6 +45,7 @@ enum WalletTransactionType {
 // MODELS
 model paper {
   id                 String              @id @unique @default(uuid(7))
+  submissionId       String              @unique
   name               String
   keywords           String[]            @default(["cse"])
   authors            author[]
@@ -169,4 +170,10 @@ model WalletTransaction {
   createdAt DateTime @default(now())
 
   @@index([employeeId])
+}
+
+model IdCounter {
+  id    String @id @unique @default("paperCounter")
+  year  Int
+  count Int
 }

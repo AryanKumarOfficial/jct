@@ -5,20 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3fbf7134-2adf-435b-806d-6f4c015e4c97" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/app/api/admin/archive/[id]/route.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/api/admin/archive/route.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/api/archive/route.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/api/author/route.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/lib/prisma.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prisma/migrations/20250926214030_updates_schema_for_advance_features_for_future/migration.sql" beforeDir="false" afterPath="$PROJECT_DIR$/prisma/migrations/20250926214030_updates_schema_for_advance_features_for_future/migration.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/prisma/schema.prisma" beforeDir="false" afterPath="$PROJECT_DIR$/prisma/schema.prisma" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/cloudflare/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/cloudflare/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/r2.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/r2.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/cloudflare.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/cloudflare.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/operations.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/operations.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/api/author/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/author/route.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,6 +24,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;AryanKumarOfficial&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/AryanKumarOfficial/jct.git&quot;,
+    &quot;accountId&quot;: &quot;d641f23e-70b9-4db6-94f8-c71c588522c4&quot;
+  }
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7
 }</component>
@@ -50,25 +51,25 @@
     <option name="sortByType" value="true" />
     <option name="sortKey" value="BY_TYPE" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;Shell Script.Git commit.executor&quot;: &quot;Run&quot;,
-    &quot;Shell Script.Prisma Studio.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;js.debugger.nextJs.config.created.client&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;npm.dev.executor&quot;: &quot;Run&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;D:\\WEB DEVELOPMENT\\FREELANCING\\jct\\node_modules\\typescript\\lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "Shell Script.Git commit.executor": "Run",
+    "Shell Script.Prisma Studio.executor": "Run",
+    "git-widget-placeholder": "main",
+    "js.debugger.nextJs.config.created.client": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "npm.dev.executor": "Run",
+    "ts.external.directory.path": "D:\\WEB DEVELOPMENT\\FREELANCING\\jct\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="npm.dev">
     <configuration name="Next.js: debug client-side" type="JavascriptDebugType" uri="http://localhost:3000/">
       <method v="2" />
@@ -143,7 +144,9 @@
       <workItem from="1758920237782" duration="8072000" />
       <workItem from="1758990870905" duration="19000" />
       <workItem from="1759067226300" duration="18000" />
-      <workItem from="1759083588452" duration="4956000" />
+      <workItem from="1759083588452" duration="5914000" />
+      <workItem from="1759124099583" duration="674000" />
+      <workItem from="1759125207373" duration="879000" />
     </task>
     <servers />
   </component>
