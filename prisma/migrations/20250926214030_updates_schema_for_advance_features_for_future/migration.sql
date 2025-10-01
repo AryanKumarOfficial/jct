@@ -2,8 +2,8 @@
   Warnings:
 
   - You are about to drop the column `paperId` on the `author` table. All the data in the column will be lost.
-  - A unique constraint covering the columns `[email]` on the table `author` will be added. If there are existing duplicate values, this will fail.
-  - A unique constraint covering the columns `[email]` on the table `admin` will be added. If there are existing duplicate values, this will fail.
+  - A unique constraint covering the columns `[emails]` on the table `author` will be added. If there are existing duplicate values, this will fail.
+  - A unique constraint covering the columns `[emails]` on the table `admin` will be added. If there are existing duplicate values, this will fail.
 
 */
 -- CreateEnum

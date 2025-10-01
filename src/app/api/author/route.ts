@@ -7,6 +7,7 @@ import {getObjectUrl} from "@/utils/cloudflare";
 import {prisma} from "@/lib/prisma";
 import bcryptjs from "bcryptjs";
 import {Prisma} from "@prisma/client";
+import {sendSubmissionMail} from "@/lib/mail/methods/sendSubmissionMail";
 
 export async function POST(req: NextRequest) {
     try {
@@ -83,6 +84,13 @@ export async function POST(req: NextRequest) {
         await fileUpload({key: objectKey, buffer, contentType});
         const fileUrl = await getObjectUrl(objectKey);
 
+        // Array to hold data for sending emails after the transaction
+        const authorEmailData: {
+            firstName: string;
+            email: string;
+            password: string;
+        }[] = [];
+
         // --- 5. Database Operations within a Transaction ---
         const newPaper = await prisma.$transaction(async (tx) => {
             // A) Upsert all authors
@@ -90,6 +98,12 @@ export async function POST(req: NextRequest) {
                 const authorFullName = `${author.firstName.trim()} ${author.lastName?.trim() || ""}`;
                 const generatedPassword = `${authorFullName.slice(0, 4).toUpperCase()}${author.phone.trim().slice(-4)}`;
                 const hashedPassword = bcryptjs.hashSync(generatedPassword, 10);
+
+                authorEmailData.push({
+                    firstName: author.firstName,
+                    email: author.email,
+                    password: generatedPassword,
+                })
 
                 return tx.author.upsert({
                     where: {email: author.email},
@@ -175,6 +189,7 @@ export async function POST(req: NextRequest) {
                         activity: "PAPER_SUBMITTED",
                         details: `A Paper Submitted by Author(s)`,
                         paperId: paper.id,
+                        authorId:authorId.id,
                     }
                 })
             })
@@ -182,6 +197,21 @@ export async function POST(req: NextRequest) {
 
             return paper; // Return the created paper from the transaction
         });
+
+        if (newPaper && authorEmailData.length > 0) {
+            const emailPromises = authorEmailData.map(authorData =>
+                sendSubmissionMail({
+                    firstName: authorData.firstName,
+                    email: authorData.email,
+                    password: authorData.password,
+                    submissionId: newPaper.submissionId,
+                })
+            )
+            await Promise.all(emailPromises)
+                .catch(e => {
+                    console.error(`Failed to send one or more submission emails: `,e);
+                })
+        }
 
         return NextResponse.json(newPaper, {status: 201});
     } catch

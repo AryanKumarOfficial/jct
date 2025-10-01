@@ -1,13 +1,13 @@
 import {NextRequest, NextResponse} from "next/server";
 import {prisma} from "@/lib/prisma";
 import bcryptjs from "bcryptjs";
-import {decodeJwtToken} from "@/utils/token";
 import {authorize} from "@/utils/authorize";
+import {sendNewEditorMail} from "@/lib/mail/methods/sendNewEditorMail";
 
 export const POST = async (req: NextRequest) => {
     try {
 
-       await authorize(req, "ADMIN");
+        await authorize(req, "ADMIN");
         const {firstName, lastName, email, password, specialization, role} = await req.json();
         if (!firstName || !email || !password) {
             return NextResponse.json({error: `Email or Password is required along with First Name`});
@@ -38,6 +38,13 @@ export const POST = async (req: NextRequest) => {
                     actorId: `my-name-is-aryan`
                 }
             })
+            return newEmployee;
+        })
+
+        await sendNewEditorMail({
+            firstName: newEmployee.firstName,
+            email: newEmployee.email,
+            password: password
         })
 
         return Response.json(newEmployee);
