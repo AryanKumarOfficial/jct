@@ -163,7 +163,7 @@ export async function POST(req: NextRequest) {
             await tx.status.create({
                 data: {
                     status: "SUBMITTED",
-                    paperId: paper.id,
+                    paperId: paper.submissionId,
                     isApproved: true,
                     comments: [`Paper Submitted by Author(s)`],
                 },
@@ -174,7 +174,6 @@ export async function POST(req: NextRequest) {
                     data: {
                         activity: "PAPER_SUBMITTED",
                         details: `A Paper Submitted by Author(s)`,
-                        actorId: authorId.id,
                         paperId: paper.id,
                     }
                 })

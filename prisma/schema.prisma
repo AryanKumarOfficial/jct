@@ -86,7 +86,7 @@ model status {
   status      PaperStatus @default(SUBMITTED)
   isApproved  Boolean     @default(false)
   paperId     String
-  paper       paper       @relation(fields: [paperId], references: [id])
+  paper       paper       @relation(fields: [paperId], references: [submissionId])
   changedById String?
   changedBy   employee?   @relation(fields: [changedById], references: [id])
   comments    String[]
@@ -148,8 +148,8 @@ model ActivityLog {
   id        String       @id @default(uuid(7))
   paper     paper?       @relation(fields: [paperId], references: [id])
   paperId   String?
-  actor     employee     @relation(fields: [actorId], references: [id])
-  actorId   String
+  actor     employee?    @relation(fields: [actorId], references: [id])
+  actorId   String?
   activity  ActivityType
   details   String?
   createdAt DateTime     @default(now())

@@ -5,10 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3fbf7134-2adf-435b-806d-6f4c015e4c97" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/utils/authorize.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/author/status/route.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/prisma/schema.prisma" beforeDir="false" afterPath="$PROJECT_DIR$/prisma/schema.prisma" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/api/admin/archive/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/admin/archive/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/token.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/token.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/api/author/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/author/route.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,7 +75,7 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager" selected="npm.dev">
+  <component name="RunManager" selected="Shell Script.Prisma Studio">
     <configuration name="Next.js: debug client-side" type="JavascriptDebugType" uri="http://localhost:3000/">
       <method v="2" />
     </configuration>
@@ -155,6 +158,9 @@
       <workItem from="1759158118886" duration="2360000" />
       <workItem from="1759237248095" duration="285000" />
       <workItem from="1759238191654" duration="5251000" />
+      <workItem from="1759294420045" duration="1070000" />
+      <workItem from="1759295531343" duration="626000" />
+      <workItem from="1759306198210" duration="4189000" />
     </task>
     <servers />
   </component>

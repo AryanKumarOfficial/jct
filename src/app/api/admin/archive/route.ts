@@ -11,6 +11,17 @@ export const POST = async (req: NextRequest) => {
             return NextResponse.json({error: "Data Provided"}, {status: 400});
         }
 
+
+        const archiveExists = await prisma.archive.findFirst({
+            where: {
+                year,
+                issue,
+                volume
+            }
+        })
+
+        if (archiveExists) return NextResponse.json({error: `This Issue already Exits`}, {status: 400})
+
         const newArchive = await prisma.archive.create({
             data: {
                 volume,
