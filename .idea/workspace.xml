@@ -5,13 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3fbf7134-2adf-435b-806d-6f4c015e4c97" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/app/api/author/status/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lib/mail/sendMail.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lib/mail/setup.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prisma/schema.prisma" beforeDir="false" afterPath="$PROJECT_DIR$/prisma/schema.prisma" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/admin/archive/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/admin/archive/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/author/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/author/route.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -161,6 +159,7 @@
       <workItem from="1759294420045" duration="1070000" />
       <workItem from="1759295531343" duration="626000" />
       <workItem from="1759306198210" duration="4189000" />
+      <workItem from="1759310627097" duration="863000" />
     </task>
     <servers />
   </component>
