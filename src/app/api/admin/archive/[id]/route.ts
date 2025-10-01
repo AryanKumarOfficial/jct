@@ -1,23 +1,14 @@
 import {NextRequest, NextResponse} from "next/server";
 import {prisma} from "@/lib/prisma";
 import {Prisma} from "@prisma/client";
-import {decodeJwtToken} from "@/utils/token";
+import {authorize} from "@/utils/authorize";
 
 interface RouteParams {
     params: Promise<{ id: string }>;
 }
 
 export const PATCH = async (req: NextRequest, {params}: RouteParams) => {
-    const token = req.headers.get('authorization')?.split(" ")[0];
-    if (!token) {
-        return NextResponse.json({error: `Authorization token is missing`}, {status: 401});
-    }
-
-    const decodedToken = decodeJwtToken({token});
-    const payload = decodedToken?.payload;
-    if (payload && payload?.role !== "ADMIN") {
-        return NextResponse.json({error: `Only an Admin can perform this action`}, {status: 403});
-    }
+    await authorize(req, "ADMIN");
     const {id: archiveId} = await params;
     try {
         if (!archiveId) {
@@ -66,16 +57,7 @@ export const PATCH = async (req: NextRequest, {params}: RouteParams) => {
 };
 
 export const DELETE = async (req: NextRequest, {params}: RouteParams) => {
-    const token = req.headers.get('authorization')?.split(" ")[0];
-    if (!token) {
-        return NextResponse.json({error: `Authorization token is missing`}, {status: 401});
-    }
-
-    const decodedToken = decodeJwtToken({token});
-    const payload = decodedToken?.payload;
-    if (payload && payload?.role !== "ADMIN") {
-        return NextResponse.json({error: `Only an Admin can perform this action`}, {status: 403});
-    }
+    await authorize(req, "ADMIN");
     const {id: archiveId} = await params;
     try {
         if (!archiveId) {

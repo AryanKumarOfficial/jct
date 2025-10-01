@@ -6,27 +6,18 @@ export interface CustomJwtPayload extends jwt.JwtPayload {
     role: string;
 }
 
-export interface DecodedToken {
-    header: jwt.JwtHeader;
-    payload: CustomJwtPayload;
-    signature: string;
-}
-
-export const decodeJwtToken = ({token}: { token: string }) => {
+export const decodeJwtToken = async ({token}: { token: string }) => {
     if (!token) {
         console.error("Token is missing");
         return null;
     }
     try {
 
-        const decoded = jwt.decode(token, {
-            json: true,
-            complete: true
-        });
+        const decoded = jwt.verify(token, process.env.JWT_SECRET as string);
 
 
         if (typeof decoded === "object" && decoded !== null) {
-            return decoded as DecodedToken;
+            return decoded as CustomJwtPayload;
         }
         return null;
     } catch (e) {
