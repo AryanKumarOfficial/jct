@@ -5,10 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3fbf7134-2adf-435b-806d-6f4c015e4c97" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/prisma/migrations/20251003062854_adds_the_editor_assigned_for_the_paper/migration.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/api/admin/paper/assign/route.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prisma/schema.prisma" beforeDir="false" afterPath="$PROJECT_DIR$/prisma/schema.prisma" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -185,7 +183,9 @@
       <workItem from="1759317637422" duration="5985000" />
       <workItem from="1759347469326" duration="1401000" />
       <workItem from="1759463594569" duration="4369000" />
-      <workItem from="1759468064744" duration="3014000" />
+      <workItem from="1759468064744" duration="3263000" />
+      <workItem from="1759474564523" duration="50000" />
+      <workItem from="1759477807705" duration="448000" />
     </task>
     <servers />
   </component>

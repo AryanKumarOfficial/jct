@@ -58,6 +58,8 @@ services:
         condition: service_healthy
     networks:
       - myapp_network
+    # Automates migrations on startup before starting the dev server
+    command: sh -c "npx prisma migrate dev && npm run dev"
 
 # Named volumes are managed by Docker and are the preferred way to persist data
 volumes:
