@@ -1,0 +1,64 @@
+# Git and version control
+.git
+.gitignore
+.gitattributes
+.github
+
+# Docker related files (so they aren't copied into the image itself)
+Dockerfile
+Dockerfile.*
+docker-compose*.yml
+.dockerignore
+.docker
+
+# Local dependencies
+node_modules
+.pnpm-store
+
+# Build artifacts and caches
+.next
+out
+dist
+build
+.cache
+*.tsbuildinfo
+next-env.d.ts
+
+# Test files
+coverage
+.nyc_output
+*.test.*
+*.spec.*
+__tests__
+__mocks__
+
+# IDE and editor config
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# Environment variable files - NEVER include these in a Docker image
+.env
+.env.*
+!.env.example
+
+# Log files
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Misc
+.vercel
+tmp
+temp
+*.tmp

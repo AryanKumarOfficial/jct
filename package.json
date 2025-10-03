@@ -2,15 +2,16 @@
   "name": "jct",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "pnpm@10.18.0",
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
     "lint": "biome check",
     "format": "biome format --write",
-    "postinstall": "prisma generate",
     "format:check": "biome format",
     "lint:fix": "biome check --write",
+    "postinstall": "prisma generate || true",
     "dev:email": "email dev --port 5000"
   },
   "dependencies": {
@@ -47,5 +48,9 @@
     "onlyBuiltDependencies": [
       "@prisma/client"
     ]
+  },
+  "engines": {
+    "node": ">=22.14.0",
+    "pnpm": ">=10.0.0"
   }
 }
