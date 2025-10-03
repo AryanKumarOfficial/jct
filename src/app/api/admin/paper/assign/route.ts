@@ -17,12 +17,14 @@ export const POST = async (req: NextRequest) => {
         if (!employee || !paper) {
             return NextResponse.json({error: "Paper or Employee does not exist"}, {status: 400})
         }
-        await prisma.paper.update({
+        const newPaper = await prisma.paper.update({
             where: {id: paperId},
             data: {
                 employeeId,
             }
         })
+
+        return NextResponse.json(newPaper);
 
     } catch (error) {
         console.error(`Error Assigning Editor`, error)
