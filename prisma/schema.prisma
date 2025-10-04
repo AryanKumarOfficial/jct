@@ -62,8 +62,8 @@ model paper {
   walletTransactions WalletTransaction[]
 
   // add the editor
-  editor     employee? @relation(fields: [employeeId], references: [id])
-  employeeId String?
+  editor   employee? @relation(fields: [editorId], references: [id])
+  editorId String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

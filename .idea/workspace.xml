@@ -5,8 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3fbf7134-2adf-435b-806d-6f4c015e4c97" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/app/api/editor/papers/route.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/prisma/schema.prisma" beforeDir="false" afterPath="$PROJECT_DIR$/prisma/schema.prisma" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/token.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/token.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,7 +84,7 @@
       <recent name="D:\WEB DEVELOPMENT\FREELANCING\jct\email" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.Email server">
+  <component name="RunManager" selected="npm.dev">
     <configuration name="Next.js: debug client-side" type="JavascriptDebugType" uri="http://localhost:3000/">
       <method v="2" />
     </configuration>
@@ -185,7 +188,10 @@
       <workItem from="1759463594569" duration="4369000" />
       <workItem from="1759468064744" duration="3263000" />
       <workItem from="1759474564523" duration="50000" />
-      <workItem from="1759477807705" duration="448000" />
+      <workItem from="1759477807705" duration="3193000" />
+      <workItem from="1759481303053" duration="1111000" />
+      <workItem from="1759483086516" duration="1577000" />
+      <workItem from="1759549391624" duration="1418000" />
     </task>
     <servers />
   </component>

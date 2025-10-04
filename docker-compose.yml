@@ -1,10 +1,9 @@
 version: '3.8'
 
-# Defines the services (containers) that make up your app
 services:
-  # PostgreSQL Database Service
+  # PostgresSQL Database Service
   db:
-    image: postgres:15-alpine
+    image: postgres:15
     container_name: myapp_db_dev
     restart: unless-stopped
     environment:
@@ -12,59 +11,52 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
       POSTGRES_DB: ${POSTGRES_DB:-myapp}
     ports:
-      # Expose PostgreSQL port to the host machine for direct access with tools like pgAdmin
       - "5432:5432"
     volumes:
-      # Persist database data on the host machine using a named volume
       - db_data:/var/lib/postgresql/data
     healthcheck:
-      # Ensures the app service doesn't start until the database is ready to accept connections
-      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-myapp}" ]
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-myapp} || exit 1" ]
       interval: 5s
       timeout: 3s
       retries: 5
     networks:
       - myapp_network
 
-  # Next.js Application Service
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      target: dev # Use the 'dev' stage from our Dockerfile
-    container_name: myapp_next_dev
-    restart: unless-stopped
-    ports:
-      # Expose Next.js app port
-      - "3000:3000"
-    environment:
-      # These variables are passed to your Next.js application
-      NODE_ENV: development
-      PORT: 3000
-      HOSTNAME: "0.0.0.0" # Important for making the container accessible from the host
-      DATABASE_URL: "postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@db:5432/${POSTGRES_DB:-myapp}?schema=public"
-      # This enables polling for file changes, crucial for hot-reloading to work reliably inside Docker
-      WATCHPACK_POLLING: "true"
-    volumes:
-      # Mount the project directory into the container for live code reloading
-      - .:/app
-      # Use an anonymous volume to prevent the container's node_modules from being overwritten by the host
-      - /app/node_modules
-      # Keep the .next build cache inside the container to prevent permission issues on the host
-      - /app/.next
-    depends_on:
-      db:
-        # Specifies that the 'app' service depends on the 'db' service being healthy
-        condition: service_healthy
-    networks:
-      - myapp_network
-    # Automates migrations on startup before starting the dev server
-    command: sh -c "npx prisma migrate dev && npm run dev"
 
-# Named volumes are managed by Docker and are the preferred way to persist data
+  # Next.js Application Service
+#  app:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#      target: dev
+#    container_name: myapp_next_dev
+#    restart: unless-stopped
+#    ports:
+#      - "3000:3000"
+#    environment:
+#      NODE_ENV: development
+#      PORT: 3000
+#      HOSTNAME: "0.0.0.0"
+#      DATABASE_URL: "postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@db:5432/${POSTGRES_DB:-myapp}?schema=public"
+#      WATCHPACK_POLLING: "true"
+#    volumes:
+#      - .:/app:cached          # Improve file change detection performance
+#      - /app/node_modules      # Prevent overwriting node_modules
+#      - /app/.next             # Keep .next cache inside container
+#    depends_on:
+#      db:
+#        condition: service_healthy
+#    networks:
+#      - myapp_network
+#    command: >
+#      sh -c "
+#        npx prisma migrate dev --name init &&
+#        npm run dev
+#      "
+#
 volumes:
   db_data:
 
-# A dedicated network allows services to communicate with each other easily and securely
 networks:
   myapp_network:
+    driver: bridge
