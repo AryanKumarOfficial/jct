@@ -7,24 +7,81 @@ import {fileUpload} from "@/utils/operations"
 import {lookup} from "mime-types"
 import {getObjectUrl} from "@/utils/cloudflare";
 import {isPaperPaid} from "@/utils/payments";
-import {PaperStatus} from "@/types/enums";
+import {PaperStatus, PaymentStatus} from "@/types/enums";
+import {Orders} from "razorpay/dist/types/orders";
+import {razorpay} from "@/lib/razorpay";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+
+const AMOUNT_IN_RUPEES = 1250;
 
 export const PATCH = async (req: NextRequest) => {
     try {
         await authorize(req, "ADMIN");
-        const {statusId} = await req.json();
-        if (!statusId) {
+        const {statusRecordId}: { statusRecordId: string } = await req.json();
+        if (!statusRecordId) {
             return NextResponse.json({error: "Status ID is required for this operation"}, {status: 400})
         }
+
+
         const updatedStatus = await prisma.status.update({
-            where: {id: statusId},
+            where: {id: statusRecordId},
             data: {
                 isApproved: true
+            },
+            include: {
+                paper: {
+                    select: {
+                        authors: {
+                            select: {
+                                id: true
+                            }
+                        }
+                    }
+                }
             }
         })
+        if (updatedStatus.status === "REVIEWED") {
+
+            const authorId = updatedStatus.paper.authors[0].id;
+            if (!authorId) {
+                return NextResponse.json({error: "Could not find an author associated with this paper."}, {status: 404});
+
+            }
+
+            // create an order in the razorpay
+            // 1. PREPARE ORDER OPTIONS WITH PROPER TYPES
+            const orderOptions: Orders.RazorpayOrderCreateRequestBody = {
+                amount: AMOUNT_IN_RUPEES * 100,
+                currency: "INR",
+                receipt: `receipt_for_${updatedStatus.paperId}_${Date.now()}`,
+                notes: {
+                    paperId: updatedStatus.paperId
+                }
+            }
+
+            // 2. create the order
+            const order: Orders.RazorpayOrder = await razorpay().orders.create(orderOptions);
+
+            // 3. save the order to the translation table
+            await prisma.transaction.create({
+                data: {
+                    razorpayOrderId: order.id,
+                    amount: 1250,
+                    status: PaymentStatus.PENDING,
+                    paperId: updatedStatus.paperId,
+                    authorId,
+                }
+            })
+
+            return NextResponse.json(order);
+
+        }
+
         return NextResponse.json(updatedStatus);
     } catch (error) {
         console.error(`Failed to approve the paper status`, error);
+        if (error instanceof PrismaClientKnownRequestError && error.code === "P2025")
+            return NextResponse.json({error: `Status record to update not found`}, {status: 404})
         return NextResponse.json({error: `Failed to approve the paper status`}, {status: 500});
     }
 }
@@ -91,10 +148,10 @@ export const POST = async (req: NextRequest) => {
                     status,
                     paperId,
                     comments,
-                    changedBy :decodedData.data.id
+                    changedById: decodedData.data.id
                 }
             })
-            return NextResponse.json(newStatus, { status: 201 });
+            return NextResponse.json(newStatus, {status: 201});
 
         }
     } catch (err) {
