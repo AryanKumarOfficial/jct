@@ -20,7 +20,7 @@ export const POST = async (req: NextRequest) => {
         const newPaper = await prisma.paper.update({
             where: {id: paperId},
             data: {
-                employeeId,
+                editorId:employeeId,
             }
         })
 

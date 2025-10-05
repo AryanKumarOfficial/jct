@@ -5,8 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3fbf7134-2adf-435b-806d-6f4c015e4c97" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/app/api/editor/papers/[id]/status/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/admin/paper/status/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/types/enums.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/payments.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/api/admin/paper/assign/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/admin/paper/assign/route.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/api/archive/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/archive/route.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,6 +84,9 @@
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\WEB DEVELOPMENT\FREELANCING\jct\email" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\WEB DEVELOPMENT\FREELANCING\jct\src\app\api\admin\paper" />
+    </key>
   </component>
   <component name="RunManager" selected="npm.dev">
     <configuration name="Next.js: debug client-side" type="JavascriptDebugType" uri="http://localhost:3000/">
@@ -141,8 +148,8 @@
       <item itemvalue="JavaScript Debug.Next.js: debug client-side" />
       <item itemvalue="npm.Email server" />
       <item itemvalue="npm.dev" />
-      <item itemvalue="Shell Script.Prisma Studio" />
       <item itemvalue="Shell Script.Git commit" />
+      <item itemvalue="Shell Script.Prisma Studio" />
     </list>
   </component>
   <component name="SharedIndexes">
@@ -189,7 +196,10 @@
       <workItem from="1759481303053" duration="1111000" />
       <workItem from="1759483086516" duration="1577000" />
       <workItem from="1759549391624" duration="4409000" />
-      <workItem from="1759555425808" duration="3269000" />
+      <workItem from="1759555425808" duration="4489000" />
+      <workItem from="1759571287645" duration="1379000" />
+      <workItem from="1759601676481" duration="23000" />
+      <workItem from="1759689304222" duration="4119000" />
     </task>
     <servers />
   </component>
