@@ -4,7 +4,26 @@ import bcryptjs from "bcryptjs";
 import {authorize} from "@/utils/authorize";
 import {sendNewEditorMail} from "@/lib/mail/methods/sendNewEditorMail";
 
-export const POST = async (req: NextRequest) => {
+/**
+ * Handles the HTTP POST request for creating a new employee.
+ *
+ * This function performs the following steps:
+ * - Authorizes the request to ensure the user has "ADMIN" permissions.
+ * - Parses the incoming request body to extract required fields: `firstName`, `lastName`, `email`, `password`, `specialization`, and `role`.
+ * - Validates that `firstName`, `email`, and `password` are provided.
+ * - Checks if an employee with the provided email already exists, returning a conflict response if true.
+ * - Hashes the password using bcryptjs.
+ * - Creates a new employee record in the database within a transactional context.
+ * - Logs the employee addition activity within the same transaction.
+ * - Sends a notification email to the newly created employee with their credentials.
+ * - Returns the newly created employee in the HTTP response.
+ *
+ * If any error occurs during the process, it responds with a 500 error and an appropriate error message.
+ *
+ * @param {NextRequest} req - The incoming Next.js API request object.
+ * @returns {Promise<NextResponse>} The HTTP response containing the created employee data or an error message.
+ */
+export const POST = async (req: NextRequest): Promise<NextResponse> => {
     try {
 
         await authorize(req, "ADMIN");
@@ -47,7 +66,7 @@ export const POST = async (req: NextRequest) => {
             password: password
         })
 
-        return Response.json(newEmployee);
+        return NextResponse.json(newEmployee);
 
     } catch
         (_err) {

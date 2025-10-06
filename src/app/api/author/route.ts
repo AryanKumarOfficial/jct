@@ -9,7 +9,28 @@ import bcryptjs from "bcryptjs";
 import {Prisma} from "@prisma/client";
 import {sendSubmissionMail} from "@/lib/mail/methods/sendSubmissionMail";
 
-export async function POST(req: NextRequest) {
+/**
+ * Handles a POST request to create and store a new paper along with its associated metadata, authors, and status.
+ * This method performs input validation, file upload, database operations, and sends emails to authors.
+ *
+ * @param {NextRequest} req - The incoming request object containing form data with details about the paper, authors, and other metadata.
+ * Required fields in `formData` include:
+ * - `file`: The manuscript file to be uploaded.
+ * - `paperName`: The name/title of the paper.
+ * - `archiveId`: The archive to associate the paper with.
+ * - `authors`: A JSON stringified array of author details with properties such as `firstName`, `lastName`, `email`, `phone`, etc.
+ * Optional field:
+ * - `keywords`: A JSON stringified array of keywords related to the paper.
+ *
+ * @return {Promise<NextResponse>} A JSON response with the created paper's data if successful, otherwise an error response.
+ *
+ * Returns:
+ * - `201` on successful paper creation.
+ * - `400` if required fields are missing, invalid, or database-related errors occur.
+ * - `404` if the specified archive does not exist.
+ * - `500` for internal server errors.
+ */
+export async function POST(req: NextRequest): Promise<NextResponse> {
     try {
         const formData = await req.formData();
 
