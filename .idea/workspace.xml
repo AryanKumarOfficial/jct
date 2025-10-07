@@ -5,15 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3fbf7134-2adf-435b-806d-6f4c015e4c97" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/app/api-docs/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/types/api-docs.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/admin/archive/[id]/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/admin/archive/[id]/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/admin/archive/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/admin/archive/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/admin/auth/create/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/admin/auth/create/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/admin/auth/login/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/admin/auth/login/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/admin/paper/assign/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/admin/paper/assign/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/admin/paper/status/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/admin/paper/status/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/archive/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/archive/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/author/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/author/route.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/globals.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -204,9 +199,22 @@
       <workItem from="1759601676481" duration="23000" />
       <workItem from="1759689304222" duration="6850000" />
     </task>
+    <task id="LOCAL-00001" summary="adds JSDoc comments across the codebase for improved documentation and readability">
+      <option name="closed" value="true" />
+      <created>1759774832004</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1759774832004</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="adds JSDoc comments across the codebase for improved documentation and readability" />
+    <option name="LAST_COMMIT_MESSAGE" value="adds JSDoc comments across the codebase for improved documentation and readability" />
   </component>
 </project>
