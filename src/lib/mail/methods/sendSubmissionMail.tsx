@@ -1,6 +1,6 @@
-import {renderTemplate} from "@/lib/mail/methods/renderTemplate";
 import SubmissionMail from "@/../emails/SubmissionMail";
-import {sendMail} from "@/lib/mail/sendMail";
+import { renderTemplate } from "@/lib/mail/methods/renderTemplate";
+import { sendMail } from "@/lib/mail/sendMail";
 
 /**
  * Represents the properties required to send a submission email.
@@ -14,10 +14,10 @@ import {sendMail} from "@/lib/mail/sendMail";
  * - `password`: Temporary or secure password related to the submission, if applicable.
  */
 interface SendSubmissionMail {
-    email: string;
-    submissionId: string;
-    firstName: string;
-    password: string;
+  email: string;
+  submissionId: string;
+  firstName: string;
+  password: string;
 }
 
 /**
@@ -31,23 +31,27 @@ interface SendSubmissionMail {
  * @return {Promise<void>} A promise that resolves when the email is successfully sent.
  * @throws {Error} Throws an error if sending the email fails.
  */
-export async function sendSubmissionMail({submissionId, firstName, password, email}: SendSubmissionMail): Promise<void> {
-    try {
-        const content = await renderTemplate(SubmissionMail, {
-            submissionId,
-            firstName,
-            email,
-            password,
-        });
+export async function sendSubmissionMail({
+  submissionId,
+  firstName,
+  password,
+  email,
+}: SendSubmissionMail): Promise<void> {
+  try {
+    const content = await renderTemplate(SubmissionMail, {
+      submissionId,
+      firstName,
+      email,
+      password,
+    });
 
-        await sendMail({
-            to: email,
-            subject: `JCT Journal: Submission Received (ID: ${submissionId})`,
-            html: content
-        })
-
-    } catch (e) {
-        console.error(`Error sending email: `, e);
-        throw new Error(`Failed sending email: `, {cause: e});
-    }
+    await sendMail({
+      to: email,
+      subject: `JCT Journal: Submission Received (ID: ${submissionId})`,
+      html: content,
+    });
+  } catch (e) {
+    console.error(`Error sending email: `, e);
+    throw new Error(`Failed sending email: `, { cause: e });
+  }
 }

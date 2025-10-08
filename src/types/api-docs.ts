@@ -8,22 +8,22 @@ export interface ApiParameter {
   name: string;
   description: string;
   required: boolean;
-  type: 'path' | 'query' | 'body';
+  type: "path" | "query" | "body";
 }
 
 export interface ApiRequestBody {
-  type: 'json' | 'formData' | 'none';
+  type: "json" | "formData" | "none";
   example?: string;
 }
 
 export interface ApiResponseBody {
-  type: 'json' | 'text' | 'none';
+  type: "json" | "text" | "none";
   example: string;
 }
 
 export interface ApiEndpoint {
   id: string;
-  method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
+  method: "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
   path: string;
   description: string;
   requestBody: ApiRequestBody;

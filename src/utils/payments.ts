@@ -1,4 +1,4 @@
-import {prisma} from "@/lib/prisma";
+import { prisma } from "@/lib/prisma";
 
 /**
  * Asynchronously checks whether a paper has been paid for.
@@ -12,12 +12,12 @@ import {prisma} from "@/lib/prisma";
  * @param {string} paperId - The unique identifier of the paper being checked.
  * @returns {Promise<boolean>} A promise that resolves to true if the paper has been paid for, or false otherwise.
  */
-export const isPaperPaid= async (paperId: string) : Promise<boolean> => {
-    const successfulTransaction = await prisma.transaction.findFirst({
-        where: {
-            paperId,
-            status: "SUCCESS"
-        }
-    })
-    return !!successfulTransaction;
-}
+export const isPaperPaid = async (paperId: string): Promise<boolean> => {
+  const successfulTransaction = await prisma.transaction.findFirst({
+    where: {
+      paperId,
+      status: "SUCCESS",
+    },
+  });
+  return !!successfulTransaction;
+};

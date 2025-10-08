@@ -4,11 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3fbf7134-2adf-435b-806d-6f4c015e4c97" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/app/api-docs/page.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/types/api-docs.ts" afterDir="false" />
+    <list default="true" id="3fbf7134-2adf-435b-806d-6f4c015e4c97" name="Changes" comment="adds an API documentation page and example endpoint details">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/api-docs/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api-docs/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/api/admin/paper/status/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/admin/paper/status/route.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/api/archive/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/archive/route.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/api/author/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/author/route.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/api/editor/papers/[id]/status/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/editor/papers/[id]/status/route.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/globals.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lib/razorpay.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/razorpay.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,7 +78,7 @@
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;npm.Email server.executor&quot;: &quot;Run&quot;,
     &quot;npm.dev.executor&quot;: &quot;Run&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;settings.sync&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;ts.external.directory.path&quot;: &quot;D:\\WEB DEVELOPMENT\\FREELANCING\\jct\\node_modules\\typescript\\lib&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
@@ -198,6 +203,8 @@
       <workItem from="1759571287645" duration="1379000" />
       <workItem from="1759601676481" duration="23000" />
       <workItem from="1759689304222" duration="6850000" />
+      <workItem from="1759851509938" duration="179000" />
+      <workItem from="1759902587221" duration="8427000" />
     </task>
     <task id="LOCAL-00001" summary="adds JSDoc comments across the codebase for improved documentation and readability">
       <option name="closed" value="true" />
@@ -207,7 +214,15 @@
       <option name="project" value="LOCAL" />
       <updated>1759774832004</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="adds an API documentation page and example endpoint details">
+      <option name="closed" value="true" />
+      <created>1759851557888</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1759851557888</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -215,6 +230,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="adds JSDoc comments across the codebase for improved documentation and readability" />
-    <option name="LAST_COMMIT_MESSAGE" value="adds JSDoc comments across the codebase for improved documentation and readability" />
+    <MESSAGE value="adds an API documentation page and example endpoint details" />
+    <option name="LAST_COMMIT_MESSAGE" value="adds an API documentation page and example endpoint details" />
   </component>
 </project>

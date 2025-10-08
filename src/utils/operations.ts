@@ -1,14 +1,14 @@
-import {bucketName, r2} from "@/lib/r2";
-import {DeleteObjectCommand, PutObjectCommand} from "@aws-sdk/client-s3";
+import { DeleteObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
+import { bucketName, r2 } from "@/lib/r2";
 
 /**
  * Represents a file uploaded to the application.
  * It contains information about the file's key, its buffer data, and its MIME type.
  */
 interface FileUpload {
-    key: string;
-    buffer: Buffer;
-    contentType: string;
+  key: string;
+  buffer: Buffer;
+  contentType: string;
 }
 
 /**
@@ -24,15 +24,19 @@ interface FileUpload {
  * @param {string} params.contentType - The MIME type of the file being uploaded.
  * @returns {Promise<void>} A promise that resolves when the file is successfully uploaded.
  */
-export const fileUpload = async ({key, buffer, contentType}: FileUpload): Promise<void> => {
-    await r2.send(
-        new PutObjectCommand({
-            Bucket: bucketName,
-            Key: key,
-            Body: buffer,
-            ContentType: contentType,
-        }),
-    );
+export const fileUpload = async ({
+  key,
+  buffer,
+  contentType,
+}: FileUpload): Promise<void> => {
+  await r2.send(
+    new PutObjectCommand({
+      Bucket: bucketName,
+      Key: key,
+      Body: buffer,
+      ContentType: contentType,
+    }),
+  );
 };
 
 /**
@@ -43,11 +47,11 @@ export const fileUpload = async ({key, buffer, contentType}: FileUpload): Promis
  * @returns {Promise<void>} A promise that resolves when the file has been successfully deleted.
  * @throws An error if the deletion operation fails.
  */
-export const fileDelete = async ({key}: { key: string }): Promise<void> => {
-    await r2.send(
-        new DeleteObjectCommand({
-            Bucket: bucketName,
-            Key: key,
-        }),
-    )
-}
+export const fileDelete = async ({ key }: { key: string }): Promise<void> => {
+  await r2.send(
+    new DeleteObjectCommand({
+      Bucket: bucketName,
+      Key: key,
+    }),
+  );
+};

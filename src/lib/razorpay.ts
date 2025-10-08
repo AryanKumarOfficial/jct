@@ -13,16 +13,15 @@ import Razorpay from "razorpay";
  * @throws {Error} If the `RAZORPAY_KEY` or `RAZORPAY_SECRET_KEY` environment variables are not defined.
  * @returns {Object} An instance of the Razorpay SDK configured with the provided credentials.
  */
-export const razorpay = (): object => {
+export const razorpay = (): Razorpay => {
+  const key_id = process.env.RAZORPAY_KEY;
+  const key_secret = process.env.RAZORPAY_SECRET_KEY;
+  if (!key_secret || !key_id) {
+    throw new Error("Invalid key secret");
+  }
 
-    const key_id = process.env.RAZORPAY_KEY;
-    const key_secret = process.env.RAZORPAY_SECRET_KEY;
-    if (!key_secret || !key_id) {
-        throw new Error("Invalid key secret");
-    }
-
-    return new Razorpay({
-        key_id: process.env.RAZORPAY_KEY,
-        key_secret: process.env.RAZORPAY_SECRET,
-    })
-}
+  return new Razorpay({
+    key_id: process.env.RAZORPAY_KEY,
+    key_secret: process.env.RAZORPAY_SECRET,
+  });
+};

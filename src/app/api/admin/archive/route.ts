@@ -1,6 +1,6 @@
-import {NextRequest, NextResponse} from "next/server";
-import {prisma} from "@/lib/prisma";
-import {authorize} from "@/utils/authorize";
+import { type NextRequest, NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
+import { authorize } from "@/utils/authorize";
 
 /**
  * Asynchronous handler function for the POST HTTP method.
@@ -18,40 +18,42 @@ import {authorize} from "@/utils/authorize";
  * - Returns a 500 status with an error message for any internal server error.
  */
 export const POST = async (req: NextRequest): Promise<NextResponse> => {
-
-    try {
-        await authorize(req, "ADMIN");
-        const {volume, issue, month, year} = await req.json();
-        if (!volume || !issue || !month || !year) {
-            return NextResponse.json({error: "Data Provided"}, {status: 400});
-        }
-
-
-        const archiveExists = await prisma.archive.findFirst({
-            where: {
-                year,
-                issue,
-                volume
-            }
-        })
-
-        if (archiveExists) return NextResponse.json({error: `This Issue already Exits`}, {status: 400})
-
-        const newArchive = await prisma.archive.create({
-            data: {
-                volume,
-                issue,
-                month,
-                year,
-            },
-        });
-
-        return NextResponse.json(newArchive, {status: 201});
-    } catch (err) {
-        console.error(err);
-        return NextResponse.json(
-            {error: "Internal Server Error"},
-            {status: 500},
-        );
+  try {
+    await authorize(req, "ADMIN");
+    const { volume, issue, month, year } = await req.json();
+    if (!volume || !issue || !month || !year) {
+      return NextResponse.json({ error: "Data Provided" }, { status: 400 });
     }
+
+    const archiveExists = await prisma.archive.findFirst({
+      where: {
+        year,
+        issue,
+        volume,
+      },
+    });
+
+    if (archiveExists)
+      return NextResponse.json(
+        { error: `This Issue already Exits` },
+        { status: 400 },
+      );
+
+    const newArchive = await prisma.archive.create({
+      data: {
+        volume,
+        issue,
+        month,
+        year,
+      },
+    });
+
+    return NextResponse.json(newArchive, { status: 201 });
+  } catch (err) {
+    console.error(err);
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 },
+    );
+  }
 };

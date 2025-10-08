@@ -1,7 +1,6 @@
-import {renderTemplate} from "@/lib/mail/methods/renderTemplate";
+import { renderTemplate } from "@/lib/mail/methods/renderTemplate";
+import { sendMail } from "@/lib/mail/sendMail";
 import NewEditorEmail from "../../../../emails/NewEditorEmail";
-import {sendMail} from "@/lib/mail/sendMail";
-
 
 /**
  * Represents the properties required for an editor.
@@ -17,9 +16,9 @@ import {sendMail} from "@/lib/mail/sendMail";
  * @property password - The password used by the editor for authentication.
  */
 interface EditorProps {
-    email: string;
-    firstName: string;
-    password: string;
+  email: string;
+  firstName: string;
+  password: string;
 }
 
 /**
@@ -32,23 +31,24 @@ interface EditorProps {
  * @return {Promise<void>} A promise that resolves when the email is sent successfully.
  * @throws {Error} If an error occurs while sending the email.
  */
-export async function sendNewEditorMail({firstName, email, password}: EditorProps): Promise<void> {
-    try {
-        const content = await renderTemplate(
-            NewEditorEmail,
-            {
-                firstName,
-                email,
-                password,
-            }
-        )
-        await sendMail({
-            to: email,
-            subject: `Welcome Aboard! Your JCT Journal Editor Account is Ready`,
-            html: content
-        })
-    } catch (e) {
-        console.error(`Error sending email: `, e);
-        throw new Error(`Failed sending email: `, {cause: e});
-    }
+export async function sendNewEditorMail({
+  firstName,
+  email,
+  password,
+}: EditorProps): Promise<void> {
+  try {
+    const content = await renderTemplate(NewEditorEmail, {
+      firstName,
+      email,
+      password,
+    });
+    await sendMail({
+      to: email,
+      subject: `Welcome Aboard! Your JCT Journal Editor Account is Ready`,
+      html: content,
+    });
+  } catch (e) {
+    console.error(`Error sending email: `, e);
+    throw new Error(`Failed sending email: `, { cause: e });
+  }
 }

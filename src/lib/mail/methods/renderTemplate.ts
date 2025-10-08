@@ -1,5 +1,5 @@
+import { pretty, render } from "@react-email/render";
 import React from "react";
-import {pretty, render} from "@react-email/render";
 
 /**
  * Renders the given React component with the provided properties into a string representation.
@@ -9,8 +9,9 @@ import {pretty, render} from "@react-email/render";
  * @return {Promise<string>} A promise that resolves to a string representation of the rendered component.
  */
 export async function renderTemplate<P>(
-    Component: React.JSXElementConstructor<P>,
-    Props: P): Promise<string> {
-    const Element = React.createElement(Component, Props);
-    return await pretty(await render(Element));
+  Component: React.JSXElementConstructor<P>,
+  Props: P,
+): Promise<string> {
+  const Element = React.createElement(Component, Props);
+  return await pretty(await render(Element));
 }
