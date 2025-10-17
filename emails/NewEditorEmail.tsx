@@ -91,7 +91,7 @@ export const NewEditorEmail = ({
               <strong>Login Email:</strong> {email}
             </Text>
             <Text className="text-base m-0">
-              <strong>Temporary Password:</strong>
+              <strong>Password:</strong>
               <code className="font-mono bg-cyan-100 text-cyan-800 px-2 py-1 rounded ml-2">
                 {password}
               </code>

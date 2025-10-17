@@ -15,11 +15,11 @@ enum EmployeeRole {
 }
 
 enum PaperStatus {
-  DRAFT
   SUBMITTED
+  DRAFT
   REVIEWED
-  PUBLISHED
   REJECTED
+  PUBLISHED
 }
 
 enum paymentStatus {
@@ -65,8 +65,9 @@ model paper {
   editor   employee? @relation(fields: [editorId], references: [id])
   editorId String?
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  Copyright Copyright?
 }
 
 model author {
@@ -185,4 +186,21 @@ model IdCounter {
   id    String @id @unique @default("paperCounter")
   year  Int
   count Int
+}
+
+model Copyright {
+  id              String          @id @unique @default(uuid(7))
+  copyrightStatus CopyrightStatus @default(PENDING)
+  pdfKey          String
+  pdfUrl          String
+  paperId         String          @unique
+  paper           paper           @relation(fields: [paperId], references: [id])
+
+  signedAt  DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum CopyrightStatus {
+  PENDING
+  SIGNED
 }

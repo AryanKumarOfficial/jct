@@ -19,7 +19,7 @@ import { getTokenData } from "@/utils/token";
  * This variable holds a numerical value (integer or floating-point)
  * indicating the monetary quantity in the currency of Indian Rupees.
  */
-const AMOUNT_IN_RUPEES = 1250;
+const AMOUNT_IN_RUPEES = 1500;
 
 /**
  * Handles an HTTP PATCH request to update the approval status of a status record.

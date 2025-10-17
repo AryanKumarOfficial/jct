@@ -5,15 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3fbf7134-2adf-435b-806d-6f4c015e4c97" name="Changes" comment="adds an API documentation page and example endpoint details">
+      <change afterPath="$PROJECT_DIR$/src/app/api/author/[paperId]/sign-copyright/route.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api-docs/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api-docs/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emails/NewEditorEmail.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/emails/NewEditorEmail.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/prisma/schema.prisma" beforeDir="false" afterPath="$PROJECT_DIR$/prisma/schema.prisma" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/api/admin/paper/status/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/admin/paper/status/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/archive/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/archive/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/author/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/author/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/editor/papers/[id]/status/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/editor/papers/[id]/status/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/globals.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/razorpay.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/razorpay.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,7 +89,7 @@
       <recent name="D:\WEB DEVELOPMENT\FREELANCING\jct\src\app\api\admin\paper" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.dev">
+  <component name="RunManager" selected="Shell Script.Prisma Studio">
     <configuration name="Next.js: debug client-side" type="JavascriptDebugType" uri="http://localhost:3000/">
       <method v="2" />
     </configuration>
@@ -204,7 +202,11 @@
       <workItem from="1759601676481" duration="23000" />
       <workItem from="1759689304222" duration="6850000" />
       <workItem from="1759851509938" duration="179000" />
-      <workItem from="1759902587221" duration="8427000" />
+      <workItem from="1759902587221" duration="8695000" />
+      <workItem from="1759948441741" duration="172000" />
+      <workItem from="1760019652717" duration="4743000" />
+      <workItem from="1760032043836" duration="12000" />
+      <workItem from="1760728354915" duration="3574000" />
     </task>
     <task id="LOCAL-00001" summary="adds JSDoc comments across the codebase for improved documentation and readability">
       <option name="closed" value="true" />
