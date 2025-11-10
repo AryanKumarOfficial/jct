@@ -1,10 +1,21 @@
-// src/schemas/submission.schema.ts
+// src/schemas/submission.schemas.ts
 import {z} from "zod";
 
 /**
  * Shared Zod schemas for paper submissions — import these on both frontend and backend.
- * Keep this file pure schema + inferred types so it can be reused safely.
+ * Keep this file pure schemas + inferred types so it can be reused safely.
  */
+
+// A reusable transformer for JSON strings
+const stringifiedJson = (schema: z.ZodType) =>
+    z.string().transform((str, ctx) => {
+        try {
+            return schema.parse(JSON.parse(str));
+        } catch (e) {
+            ctx.addIssue({code: z.ZodIssueCode.custom, message: "Invalid JSON string"});
+            return z.NEVER;
+        }
+    });
 
 export const authorSchema = z.object({
     firstName: z.string().min(1, "First name is required"),
@@ -18,8 +29,8 @@ export const authorSchema = z.object({
 export const submissionSchema = z.object({
     paperName: z.string().min(3, "Paper name must be at least 3 characters"),
     archiveId: z.string().min(1, "Archive ID is required"),
-    authors: z.array(authorSchema).min(1, "At least one author is required"),
-    keywords: z.array(z.string()).optional(),
+    authors: stringifiedJson(z.array(authorSchema).min(1, "At least one author is required")),
+    keywords: stringifiedJson(z.array(z.string()).default([]).optional()),
 });
 
 // Inferred TypeScript types for convenience
