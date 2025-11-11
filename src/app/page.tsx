@@ -2,7 +2,7 @@
 import { motion } from "motion/react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import Link  from "next/link";
+import Link from "next/link";
 import { BookOpen, Award, Users, TrendingUp } from "lucide-react";
 
 const Index = () => {
