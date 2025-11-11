@@ -122,3 +122,11 @@
         @apply bg-background text-foreground;
     }
 }
+
+.dark-logo-filter {
+    /* Invert colors to make dark elements light, then adjust hue and saturation */
+    filter: invert(0.9) hue-rotate(180deg) saturate(1.5) brightness(1.2);
+    /* You might need to tweak these values (hue-rotate, saturate, brightness)
+       to get the exact green shade you want in dark mode.
+       Start by uncommenting just 'invert(0.9)' and see how it looks. */
+}
