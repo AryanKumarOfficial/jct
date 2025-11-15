@@ -1,7 +1,6 @@
 @import "tailwindcss";
-@import "tw-animate-css";
 
-@custom-variant dark (&:where(.dark, .dark *));
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
     --radius-sm: calc(var(--radius) - 4px);
@@ -15,6 +14,7 @@
     --color-popover: var(--popover);
     --color-popover-foreground: var(--popover-foreground);
     --color-primary: var(--primary);
+    --color-primary-light: var(--primary-light);
     --color-primary-foreground: var(--primary-foreground);
     --color-secondary: var(--secondary);
     --color-secondary-foreground: var(--secondary-foreground);
@@ -40,77 +40,113 @@
     --color-sidebar-border: var(--sidebar-border);
     --color-sidebar-ring: var(--sidebar-ring);
 }
-
 :root {
     --radius: 0.625rem;
 
-    /* --- Green Light Mode --- */
+    /* --- Green Light Mode (Oklch) --- */
     --background: oklch(1 0 0);
-    --foreground: oklch(0.1 0.02 150);
+    --foreground: oklch(0.2666 0.024 165.6);
+
     --card: oklch(1 0 0);
-    --card-foreground: oklch(0.1 0.02 150);
+    --card-foreground: oklch(0.2666 0.024 165.6);
+
     --popover: oklch(1 0 0);
-    --popover-foreground: oklch(0.1 0.02 150);
-    --primary: oklch(0.55 0.18 152);
-    --primary-foreground: oklch(0.95 0.02 150);
-    --secondary: oklch(0.94 0.02 150);
-    --secondary-foreground: oklch(0.25 0.05 150);
-    --muted: oklch(0.94 0.02 150);
-    --muted-foreground: oklch(0.45 0.03 150);
-    --accent: oklch(0.94 0.02 150);
-    --accent-foreground: oklch(0.25 0.05 150);
-    --destructive: oklch(0.577 0.245 27.325); /* Kept Red */
-    --border: oklch(0.9 0.02 150);
-    --input: oklch(0.9 0.02 150);
-    --ring: oklch(0.55 0.18 152);
-    --chart-1: oklch(0.55 0.18 152);
-    --chart-2: oklch(0.65 0.15 150);
-    --chart-3: oklch(0.75 0.12 148);
-    --chart-4: oklch(0.45 0.15 155);
-    --chart-5: oklch(0.35 0.12 158);
-    --sidebar: oklch(0.98 0.01 150);
-    --sidebar-foreground: oklch(0.1 0.02 150);
-    --sidebar-primary: oklch(0.55 0.18 152);
-    --sidebar-primary-foreground: oklch(0.95 0.02 150);
-    --sidebar-accent: oklch(0.94 0.02 150);
-    --sidebar-accent-foreground: oklch(0.25 0.05 150);
-    --sidebar-border: oklch(0.9 0.02 150);
-    --sidebar-ring: oklch(0.55 0.18 152);
+    --popover-foreground: oklch(0.2666 0.024 165.6);
+
+    --primary: oklch(0.4919 0.113 167.31);
+    --primary-foreground: oklch(0.9539 0.013 165.6);
+
+    --primary-hover: oklch(0.4433 0.106 167.24);
+    --primary-light: oklch(0.9427 0.015 165.6);
+
+    --secondary: oklch(0.9427 0.015 165.6);
+    --secondary-foreground: oklch(0.2877 0.057 165.57);
+
+    --muted: oklch(0.9427 0.015 165.6);
+    --muted-foreground: oklch(0.5101 0.049 165.59);
+
+    --accent: oklch(0.9427 0.015 165.6);
+    --accent-foreground: oklch(0.2877 0.057 165.57);
+
+    --destructive: oklch(0.6742 0.169 50.91);
+    --destructive-foreground: oklch(1 0 0);
+
+    --border: oklch(0.9087 0.022 165.6);
+    --input: oklch(0.9087 0.022 165.6);
+    --ring: oklch(0.4919 0.113 167.31);
+
+    --header-blur: oklch(1 0 0 / 0.8);
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    --sidebar: oklch(0.9819 0.005 165.6);
+    --sidebar-background: oklch(0.9819 0.005 165.6);
+    --sidebar-foreground: oklch(0.2666 0.024 165.6);
+    --sidebar-primary: oklch(0.4919 0.113 167.31);
+    --sidebar-primary-foreground: oklch(0.9539 0.013 165.6);
+    --sidebar-accent: oklch(0.9427 0.015 165.6);
+    --sidebar-accent-foreground: oklch(0.2877 0.057 165.57);
+    --sidebar-border: oklch(0.9087 0.022 165.6);
+    --sidebar-ring: oklch(0.4919 0.113 167.31);
+
+    /* Chart colors */
+    --chart-1: oklch(0.4919 0.113 167.31);
+    --chart-2: oklch(0.5676 0.103 165.59);
+    --chart-3: oklch(0.6574 0.088 163.78);
+    --chart-4: oklch(0.4688 0.098 170.01);
+    --chart-5: oklch(0.3619 0.076 172.95);
 }
 
 .dark {
-    /* --- Green Dark Mode --- */
-    --background: oklch(0.1 0.02 150);
-    --foreground: oklch(0.95 0.02 150);
-    --card: oklch(0.12 0.02 150);
-    --card-foreground: oklch(0.95 0.02 150);
-    --popover: oklch(0.12 0.02 150);
-    --popover-foreground: oklch(0.95 0.02 150);
-    --primary: oklch(0.6 0.2 152);
-    --primary-foreground: oklch(0.09 0.02 150);
-    --secondary: oklch(0.2 0.03 150);
-    --secondary-foreground: oklch(0.9 0.02 150);
-    --muted: oklch(0.2 0.03 150);
-    --muted-foreground: oklch(0.65 0.03 150);
-    --accent: oklch(0.2 0.03 150);
-    --accent-foreground: oklch(0.9 0.02 150);
-    --destructive: oklch(0.704 0.191 22.216); /* Kept Red */
-    --border: oklch(0.2 0.03 150);
-    --input: oklch(0.2 0.03 150);
-    --ring: oklch(0.6 0.2 152);
-    --chart-1: oklch(0.6 0.2 152);
-    --chart-2: oklch(0.5 0.18 150);
-    --chart-3: oklch(0.7 0.15 148);
-    --chart-4: oklch(0.8 0.12 155);
-    --chart-5: oklch(0.4 0.18 158);
-    --sidebar: oklch(0.12 0.02 150);
-    --sidebar-foreground: oklch(0.95 0.02 150);
-    --sidebar-primary: oklch(0.6 0.2 152);
-    --sidebar-primary-foreground: oklch(0.09 0.02 150);
-    --sidebar-accent: oklch(0.2 0.03 150);
-    --sidebar-accent-foreground: oklch(0.9 0.02 150);
-    --sidebar-border: oklch(0.2 0.03 150);
-    --sidebar-ring: oklch(0.6 0.2 152);
+    /* --- Green Dark Mode (Oklch) --- */
+    --background: oklch(0.2234 0.0174 162.9);
+    --foreground: oklch(0.9539 0.013 165.6);
+
+    --card: oklch(0.2917 0.029 165.6);
+    --card-foreground: oklch(0.9539 0.013 165.6);
+
+    --popover: oklch(0.2917 0.029 165.6);
+    --popover-foreground: oklch(0.9539 0.013 165.6);
+
+    --primary: oklch(0.6213 0.114 159.91);
+    --primary-foreground: oklch(0.2539 0.021 165.6);
+
+    --primary-hover: oklch(0.5714 0.13 167.35);
+    --primary-light: oklch(0.351 0.0457 161.02);
+
+    --secondary: oklch(0.3301 0.046 165.58);
+    --secondary-foreground: oklch(0.9087 0.022 165.6);
+
+    --muted: oklch(0.3301 0.046 165.58);
+    --muted-foreground: oklch(0.698 0.041 165.59);
+
+    --accent: oklch(0.3301 0.046 165.58);
+    --accent-foreground: oklch(0.9087 0.022 165.6);
+
+    --destructive: oklch(0.7193 0.138 60.15);
+    --destructive-foreground: oklch(0.9803 0 0);
+
+    --border: oklch(0.3301 0.046 165.58);
+    --input: oklch(0.3301 0.046 165.58);
+    --ring: oklch(0.5222 0.124 167.33);
+
+    --header-blur: oklch(0.2666 0.024 165.6 / 0.8);
+
+    --sidebar: oklch(0.2917 0.029 165.6);
+    --sidebar-background: oklch(0.2917 0.029 165.6);
+    --sidebar-foreground: oklch(0.9539 0.013 165.6);
+    --sidebar-primary: oklch(0.5222 0.124 167.33);
+    --sidebar-primary-foreground: oklch(0.2539 0.021 165.6);
+    --sidebar-accent: oklch(0.3301 0.046 165.58);
+    --sidebar-accent-foreground: oklch(0.9087 0.022 165.6);
+    --sidebar-border: oklch(0.3301 0.046 165.58);
+    --sidebar-ring: oklch(0.5222 0.124 167.33);
+
+    /* Chart colors */
+    --chart-1: oklch(0.5222 0.124 167.33);
+    --chart-2: oklch(0.4746 0.096 165.58);
+    --chart-3: oklch(0.6077 0.099 163.81);
+    --chart-4: oklch(0.701 0.081 170.14);
+    --chart-5: oklch(0.4144 0.096 172.93);
 }
 
 @layer base {
@@ -121,12 +157,106 @@
     body {
         @apply bg-background text-foreground;
     }
+
+    html, body {
+        height: 100%;
+        background-color: var(--background);
+        color: var(--foreground);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    :focus {
+        outline: 2px solid hsl(var(--ring));
+        outline-offset: 2px;
+    }
+
+    /* keyframes pulled from your tailwind config so utilities can reference them */
+    @keyframes accordion-down {
+        from {
+            height: 0
+        }
+        to {
+            height: var(--radix-accordion-content-height)
+        }
+    }
+    @keyframes accordion-up {
+        from {
+            height: var(--radix-accordion-content-height)
+        }
+        to {
+            height: 0
+        }
+    }
+
+
+    @layer components {
+        .animate-accordion-down {
+            animation: accordion-down 0.2s ease-out;
+        }
+
+        .animate-accordion-up {
+            animation: accordion-up 0.2s ease-out;
+        }
+
+
+        /* small card component example that uses the same tokens as your Tailwind config */
+        .card {
+            background-color: hsl(var(--card));
+            color: hsl(var(--card-foreground));
+            border-radius: var(--radius);
+            border: 1px solid hsl(var(--border));
+            padding: 1rem;
+        }
+    }
 }
 
-.dark-logo-filter {
-    /* Invert colors to make dark elements light, then adjust hue and saturation */
-    filter: invert(0.9) hue-rotate(180deg) saturate(1.5) brightness(1.2);
-    /* You might need to tweak these values (hue-rotate, saturate, brightness)
-       to get the exact green shade you want in dark mode.
-       Start by uncommenting just 'invert(0.9)' and see how it looks. */
+
+.logo {
+    height: 10em;
+    will-change: filter;
+    transition: filter 300ms;
+}
+
+/*.logo:hover {*/
+/*    filter: drop-shadow(0 0 2em #646cffaa);*/
+/*}*/
+
+/*.logo.react:hover {*/
+/*    filter: drop-shadow(0 0 2em #61dafbaa);*/
+/*}*/
+
+@keyframes logo-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+@media (prefers-reduced-motion: no-preference) {
+    a:nth-of-type(2) .logo {
+        animation: logo-spin infinite 20s linear;
+    }
+}
+
+.card {
+    padding: 2em;
+}
+
+.read-the-docs {
+    color: #888;
+}
+
+#root {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem;
+    text-align: center;
+}
+
+.rounded-theme {
+    border-radius: var(--radius)
 }

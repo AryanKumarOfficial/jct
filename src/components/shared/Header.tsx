@@ -12,7 +12,7 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {Menu, ChevronDown, FileText, BookOpen, Users, Mail, Send, Sun, Moon} from "lucide-react";
-import jctLogo from "@/../public/images/logo.png";
+import jctLogo from "@/../public/images/logo-new.png";
 import Image from "next/image";
 
 const Header = () => {
@@ -48,11 +48,11 @@ const Header = () => {
                             className="relative"
                         >
                             <div
-                                className="h-14 w-14 rounded-xl bg-primary/10 flex items-center justify-center border-2 border-primary/20 group-hover:border-primary/40 transition-colors p-2">
+                                className="h-14 w-14 rounded-xl bg-transparent flex items-center justify-center border-2 border-primary/20 group-hover:border-primary/40 transition-colors p-2">
                                 <Image
                                     src={jctLogo}
                                     alt="JCT Logo"
-                                    className="object-contain"
+                                    className="object-contain logo group-hover:brightness-100 transition-all duration-300 dark:invert-100 dark:brightness-0"
                                     fill
                                     sizes="100vw"
                                     priority
