@@ -1,6 +1,6 @@
 "use client";
 
-import {useEffect, useState} from "react";
+import React, {use, useEffect, useState} from "react";
 import {Button} from "@/components/ui/button";
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
@@ -10,7 +10,6 @@ import {Alert, AlertDescription, AlertTitle} from "@/components/ui/alert";
 import {Loader2, AlertCircle, History, Download, Send, CheckCircle2} from "lucide-react";
 import Link from "next/link";
 
-// Based on API docs for GET /api/editor/paper/[id]
 interface Status {
     id: string;
     status: string;
@@ -24,15 +23,12 @@ interface PaperDetails {
     submissionId: string;
     keywords: string[];
     manuscriptUrl: string | null;
+    // other fields you may have: manuscriptId, archiveId, publishId, etc.
 }
 
-interface StatusResponse extends Status {
-    paper: PaperDetails;
-}
-
-export default function PaperReviewPage({params}: { params: { id: string } }) {
-    const paperId = params.id; // This is the submissionId
-    const [history, setHistory] = useState<StatusResponse[]>([]);
+export default function PaperReviewPage({params}: { params: Promise<{ id: string }> }) {
+    const paperId = use(params).id; // submissionId
+    const [history, setHistory] = useState<Status[]>([]);
     const [paper, setPaper] = useState<PaperDetails | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -44,67 +40,120 @@ export default function PaperReviewPage({params}: { params: { id: string } }) {
     const [submitError, setSubmitError] = useState<string | null>(null);
     const [submitSuccess, setSubmitSuccess] = useState(false);
 
+    // Fetch paper (and try to fetch history)
     useEffect(() => {
-        const fetchPaperDetails = async () => {
+        const fetchPaper = async () => {
             if (!paperId) return;
             setIsLoading(true);
             setError(null);
-            try {
-                // TODO: Add Authorization header
-                const response = await fetch(`/api/editor/paper/${paperId}`);
-                const data = await response.json();
 
-                if (!response.ok) {
-                    throw new Error(data.error || "Failed to fetch paper details.");
+            try {
+                const res = await fetch(`/api/editor/papers/${encodeURIComponent(paperId)}`, {
+                    credentials: "include",
+                    cache: "no-store",
+                });
+                const data = await res.json();
+
+                if (!res.ok) {
+                    throw new Error(data?.error || "Failed to fetch paper details");
                 }
 
-                setHistory(data);
-                if (data.length > 0) {
-                    setPaper(data[0].paper);
+                // If server returned an array (legacy history-array shape), handle that
+                if (Array.isArray(data)) {
+                    // legacy: data is StatusResponse[]
+                    setHistory(data);
+                    if (data.length > 0 && data[0].paper) {
+                        setPaper(data[0].paper);
+                    }
+                } else if (data && typeof data === "object") {
+                    // new: server returns a single paper object
+                    setPaper(data as PaperDetails);
+
+                    // try to fetch history from the status endpoint (may not exist)
+                    try {
+                        const histRes = await fetch(`/api/editor/papers/${encodeURIComponent(paperId)}/status`, {
+                            credentials: "include",
+                            cache: "no-store",
+                        });
+                        if (histRes.ok) {
+                            const histData = await histRes.json();
+                            // expect histData to be an array of statuses
+                            if (Array.isArray(histData)) {
+                                setHistory(histData as Status[]);
+                            } else {
+                                // if not array, set empty history
+                                setHistory([]);
+                            }
+                        } else {
+                            // status endpoint not available or returned error, fallback to empty history
+                            setHistory([]);
+                        }
+                    } catch (err) {
+                        // ignore history fetch errors, don't block page
+                        console.warn("Failed to fetch status history:", err);
+                        setHistory([]);
+                    }
+                } else {
+                    // unknown response shape
+                    throw new Error("Unexpected API response");
                 }
             } catch (err: any) {
-                setError(err.message);
+                setError(err?.message ?? "Failed to fetch paper details");
             } finally {
                 setIsLoading(false);
             }
         };
 
-        fetchPaperDetails();
+        fetchPaper();
     }, [paperId]);
 
     const handleSubmitReview = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!newStatus || !comments) {
+        setSubmitError(null);
+        setSubmitSuccess(false);
+
+        if (!newStatus || !comments.trim()) {
             setSubmitError("Please select a status and provide comments.");
             return;
         }
 
         setIsSubmitting(true);
-        setSubmitError(null);
-        setSubmitSuccess(false);
-
         try {
-            // TODO: Add Authorization header
-            const response = await fetch(`/api/editor/paper/${paperId}/status`, {
+            const response = await fetch(`/api/editor/papers/${encodeURIComponent(paperId)}/status`, {
                 method: "POST",
+                credentials: "include",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({
                     status: newStatus,
-                    comments: [comments], // API expects an array of comments
+                    comments: [comments.trim()],
                 }),
+                cache: "no-store"
             });
 
             const data = await response.json();
             if (!response.ok) {
-                throw new Error(data.error || "Failed to submit review.");
+                throw new Error(data?.error || "Failed to submit review.");
             }
 
             setSubmitSuccess(true);
             setNewStatus("");
             setComments("");
-            // Optionally, refetch history
+
+            // refetch history (best-effort)
+            try {
+                const histRes = await fetch(`/api/editor/papers/${encodeURIComponent(paperId)}/status`, {
+                    credentials: "include",
+                    cache: "no-store",
+                });
+                if (histRes.ok) {
+                    const histData = await histRes.json();
+                    if (Array.isArray(histData)) setHistory(histData as Status[]);
+                }
+            } catch (err) {
+                // ignore
+            }
         } catch (err: any) {
-            setSubmitError(err.message);
+            setSubmitError(err?.message ?? "Failed to submit review.");
         } finally {
             setIsSubmitting(false);
         }
@@ -156,16 +205,17 @@ export default function PaperReviewPage({params}: { params: { id: string } }) {
                         <CardContent>
                             <p className="text-sm font-medium mb-2">Keywords:</p>
                             <div className="flex flex-wrap gap-2">
-                                {paper.keywords.map((kw) => (
+                                {paper.keywords?.map((kw) => (
                                     <span key={kw}
                                           className="px-3 py-1 text-sm bg-muted text-muted-foreground rounded-full">
                     {kw}
                   </span>
                                 ))}
                             </div>
+
                             {paper.manuscriptUrl && (
                                 <Button asChild className="mt-6" size="lg">
-                                    <Link href={paper.manuscriptUrl} target="_blank">
+                                    <Link href={paper.manuscriptUrl} target="_blank" rel="noopener noreferrer">
                                         <Download className="mr-2 h-4 w-4"/>
                                         Download Manuscript
                                     </Link>
@@ -188,7 +238,7 @@ export default function PaperReviewPage({params}: { params: { id: string } }) {
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                     <div className="space-y-2">
                                         <Label htmlFor="status">New Status</Label>
-                                        <Select value={newStatus} onValueChange={setNewStatus} required>
+                                        <Select value={newStatus} onValueChange={(v) => setNewStatus(v)} required>
                                             <SelectTrigger id="status">
                                                 <SelectValue placeholder="Select a status..."/>
                                             </SelectTrigger>
@@ -200,6 +250,7 @@ export default function PaperReviewPage({params}: { params: { id: string } }) {
                                         </Select>
                                     </div>
                                 </div>
+
                                 <div className="space-y-2">
                                     <Label htmlFor="comments">Comments for Author/Admin</Label>
                                     <Textarea
@@ -216,11 +267,11 @@ export default function PaperReviewPage({params}: { params: { id: string } }) {
                                     <Alert variant="default" className="bg-green-50 border-green-200 text-green-800">
                                         <CheckCircle2 className="h-4 w-4"/>
                                         <AlertTitle>Review Submitted!</AlertTitle>
-                                        <AlertDescription>
-                                            Your review has been sent to the admin for final approval.
-                                        </AlertDescription>
+                                        <AlertDescription>Your review has been sent to the admin for final
+                                            approval.</AlertDescription>
                                     </Alert>
                                 )}
+
                                 {submitError && (
                                     <Alert variant="destructive">
                                         <AlertCircle className="h-4 w-4"/>
@@ -230,11 +281,8 @@ export default function PaperReviewPage({params}: { params: { id: string } }) {
                                 )}
 
                                 <Button type="submit" size="lg" disabled={isSubmitting}>
-                                    {isSubmitting ? (
-                                        <Loader2 className="mr-2 h-4 w-4 animate-spin"/>
-                                    ) : (
-                                        <Send className="mr-2 h-4 w-4"/>
-                                    )}
+                                    {isSubmitting ? <Loader2 className="mr-2 h-4 w-4 animate-spin"/> :
+                                        <Send className="mr-2 h-4 w-4"/>}
                                     Submit Review
                                 </Button>
                             </form>
@@ -253,25 +301,23 @@ export default function PaperReviewPage({params}: { params: { id: string } }) {
                         </CardHeader>
                         <CardContent>
                             <div className="relative space-y-6 pl-5 border-l-2 border-dashed border-border">
-                                {history.map((s) => (
-                                    <div key={s.id} className="relative">
-                                        <div
-                                            className="absolute -left-[28px] top-1.5 h-4 w-4 rounded-full bg-primary ring-4 ring-background"/>
-                                        <div className="ml-2">
-                                            <h4 className="font-semibold text-sm text-foreground">
-                                                {s.status.replace("_", " ")}
-                                            </h4>
-                                            <p className="text-xs text-muted-foreground">
-                                                {new Date(s.createdAt).toLocaleString()}
-                                            </p>
-                                            {s.comments.length > 0 && (
-                                                <p className="text-xs italic text-muted-foreground mt-1">
-                                                    &ldquo;{s.comments[0]}&rdquo;
-                                                </p>
-                                            )}
+                                {history.length === 0 ? (
+                                    <p className="text-sm text-muted-foreground">No history available.</p>
+                                ) : (
+                                    history.map((s) => (
+                                        <div key={s.id} className="relative">
+                                            <div
+                                                className="absolute -left-[28px] top-1.5 h-4 w-4 rounded-full bg-primary ring-4 ring-background"/>
+                                            <div className="ml-2">
+                                                <h4 className="font-semibold text-sm text-foreground">{s.status.replace("_", " ")}</h4>
+                                                <p className="text-xs text-muted-foreground">{new Date(s.createdAt).toLocaleString()}</p>
+                                                {s.comments.length > 0 && (
+                                                    <p className="text-xs italic text-muted-foreground mt-1">&ldquo;{s.comments[0]}&rdquo;</p>
+                                                )}
+                                            </div>
                                         </div>
-                                    </div>
-                                ))}
+                                    ))
+                                )}
                             </div>
                         </CardContent>
                     </Card>

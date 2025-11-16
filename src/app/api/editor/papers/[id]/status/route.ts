@@ -1,7 +1,7 @@
-import { type NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
-import { authorize } from "@/utils/authorize";
-import { getTokenData } from "@/utils/token";
+import {type NextRequest, NextResponse} from "next/server";
+import {prisma} from "@/lib/prisma";
+import {authorize} from "@/utils/authorize";
+import {getTokenData} from "@/utils/token";
 
 /**
  * Handles the POST request for updating the status of a paper in the system.
@@ -28,39 +28,60 @@ import { getTokenData } from "@/utils/token";
  * - Updates the paper's status in the database with details of the editor making the change.
  */
 export const POST = async (
-  req: NextRequest,
-  { params }: { params: Promise<{ id: string }> },
+    req: NextRequest,
+    {params}: { params: Promise<{ id: string }> },
 ): Promise<NextResponse> => {
-  try {
-    await authorize(req, "EDITOR");
-    const decodedData = await getTokenData(req);
-    if (!decodedData.success) {
-      return NextResponse.json({ error: "Invalid token" }, { status: 401 });
-    }
-    const { id } = await params;
-    if (!id)
-      return NextResponse.json(
-        { error: "Paper ID not found" },
-        { status: 400 },
-      );
+    try {
+        await authorize(req, "EDITOR");
+        const decodedData = await getTokenData(req);
+        if (!decodedData.success) {
+            return NextResponse.json({error: "Invalid token"}, {status: 401});
+        }
+        const {id} = await params;
+        if (!id)
+            return NextResponse.json(
+                {error: "Submission ID not found"},
+                {status: 400},
+            );
 
-    const { status, comments } = await req.json();
-    await prisma.status.create({
-      data: {
-        status,
-        paperId: id,
-        changedById: decodedData.data.id,
-        comments: comments,
-      },
-    });
-    return NextResponse.json({ success: true }, { status: 201 });
-  } catch (err) {
-    console.error(`Failed to update the status`, err);
-    return NextResponse.json(
-      { error: `Failed to update the status` },
-      { status: 500 },
-    );
-  }
+        const paperExists = await prisma.paper.findFirst({
+            where: {
+                submissionId: id
+            },
+        });
+        if (!paperExists)
+            return NextResponse.json(
+                {error: `Paper doesn't exist`},
+                {
+                    status: 404
+                }
+            )
+
+        // ensure the requesting editor is assigned to this paper
+        if (paperExists.editorId !== decodedData.data.id) {
+            return NextResponse.json({error: "You are not assigned to this paper"}, {status: 403});
+        }
+
+        const {status, comments} = await req.json();
+        if (!status) {
+            return NextResponse.json({error: "`status` is required in the request body"}, {status: 400});
+        }
+        await prisma.status.create({
+            data: {
+                status,
+                paperId: id,
+                changedById: decodedData.data.id,
+                comments: comments,
+            },
+        });
+        return NextResponse.json({success: true}, {status: 201});
+    } catch (err) {
+        console.error(`Failed to update the status`, err);
+        return NextResponse.json(
+            {error: `Failed to update the status`},
+            {status: 500},
+        );
+    }
 };
 
 /**
@@ -84,43 +105,43 @@ export const POST = async (
  * - Handles and logs errors, returning appropriate error responses.
  */
 export const PATCH = async (
-  req: NextRequest,
-  { params }: { params: Promise<{ id: string }> },
+    req: NextRequest,
+    {params}: { params: Promise<{ id: string }> },
 ): Promise<NextResponse> => {
-  try {
-    await authorize(req, "EDITOR");
-    const { id } = await params;
-    const decodedData = await getTokenData(req);
-    if (!decodedData.success) {
-      return NextResponse.json({ error: "Token malformed" }, { status: 401 });
-    }
-    if (!id) {
-      return NextResponse.json(
-        { error: "Paper ID not found" },
-        { status: 401 },
-      );
-    }
+    try {
+        await authorize(req, "EDITOR");
+        const {id} = await params;
+        const decodedData = await getTokenData(req);
+        if (!decodedData.success) {
+            return NextResponse.json({error: "Token malformed"}, {status: 401});
+        }
+        if (!id) {
+            return NextResponse.json(
+                {error: "Paper ID not found"},
+                {status: 401},
+            );
+        }
 
-    const { comments, statusId } = await req.json();
-    const updatedStatus = await prisma.status.update({
-      where: {
-        id: statusId,
-      },
-      data: {
-        comments: {
-          push: comments,
-        },
-      },
-    });
+        const {comments, statusId} = await req.json();
+        const updatedStatus = await prisma.status.update({
+            where: {
+                id: statusId,
+            },
+            data: {
+                comments: {
+                    push: comments,
+                },
+            },
+        });
 
-    return NextResponse.json(updatedStatus);
-  } catch (err) {
-    console.log(`Failed to update the status`, err);
-    return NextResponse.json({
-      error: `Failed to update the status`,
-      status: 500,
-    });
-  }
+        return NextResponse.json(updatedStatus);
+    } catch (err) {
+        console.log(`Failed to update the status`, err);
+        return NextResponse.json({
+            error: `Failed to update the status`,
+            status: 500,
+        });
+    }
 };
 
 /**
@@ -137,31 +158,34 @@ export const PATCH = async (
  * @returns {Promise<NextResponse>} A response object with the retrieved statuses or an error message.
  */
 export const GET = async (
-  req: NextRequest,
-  { params }: { params: Promise<{ id: string }> },
+    req: NextRequest,
+    {params}: { params: Promise<{ id: string }> },
 ): Promise<NextResponse> => {
-  try {
-    await authorize(req, "EDITOR");
-    const { id } = await params;
-    if (!id) {
-      return NextResponse.json(
-        { error: "Paper not found provided" },
-        { status: 400 },
-      );
-    }
-    const statuses = await prisma.status.findMany({
-      where: { paperId: id },
-      include: {
-        paper: true,
-      },
-    });
+    try {
+        await authorize(req, "EDITOR");
+        const {id} = await params;
+        if (!id) {
+            return NextResponse.json(
+                {error: "Paper not found provided"},
+                {status: 400},
+            );
+        }
+        const statuses = await prisma.status.findMany({
+            where: {paperId: id},
+            include: {
+                paper: true,
+            },
+            orderBy: {
+                createdAt: "desc",
+            },
+        });
 
-    return NextResponse.json(statuses);
-  } catch (err) {
-    console.error(`Failed to get the status`, err);
-    return NextResponse.json({
-      error: `Failed to get the status`,
-      status: 500,
-    });
-  }
+        return NextResponse.json(statuses);
+    } catch (err) {
+        console.error(`Failed to get the status`, err);
+        return NextResponse.json({
+            error: `Failed to get the status`,
+            status: 500,
+        });
+    }
 };

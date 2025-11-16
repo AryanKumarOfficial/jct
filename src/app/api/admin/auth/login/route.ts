@@ -45,13 +45,13 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
             {
                 id: userExists.id,
                 email: userExists.email,
+                role: userExists.role,
             },
             process.env.JWT_SECRET_KEY as string,
             {expiresIn: "7d"},
         );
 
         const response = NextResponse.json({
-            token,
             email: userExists.email,
             id: userExists.id,
             role: userExists.role,
