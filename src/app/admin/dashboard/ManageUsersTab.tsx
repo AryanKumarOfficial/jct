@@ -268,7 +268,7 @@ export default function ManageUsersTab() {
                         </div>
 
                         {success && (
-                            <Alert variant="default" className="bg-green-50 border-green-200">
+                            <Alert variant="default" className="bg-green-50 border-green-200 dark:bg-green-900 dark:border-green-800">
                                 <CheckCircle2 className="h-4 w-4" />
                                 <AlertTitle>Success</AlertTitle>
                                 <AlertDescription>{success}</AlertDescription>

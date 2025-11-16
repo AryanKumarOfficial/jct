@@ -1,7 +1,7 @@
 import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { type NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
+import {type NextRequest, NextResponse} from "next/server";
+import {prisma} from "@/lib/prisma";
 
 /**
  * Handles the POST request to authenticate a user based on their email and password.
@@ -18,45 +18,54 @@ import { prisma } from "@/lib/prisma";
  * 6. Returns an error response with the appropriate status code and message in case of invalid credentials, missing fields, or other errors.
  */
 export const POST = async (req: NextRequest): Promise<NextResponse> => {
-  try {
-    const { email, password } = await req.json();
-    if (!email || !password) {
-      return NextResponse.json(
-        { error: `Email or Password is required` },
-        { status: 400 },
-      );
-    }
-    const userExists = await prisma.employee.findUnique({ where: { email } });
-    if (!userExists) {
-      return NextResponse.json(
-        { error: `User Not found` },
-        { status: 404 },
-      );
-    }
+    try {
+        const {email, password} = await req.json();
+        if (!email || !password) {
+            return NextResponse.json(
+                {error: `Email or Password is required`},
+                {status: 400},
+            );
+        }
+        const userExists = await prisma.employee.findUnique({where: {email}});
+        if (!userExists) {
+            return NextResponse.json(
+                {error: `User Not found`},
+                {status: 404},
+            );
+        }
 
-    const isVerified = await bcryptjs.compare(password, userExists.password);
-    if (!isVerified) {
-      return NextResponse.json(
-        { error: `Invalid Credentials` },
-        { status: 401 },
-      );
-    }
-    const token = jwt.sign(
-      {
-        id: userExists.id,
-        email: userExists.email,
-      },
-      process.env.JWT_SECRET_KEY as string,
-      { expiresIn: "1h" },
-    );
+        const isVerified = await bcryptjs.compare(password, userExists.password);
+        if (!isVerified) {
+            return NextResponse.json(
+                {error: `Invalid Credentials`},
+                {status: 401},
+            );
+        }
+        const token = jwt.sign(
+            {
+                id: userExists.id,
+                email: userExists.email,
+            },
+            process.env.JWT_SECRET_KEY as string,
+            {expiresIn: "1h"},
+        );
 
-    return NextResponse.json({
-      token,
-      email: userExists.email,
-      id: userExists.id,
-      role: userExists.role,
-    });
-  } catch (_e) {
-    return NextResponse.json({ error: `Failed to login` }, { status: 500 });
-  }
+        const response = NextResponse.json({
+            token,
+            email: userExists.email,
+            id: userExists.id,
+            role: userExists.role,
+        });
+        response.cookies.set("authToken", token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: "strict",
+            maxAge: 60 * 60 * 24 * 7,
+            path: "/"
+        })
+        return response;
+    } catch (e) {
+        console.error(`Failed to login`, e);
+        return NextResponse.json({error: `Failed to login`}, {status: 500});
+    }
 };
