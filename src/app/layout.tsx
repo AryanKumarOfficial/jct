@@ -4,6 +4,7 @@ import "./globals.css";
 import Providers from "@/app/providers";
 import React from "react";
 import Header from "@/components/shared/Header";
+import {Toaster} from "@/components/ui/sonner";
 
 const inter = Inter({subsets: ["latin"]});
 
@@ -26,6 +27,8 @@ export default function RootLayout({
             className={`${inter.className} antialiased`}
         >
         <Providers>
+            <Toaster
+            />
             <Header/>
             <main className={"min-h-screen"}>
                 {children}
