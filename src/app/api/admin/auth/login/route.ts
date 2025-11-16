@@ -29,7 +29,7 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
     const userExists = await prisma.employee.findUnique({ where: { email } });
     if (!userExists) {
       return NextResponse.json(
-        { error: `User already exists` },
+        { error: `User Not found` },
         { status: 404 },
       );
     }
