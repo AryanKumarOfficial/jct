@@ -92,7 +92,7 @@ export default function ArchivesPage() {
             archives = archives.filter(archive => archive.month.toLowerCase() === selectedMonth.toLowerCase());
         }
 
-        // 3. Filter papers within archives by Keyword
+        // 3. Filter paper within archives by Keyword
         if (keyword) {
             const lowerCaseKeyword = keyword.toLowerCase();
             archives = archives.map(archive => {

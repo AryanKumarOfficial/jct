@@ -1,4 +1,4 @@
-// app/api/papers/route.ts
+// app/api/paper/route.ts
 
 import { Prisma } from "@prisma/client";
 import bcryptjs from "bcryptjs";

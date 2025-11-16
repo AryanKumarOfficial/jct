@@ -1,9 +1,10 @@
 "use client";
 
-import React, {useEffect, useRef, useState} from "react";
+import React, {useCallback, useEffect, useRef, useState} from "react";
 import {useForm, Controller, useFieldArray, Resolver} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {submitSchema, SubmitSchema} from "@/schemas/submitSchema";
+import {z} from "zod";
+import {submitSchema} from "@/schemas/submitSchema";
 import {Button} from "@/components/ui/button";
 import {
     Card,
@@ -34,7 +35,8 @@ import {
 import {motion, AnimatePresence} from "motion/react";
 import {toast} from "sonner";
 
-type Author = SubmitSchema["authors"][number];
+type SubmitForm = z.infer<typeof submitSchema>;
+type Author = SubmitForm["authors"][number];
 
 interface Archive {
     id: string;
@@ -48,10 +50,7 @@ interface Archive {
 const MAX_AUTHORS = 4;
 
 const SubmitPage: React.FC = () => {
-    // ----------- USE the Resolver variable -------------
-    const resolver: Resolver<SubmitSchema> = zodResolver(submitSchema) as unknown as Resolver<SubmitSchema>;
-
-    // ----------- Reusable empty author (uses Author type) -------------
+    // ---------- form setup ----------
     const emptyAuthor: Author = {
         firstName: "",
         lastName: "",
@@ -70,92 +69,96 @@ const SubmitPage: React.FC = () => {
         watch,
         reset,
         formState: {errors, isSubmitting},
-    } = useForm<SubmitSchema>({
-        resolver, // <- using the typed resolver variable
+    } = useForm<SubmitForm>({
+        resolver: zodResolver(submitSchema) as Resolver<SubmitForm>,
         defaultValues: {
             paperName: "",
             archiveId: "",
             keywords: [],
-            authors: [emptyAuthor], // <- use typed emptyAuthor
+            authors: [emptyAuthor],
             file: undefined,
         },
     });
 
-    // Field array for authors
     const {fields, append, remove} = useFieldArray({
         control,
         name: "authors",
     });
 
-    // Local archives (mock) — you can fetch real data instead
+    // ---------- archives ----------
     const [archives, setArchives] = useState<Archive[]>([]);
-    useEffect(() => {
-        const mockArchives: Archive[] = [
-            {
-                id: "archive_vol12_iss4_oct2025",
-                volume: 12,
-                issue: 4,
-                month: "October",
-                year: 2025,
-            },
-            {
-                id: "archive_vol12_iss3_sep2025",
-                volume: 12,
-                issue: 3,
-                month: "September",
-                year: 2025,
-            },
-        ];
-        setArchives(mockArchives);
+    const [archivesLoading, setArchivesLoading] = useState(false);
+    const [archivesError, setArchivesError] = useState<string | null>(null);
+
+    const fetchArchives = useCallback(async () => {
+        setArchivesLoading(true);
+        setArchivesError(null);
+        try {
+            const res = await fetch("/api/archive?mode=latest");
+            const data = await res.json();
+            if (!res.ok) throw new Error(data?.error || "Failed to fetch archives");
+            setArchives(Array.isArray(data) ? data : []);
+        } catch (err: any) {
+            console.error("fetchArchives error:", err);
+            setArchivesError(err?.message ?? "Failed to fetch archives");
+            toast.error("Failed to load archives");
+        } finally {
+            setArchivesLoading(false);
+        }
     }, []);
 
-    // File input ref (we keep file in form via register('file'))
+    useEffect(() => {
+        fetchArchives();
+    }, [fetchArchives]);
+
+    // ---------- file ref ----------
     const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-    // ------- Keywords as tags -------
+    // ---------- keywords tags ----------
     const [tagInput, setTagInput] = useState("");
-    const tags = watch("keywords") || [];
+    const tags = watch("keywords") ?? [];
 
-    // Add tag helper (called on comma/enter/blur)
-    const addTag = (raw: string) => {
-        const value = raw.trim();
-        if (!value) return;
-        // avoid duplicates
-        const next = Array.from(new Set([...(tags || []), value]));
-        setValue("keywords", next, {shouldDirty: true});
-        setTagInput("");
-    };
+    const addTag = useCallback(
+        (raw: string) => {
+            const value = raw.trim();
+            if (!value) return;
+            const next = Array.from(new Set([...(tags || []), value]));
+            setValue("keywords", next, {shouldDirty: true});
+            setTagInput("");
+        },
+        [setValue, tags]
+    );
 
-    const removeTag = (idx: number) => {
-        const next = (tags || []).filter((_, i) => i !== idx);
-        setValue("keywords", next);
-    };
+    const removeTag = useCallback(
+        (idx: number) => {
+            const next = (tags || []).filter((_, i) => i !== idx);
+            setValue("keywords", next);
+        },
+        [setValue, tags]
+    );
 
     const onTagKeyDown: React.KeyboardEventHandler<HTMLInputElement> = (e) => {
         if (e.key === "Enter" || e.key === ",") {
             e.preventDefault();
             if (tagInput.trim()) addTag(tagInput);
         } else if (e.key === "Backspace" && tagInput === "") {
-            // remove last tag on backspace
             if ((tags || []).length > 0) {
                 removeTag((tags || []).length - 1);
             }
         }
     };
 
-    // -------- Authors helpers (max 4) --------
-    const handleAddAuthor = () => {
+    // ---------- authors ----------
+    const handleAddAuthor = useCallback(() => {
         if (fields.length >= MAX_AUTHORS) {
             toast.error(`You can add up to ${MAX_AUTHORS} authors only.`);
             return;
         }
-        append(emptyAuthor); // <- use the typed emptyAuthor
-    };
+        append(emptyAuthor);
+    }, [append, fields.length]);
 
-    // -------- Submit handler --------
-    const onSubmit = async (data: SubmitSchema) => {
-        // file is validated by zod, but because HTML file inputs are tricky,
-        // ensure we actually have a File object
+    // ---------- submit ----------
+    const onSubmit = async (data: SubmitForm) => {
         const fileVal = getValues("file") as unknown as File | undefined;
         if (!(fileVal instanceof File)) {
             toast.error("Please attach a file.");
@@ -180,21 +183,19 @@ const SubmitPage: React.FC = () => {
             }
             const successMsg = `Paper submitted successfully! Submission ID: ${result.submissionId ?? "N/A"}`;
             toast.success(successMsg);
-            reset(); // resets to default values
+            reset();
             if (fileInputRef.current) fileInputRef.current.value = "";
         } catch (err: any) {
-            console.error(err);
+            console.error("submit error:", err);
             toast.error(err?.message || "Submission failed");
         }
     };
 
-    // Show form-level errors via toast once if present
+    // show first form error as toast
     useEffect(() => {
         if (Object.keys(errors).length > 0) {
-            // pick the first error to show
-            const firstKey = Object.keys(errors)[0] as keyof typeof errors;
-            const val = (errors as any)[firstKey];
-            const msg = val?.message ?? "Please fix errors on the form";
+            const first = Object.values(errors)[0] as any;
+            const msg = first?.message ?? "Please fix errors on the form";
             toast.error(String(msg));
         }
     }, [errors]);
@@ -235,18 +236,27 @@ const SubmitPage: React.FC = () => {
                                             render={({field}) => (
                                                 <Select value={field.value} onValueChange={field.onChange}>
                                                     <SelectTrigger id="archiveId">
-                                                        <SelectValue placeholder="Select an issue..."/>
+                                                        <SelectValue
+                                                            placeholder={archivesLoading ? "Loading..." : "Select an issue..."}/>
                                                     </SelectTrigger>
                                                     <SelectContent>
-                                                        {archives.length > 0 ? (
+                                                        {archivesLoading ? (
+                                                            <SelectItem value="loading" disabled>
+                                                                Loading archives...
+                                                            </SelectItem>
+                                                        ) : archivesError ? (
+                                                            <SelectItem value="error" disabled>
+                                                                Error loading archives
+                                                            </SelectItem>
+                                                        ) : archives.length > 0 ? (
                                                             archives.map((a) => (
                                                                 <SelectItem key={a.id} value={a.id}>
                                                                     Vol. {a.volume}, Iss. {a.issue} ({a.month} {a.year})
                                                                 </SelectItem>
                                                             ))
                                                         ) : (
-                                                            <SelectItem value="" disabled>
-                                                                Loading archives...
+                                                            <SelectItem value="no" disabled>
+                                                                No archives available
                                                             </SelectItem>
                                                         )}
                                                     </SelectContent>
@@ -259,10 +269,9 @@ const SubmitPage: React.FC = () => {
                                         <Label htmlFor="keywords">Keywords</Label>
                                         <div className="border rounded-md px-3 py-2 bg-background">
                                             <div className="flex flex-wrap gap-2 items-center">
-                                                {/* tags */}
                                                 {(tags || []).map((t, i) => (
                                                     <span
-                                                        key={t + i}
+                                                        key={`${t}-${i}`}
                                                         className="flex items-center gap-2 px-2 py-0.5 rounded-full text-sm bg-primary/10 text-primary"
                                                     >
                             <span>{t}</span>
@@ -397,7 +406,6 @@ const SubmitPage: React.FC = () => {
                                                     accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.pdf,application/pdf"
                                                     onChange={(e) => {
                                                         const f = e.target.files?.[0];
-                                                        // set into RHF field
                                                         setValue("file", f as any, {shouldDirty: true});
                                                     }}
                                                 />
@@ -416,17 +424,14 @@ const SubmitPage: React.FC = () => {
                                             <AlertCircle className="h-4 w-4"/>
                                             <AlertTitle>Form Error</AlertTitle>
                                             <AlertDescription>
-                                                {Object.values(errors)
-                                                    .map((e: any) => e?.message || "")
-                                                    .filter(Boolean)[0] || "Please fix the errors."}
+                                                {Object.values(errors).map((e: any) => e?.message || "").filter(Boolean)[0] || "Please fix the errors."}
                                             </AlertDescription>
                                         </Alert>
                                     </motion.div>
                                 )}
                             </AnimatePresence>
 
-                            <Button type="submit" size="lg" className="w-full"
-                                    disabled={isSubmitting}>
+                            <Button type="submit" size="lg" className="w-full" disabled={isSubmitting}>
                                 {isSubmitting ? "Submitting..." : "Submit Manuscript"}
                             </Button>
                         </CardFooter>

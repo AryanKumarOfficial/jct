@@ -3,13 +3,13 @@ import { prisma } from "@/lib/prisma";
 
 /**
  * Fetches a list of archives from the database, ordered by year (descending),
- * volume (descending), and issue (descending), and includes associated papers.
+ * volume (descending), and issue (descending), and includes associated paper.
  *
  * The archives are retrieved using Prisma's `findMany` method with specified
  * sorting criteria and relational data inclusion.
  *
  * @returns {Promise<NextResponse>} A JSON response containing the fetched archive
- *          records with their associated papers or an error message if the
+ *          records with their associated paper or an error message if the
  *          operation fails.
  *
  * @throws {Error} Returns a 500 status JSON response with an error message

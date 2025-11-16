@@ -5,7 +5,7 @@
 
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 import {
     Card,
     CardContent,
@@ -13,7 +13,7 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import {Button} from "@/components/ui/button";
 import {
     Select,
     SelectContent,
@@ -21,7 +21,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import {Alert, AlertDescription, AlertTitle} from "@/components/ui/alert";
 import {
     Loader2,
     AlertCircle,
@@ -30,8 +30,8 @@ import {
     FileText,
     ShieldCheck,
 } from "lucide-react";
-import { toast } from "sonner";
-import { Input } from "@/components/ui/input";
+import {toast} from "sonner";
+import {Input} from "@/components/ui/input";
 
 // --- Mock Data Structures (based on schema) ---
 interface Paper {
@@ -55,10 +55,11 @@ interface Editor {
     firstName: string;
     lastName: string | null;
 }
+
 // --- End Mock Data Structures ---
 
 // A single paper row
-function PaperRow({ paper, editors }: { paper: Paper; editors: Editor[] }) {
+function PaperRow({paper, editors}: { paper: Paper; editors: Editor[] }) {
     const [selectedEditor, setSelectedEditor] = useState("");
     const [isAssigning, setIsAssigning] = useState(false);
     const [isApproving, setIsApproving] = useState(false);
@@ -74,8 +75,8 @@ function PaperRow({ paper, editors }: { paper: Paper; editors: Editor[] }) {
         try {
             const res = await fetch("/api/admin/paper/assign", {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ paperId: paper.id, employeeId: selectedEditor }),
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({paperId: paper.id, employeeId: selectedEditor}),
             });
             if (!res.ok) throw new Error("Failed to assign editor.");
             toast.success("Editor assigned successfully.");
@@ -92,8 +93,8 @@ function PaperRow({ paper, editors }: { paper: Paper; editors: Editor[] }) {
         try {
             const res = await fetch("/api/admin/paper/status", {
                 method: "PATCH",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ statusRecordId: statusId }),
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({statusRecordId: statusId}),
             });
             if (!res.ok) throw new Error("Failed to approve status.");
             toast.success("Status approved.");
@@ -143,7 +144,7 @@ function PaperRow({ paper, editors }: { paper: Paper; editors: Editor[] }) {
             <div className="flex gap-2">
                 <Select value={selectedEditor} onValueChange={setSelectedEditor}>
                     <SelectTrigger>
-                        <SelectValue placeholder="Select Editor..." />
+                        <SelectValue placeholder="Select Editor..."/>
                     </SelectTrigger>
                     <SelectContent>
                         {editors.map((e) => (
@@ -154,7 +155,7 @@ function PaperRow({ paper, editors }: { paper: Paper; editors: Editor[] }) {
                     </SelectContent>
                 </Select>
                 <Button onClick={handleAssignEditor} disabled={isAssigning} size="sm">
-                    {isAssigning && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                    {isAssigning && <Loader2 className="mr-2 h-4 w-4 animate-spin"/>}
                     Assign
                 </Button>
             </div>
@@ -168,7 +169,7 @@ function PaperRow({ paper, editors }: { paper: Paper; editors: Editor[] }) {
                 size="sm"
                 variant="outline"
             >
-                {isApproving && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                {isApproving && <Loader2 className="mr-2 h-4 w-4 animate-spin"/>}
                 Approve Status: {status.status}
             </Button>
         );
@@ -182,7 +183,7 @@ function PaperRow({ paper, editors }: { paper: Paper; editors: Editor[] }) {
                     onChange={(e) => setFile(e.target.files?.[0] || null)}
                 />
                 <Button type="submit" disabled={isPublishing} size="sm">
-                    {isPublishing && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                    {isPublishing && <Loader2 className="mr-2 h-4 w-4 animate-spin"/>}
                     Publish
                 </Button>
             </form>
@@ -190,7 +191,8 @@ function PaperRow({ paper, editors }: { paper: Paper; editors: Editor[] }) {
     }
 
     return (
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 p-4 border rounded-lg">
+        <div
+            className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 p-4 border rounded-lg">
             <div className="flex-1">
                 <h4 className="font-semibold">{paper.name}</h4>
                 <p className="text-sm text-muted-foreground">{paper.submissionId}</p>
@@ -220,60 +222,14 @@ export default function ManagePapersTab() {
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        // Mock data fetching, as GET APIs are not provided
         const fetchAllData = async () => {
             setIsLoading(true);
             setError(null);
             try {
-                // --- MOCK DATA ---
-                // In a real app, you'd fetch:
-                // const papersRes = await fetch("/api/admin/papers"); // (Assumed API)
-                // const editorsRes = await fetch("/api/admin/users?role=EDITOR"); // (Assumed API)
-                const mockEditors: Editor[] = [
-                    { id: "editor-1", firstName: "Dr.", lastName: "Smith" },
-                    { id: "editor-2", firstName: "Prof.", lastName: "Jones" },
-                ];
-                const mockPapers: Paper[] = [
-                    {
-                        id: "paper-1",
-                        submissionId: "JCT-25-001",
-                        name: "A Novel Approach to AI",
-                        editorId: null,
-                        latestStatus: {
-                            id: "status-1",
-                            status: "SUBMITTED",
-                            isApproved: true,
-                            paperId: "paper-1",
-                        },
-                    },
-                    {
-                        id: "paper-2",
-                        submissionId: "JCT-25-002",
-                        name: "Machine Learning in Healthcare",
-                        editorId: "editor-1",
-                        latestStatus: {
-                            id: "status-2",
-                            status: "REVIEWED",
-                            isApproved: false, // Needs admin approval
-                            paperId: "paper-2",
-                        },
-                    },
-                    {
-                        id: "paper-3",
-                        submissionId: "JCT-25-003",
-                        name: "Quantum Computing Explained",
-                        editorId: "editor-1",
-                        latestStatus: {
-                            id: "status-3",
-                            status: "REVIEWED",
-                            isApproved: true, // Approved, ready for payment/publish
-                            paperId: "paper-3",
-                        },
-                    },
-                ];
-                // --- END MOCK DATA ---
-                setPapers(mockPapers);
-                setEditors(mockEditors);
+                const papersRes = await fetch("/api/paper");
+                const editorsRes = await fetch("/api/admin/users?role=EDITOR");
+                setPapers(papersRes.ok ? (await papersRes.json()) : []);
+                setEditors(editorsRes.ok ? (await editorsRes.json()) : []);
             } catch (err: any) {
                 setError("Failed to load dashboard data.");
             } finally {
@@ -294,12 +250,12 @@ export default function ManagePapersTab() {
             <CardContent className="space-y-4">
                 {isLoading && (
                     <div className="flex justify-center p-8">
-                        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                        <Loader2 className="h-8 w-8 animate-spin text-primary"/>
                     </div>
                 )}
                 {error && (
                     <Alert variant="destructive">
-                        <AlertCircle className="h-4 w-4" />
+                        <AlertCircle className="h-4 w-4"/>
                         <AlertTitle>Error</AlertTitle>
                         <AlertDescription>{error}</AlertDescription>
                     </Alert>
@@ -308,7 +264,7 @@ export default function ManagePapersTab() {
                     !error &&
                     (papers.length > 0 ? (
                         papers.map((paper) => (
-                            <PaperRow key={paper.id} paper={paper} editors={editors} />
+                            <PaperRow key={paper.id} paper={paper} editors={editors}/>
                         ))
                     ) : (
                         <p className="text-muted-foreground italic">No papers found.</p>

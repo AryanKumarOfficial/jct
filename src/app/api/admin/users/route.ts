@@ -1,11 +1,16 @@
-import {NextResponse} from "next/server";
+import {NextRequest, NextResponse} from "next/server";
 import {prisma} from "@/lib/prisma";
+import {EmployeeRole} from "@/types/enums";
 
-export const GET = async () => {
+export const GET = async (req: NextRequest) => {
     try {
+        const role = req.nextUrl.searchParams.get(`role`);
         const staffs = await prisma.employee.findMany({
             omit: {
                 password: true
+            },
+            where: {
+                role: role as EmployeeRole
             }
         });
         if (!staffs) {

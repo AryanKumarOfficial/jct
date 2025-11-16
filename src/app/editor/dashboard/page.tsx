@@ -38,7 +38,7 @@ export default function EditorDashboard() {
 
 
                 if (!response.ok) {
-                    throw new Error(data.error || "Failed to fetch papers.");
+                    throw new Error(data.error || "Failed to fetch paper.");
                 }
 
                 setPapers(data.papers || data);

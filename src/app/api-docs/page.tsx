@@ -653,7 +653,7 @@ export default function ApiDocsPage() {
         //     id: "author-paper-list",
         //     method: "GET",
         //     path: "/api/author/paper/list",
-        //     description: "Retrieves all papers submitted by the authenticated author",
+        //     description: "Retrieves all paper submitted by the authenticated author",
         //     requestBody: {
         //         type: "none"
         //     },
@@ -661,7 +661,7 @@ export default function ApiDocsPage() {
         //         type: "json",
         //         example: JSON.stringify(
         //             {
-        //                 papers: [
+        //                 paper: [
         //                     {
         //                         id: "clj2hf3g30000vx085zfhs7do",
         //                         title: "Paper Title 1",
@@ -768,9 +768,9 @@ export default function ApiDocsPage() {
         {
           id: "editor-paper-list",
           method: "GET",
-          path: "/api/editor/papers",
+          path: "/api/editor/paper",
           description:
-            "Retrieves a list of papers assigned to the editor for review",
+            "Retrieves a list of paper assigned to the editor for review",
           requestBody: {
             type: "none",
           },
@@ -832,7 +832,7 @@ export default function ApiDocsPage() {
             // },
             // {
             //     name: "status",
-            //     description: "Filter papers by status (ASSIGNED_FOR_REVIEW, REVIEWED)",
+            //     description: "Filter paper by status (ASSIGNED_FOR_REVIEW, REVIEWED)",
             //     required: false,
             //     type: "query"
             // }
@@ -1064,7 +1064,7 @@ export default function ApiDocsPage() {
           id: "list archives",
           method: "GET",
           path: "/api/archive",
-          description: "Retrieves all archives and their papers",
+          description: "Retrieves all archives and their paper",
           requestBody: {
             type: "none",
           },
@@ -1186,13 +1186,13 @@ export default function ApiDocsPage() {
             },
             {
               name: "keyword",
-              description: "Filter papers by keyword",
+              description: "Filter paper by keyword",
               required: false,
               type: "query",
             },
             {
               name: "author",
-              description: "Filter papers by author name",
+              description: "Filter paper by author name",
               required: false,
               type: "query",
             },
