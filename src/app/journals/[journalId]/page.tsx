@@ -42,13 +42,9 @@ export default async function JournalPage({params}: { params: Promise<{ journalI
     // You can customize this logic.
     // For now, we just check if the journalId is one of the two expected.
     const journalName =
-        journalId === "jct"
-            ? "Journal of Computing Technologies (JCT)"
-            : journalId === "jert"
-                ? "Journal of Education & Research (JERT)"
-                : null;
+        "Journal of Computing Technologies (JCT)"
 
-    if (!journalName) {
+    if (!journalId) {
         notFound();
     }
 
