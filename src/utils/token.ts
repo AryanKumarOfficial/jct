@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import type { NextRequest } from "next/server";
+import type {NextRequest} from "next/server";
 
 /**
  * Interface representing a custom JWT payload that extends the default JwtPayload.
@@ -11,9 +11,9 @@ import type { NextRequest } from "next/server";
  * - role: The role assigned to the user within the application.
  */
 export interface CustomJwtPayload extends jwt.JwtPayload {
-  id: string;
-  email: string;
-  role: string;
+    id: string;
+    email: string;
+    role: string;
 }
 
 /**
@@ -24,22 +24,23 @@ export interface CustomJwtPayload extends jwt.JwtPayload {
  * @returns {Promise<CustomJwtPayload | null>} A promise that resolves to the decoded payload if the token is valid, or null if it is invalid or an error occurs.
  * @throws Will log an error to the console if the decoding process fails or the token is missing.
  */
-export const decodeJwtToken = async ({ token }: { token: string }) => {
-  if (!token) {
-    console.error("Token is missing");
-    return null;
-  }
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET as string);
-
-    if (typeof decoded === "object" && decoded !== null) {
-      return decoded as CustomJwtPayload;
+export const decodeJwtToken = async ({token}: { token: string }) => {
+    if (!token) {
+        console.error("Token is missing");
+        return null;
     }
-    return null;
-  } catch (e) {
-    console.error(`Failed to decode Jwt: ${e}`);
-    return null;
-  }
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY as string);
+
+        if (typeof decoded === "object" && decoded !== null) {
+            console.log(`token decoded successfully`, decoded as CustomJwtPayload);
+            return decoded as CustomJwtPayload;
+        }
+        return null;
+    } catch (e) {
+        console.error(`Failed to decode Jwt: ${e}`);
+        return null;
+    }
 };
 
 /**
@@ -52,8 +53,8 @@ export const decodeJwtToken = async ({ token }: { token: string }) => {
  * An unsuccessful result includes an error message that describes the reason for failure.
  */
 type TokenResult =
-  | { success: true; data: CustomJwtPayload } // replace `any` with your decoded token type
-  | { success: false; error: string };
+    | { success: true; data: CustomJwtPayload } // replace `any` with your decoded token type
+    | { success: false; error: string };
 
 /**
  * Extracts and validates the token from the authorization header of the incoming request.
@@ -64,25 +65,17 @@ type TokenResult =
  * If successful, includes the decoded token data; otherwise, includes an error message.
  */
 export const getTokenData = async (req: NextRequest): Promise<TokenResult> => {
-  const authHeader = req.headers.get("authorization");
 
-  if (!authHeader?.startsWith("Bearer ")) {
-    return {
-      success: false,
-      error: "Authorization token is missing or invalid",
-    };
-  }
+    const token = req.cookies.get("authToken")?.value ?? null;
 
-  const token = authHeader.replace(/^Bearer\s+/i, "").trim();
+    if (!token) {
+        return {success: false, error: "Token is missing"};
+    }
 
-  if (!token) {
-    return { success: false, error: "Token is missing" };
-  }
+    const decoded = await decodeJwtToken({token});
+    if (!decoded) {
+        return {success: false, error: "Invalid or expired token"};
+    }
 
-  const decoded = await decodeJwtToken({ token });
-  if (!decoded) {
-    return { success: false, error: "Invalid or expired token" };
-  }
-
-  return { success: true, data: decoded };
+    return {success: true, data: decoded};
 };

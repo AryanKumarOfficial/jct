@@ -47,7 +47,7 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
                 email: userExists.email,
             },
             process.env.JWT_SECRET_KEY as string,
-            {expiresIn: "1h"},
+            {expiresIn: "7d"},
         );
 
         const response = NextResponse.json({

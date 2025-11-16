@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Loader2, AlertCircle, Inbox, FileText, ArrowRight } from "lucide-react";
+import {useEffect, useState} from "react";
+import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/components/ui/card";
+import {Button} from "@/components/ui/button";
+import {Alert, AlertDescription, AlertTitle} from "@/components/ui/alert";
+import {Loader2, AlertCircle, Inbox, FileText, ArrowRight} from "lucide-react";
 import Link from "next/link";
 
 // Define Paper type based on your API
@@ -26,20 +26,21 @@ export default function EditorDashboard() {
             setIsLoading(true);
             setError(null);
             try {
-                // TODO: Add Authorization header with token
                 const response = await fetch("/api/editor/papers", {
-                    headers: {
-                        // "Authorization": "Bearer YOUR_TOKEN"
-                    },
+                    credentials: "include",
+                    cache: "no-store",
                 });
 
+
                 const data = await response.json();
+
+                console.log("API Response:", data);
+
 
                 if (!response.ok) {
                     throw new Error(data.error || "Failed to fetch papers.");
                 }
 
-                // The API returns { papers: [...] }
                 setPapers(data.papers || data);
             } catch (err: any) {
                 setError(err.message);
@@ -57,13 +58,13 @@ export default function EditorDashboard() {
 
             {isLoading && (
                 <div className="flex justify-center p-12">
-                    <Loader2 className="h-10 w-10 animate-spin text-primary" />
+                    <Loader2 className="h-10 w-10 animate-spin text-primary"/>
                 </div>
             )}
 
             {error && (
                 <Alert variant="destructive" className="max-w-2xl mx-auto">
-                    <AlertCircle className="h-4 w-4" />
+                    <AlertCircle className="h-4 w-4"/>
                     <AlertTitle>Error</AlertTitle>
                     <AlertDescription>{error}</AlertDescription>
                 </Alert>
@@ -83,7 +84,8 @@ export default function EditorDashboard() {
                                         <p className="text-sm font-medium">Keywords:</p>
                                         <div className="flex flex-wrap gap-2 mt-2">
                                             {paper.keywords.map((kw) => (
-                                                <span key={kw} className="px-2 py-0.5 text-xs bg-muted text-muted-foreground rounded-full">
+                                                <span key={kw}
+                                                      className="px-2 py-0.5 text-xs bg-muted text-muted-foreground rounded-full">
                           {kw}
                         </span>
                                             ))}
@@ -92,7 +94,7 @@ export default function EditorDashboard() {
                                     <CardFooter>
                                         <Button asChild className="w-full">
                                             <Link href={`/editor/paper/${paper.submissionId}`}>
-                                                Review Paper <ArrowRight className="ml-2 h-4 w-4" />
+                                                Review Paper <ArrowRight className="ml-2 h-4 w-4"/>
                                             </Link>
                                         </Button>
                                     </CardFooter>
@@ -101,7 +103,7 @@ export default function EditorDashboard() {
                         </div>
                     ) : (
                         <div className="text-center py-12 border-2 border-dashed border-border rounded-lg">
-                            <Inbox className="h-16 w-16 mx-auto text-muted-foreground" />
+                            <Inbox className="h-16 w-16 mx-auto text-muted-foreground"/>
                             <h3 className="mt-4 text-xl font-semibold">Inbox Empty</h3>
                             <p className="text-muted-foreground">
                                 You have no papers assigned for review at this time.

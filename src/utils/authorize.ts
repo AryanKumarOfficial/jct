@@ -1,5 +1,5 @@
-import { type NextRequest, NextResponse } from "next/server";
-import { decodeJwtToken } from "@/utils/token";
+import {type NextRequest, NextResponse} from "next/server";
+import {decodeJwtToken} from "@/utils/token";
 
 /**
  * Handles authorization for incoming requests by validating a provided JWT token and user's role.
@@ -13,20 +13,26 @@ import { decodeJwtToken } from "@/utils/token";
  * @param {string} [role="AUTHOR"] - The required user role to access the resource. Defaults to "AUTHOR".
  * @returns {Promise<NextResponse>} A NextResponse object representing the result of the authorization check.
  */
-export const authorize = async (req: NextRequest, role: string = "AUTHOR") => {
-  const token = req.headers.get("authorization")?.split("Bearer ")[0];
-  if (!token) {
-    return NextResponse.json(
-      { error: `Authorization token is missing` },
-      { status: 401 },
-    );
-  }
+export const authorize = async (req: NextRequest, role: string = "AUTHOR"): Promise<NextResponse> => {
+    const token = req.cookies?.get?.("authToken")?.value ?? null;
+    if (!token) {
+        return NextResponse.json(
+            {error: `Authorization token is missing at middleware`},
+            {status: 401},
+        );
+    }
 
-  const payload = await decodeJwtToken({ token });
-  if (payload && payload?.role !== role) {
-    return NextResponse.json(
-      { error: `Only an Admin can perform this action` },
-      { status: 403 },
-    );
-  }
+    let payload;
+    try {
+
+        payload = await decodeJwtToken({token});
+    } catch (e) {
+        return NextResponse.json({error: "Invalid or expired token"}, {status: 401});
+    }
+    if (!payload || payload.role !== role) {
+        return NextResponse.json({error: `Only a ${role} can perform this action`}, {status: 403});
+    }
+
+    return NextResponse.next();
+
 };
