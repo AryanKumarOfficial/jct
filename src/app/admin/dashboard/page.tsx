@@ -19,6 +19,8 @@ import {
     Edit3,
     Save,
 } from "lucide-react";
+import ManagePapersTab from "@/app/admin/dashboard/ManagePapersTab";
+import ManageUsersTab from "@/app/admin/dashboard/ManageUsersTab";
 
 type Archive = {
     id: string;
@@ -407,10 +409,7 @@ export default function AdminDashboard() {
                             </CardDescription>
                         </CardHeader>
                         <CardContent>
-                            {/* TODO: Fetch and list papers needing assignment */}
-                            <p className="text-muted-foreground italic">(Paper assignment UI will go here)</p>
-                            {/* TODO: Fetch and list statuses needing approval */}
-                            <p className="text-muted-foreground italic mt-4">(Status approval UI will go here)</p>
+                            <ManagePapersTab/>
                         </CardContent>
                     </Card>
                 </TabsContent>
@@ -430,8 +429,7 @@ export default function AdminDashboard() {
                             </CardDescription>
                         </CardHeader>
                         <CardContent>
-                            {/* TODO: Add "Create User" form */}
-                            <p className="text-muted-foreground italic">(User management UI will go here)</p>
+                            <ManageUsersTab/>
                         </CardContent>
                     </Card>
                 </TabsContent>
