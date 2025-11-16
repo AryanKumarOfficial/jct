@@ -10,7 +10,7 @@ export const GET = async (req: NextRequest) => {
                 password: true
             },
             where: {
-                role: role as EmployeeRole
+                role: role ? (role as EmployeeRole) : undefined
             }
         });
         if (!staffs) {

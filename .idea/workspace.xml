@@ -5,12 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3fbf7134-2adf-435b-806d-6f4c015e4c97" name="Changes" comment="adds an API documentation page and example endpoint details">
-      <change afterPath="$PROJECT_DIR$/src/app/api/editor/papers/[id]/route.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/admin/auth/login/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/admin/auth/login/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/editor/papers/[id]/status/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/editor/papers/[id]/status/route.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/api/admin/users/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/admin/users/route.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/editor/paper/[id]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/editor/paper/[id]/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/authorize.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/authorize.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/cloudflare.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/cloudflare.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -219,7 +217,8 @@
       <workItem from="1762972863102" duration="1642000" />
       <workItem from="1762974597582" duration="2733000" />
       <workItem from="1763230783106" duration="7986000" />
-      <workItem from="1763289076274" duration="19523000" />
+      <workItem from="1763289076274" duration="20234000" />
+      <workItem from="1763324393726" duration="888000" />
     </task>
     <task id="LOCAL-00001" summary="adds JSDoc comments across the codebase for improved documentation and readability">
       <option name="closed" value="true" />
@@ -242,6 +241,11 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+    <option name="exactExcludedFiles">
+      <list>
+        <option value="$PROJECT_DIR$/src/utils/cloudflare.js" />
+      </list>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="adds JSDoc comments across the codebase for improved documentation and readability" />

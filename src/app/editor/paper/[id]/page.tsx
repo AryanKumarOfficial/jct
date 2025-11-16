@@ -215,7 +215,7 @@ export default function PaperReviewPage({params}: { params: Promise<{ id: string
 
                             {paper.manuscriptUrl && (
                                 <Button asChild className="mt-6" size="lg">
-                                    <Link href={paper.manuscriptUrl} target="_blank" rel="noopener noreferrer">
+                                    <Link href={paper.manuscriptUrl} target="_blank" rel="noopener noreferrer" download>
                                         <Download className="mr-2 h-4 w-4"/>
                                         Download Manuscript
                                     </Link>
