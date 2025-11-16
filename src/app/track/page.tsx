@@ -1,12 +1,12 @@
 "use client";
 
-import {useState} from "react";
-import {Button} from "@/components/ui/button";
-import {Input} from "@/components/ui/input";
-import {Label} from "@/components/ui/label";
-import {Card, CardContent, CardHeader, CardTitle, CardDescription} from "@/components/ui/card";
-import {Alert, AlertDescription, AlertTitle} from "@/components/ui/alert";
-import {Search, Loader2, AlertCircle, CheckCircle2, FileClock, History} from "lucide-react";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Search, Loader2, AlertCircle, CheckCircle2, FileClock, History } from "lucide-react";
 
 // Define the structure of a status update based on your API response
 interface Status {
@@ -56,7 +56,7 @@ export default function TrackSubmissionPage() {
                 <CardHeader>
                     <CardTitle className="text-3xl font-bold">Track Your Submission</CardTitle>
                     <CardDescription>
-                        Enter your Submission ID (e.g., JCT-2025-10-08-001) to see its current status.
+                        Enter your Submission ID (e.g., JCT-25-001) to see its current status.
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -73,9 +73,9 @@ export default function TrackSubmissionPage() {
                         </div>
                         <Button type="submit" size="lg" disabled={isLoading}>
                             {isLoading ? (
-                                <Loader2 className="mr-2 h-4 w-4 animate-spin"/>
+                                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                             ) : (
-                                <Search className="mr-2 h-4 w-4"/>
+                                <Search className="mr-2 h-4 w-4" />
                             )}
                             Track
                         </Button>
@@ -86,13 +86,13 @@ export default function TrackSubmissionPage() {
             <div className="mt-8">
                 {isLoading && (
                     <div className="flex justify-center p-8">
-                        <Loader2 className="h-8 w-8 animate-spin text-primary"/>
+                        <Loader2 className="h-8 w-8 animate-spin text-primary" />
                     </div>
                 )}
 
                 {error && (
                     <Alert variant="destructive">
-                        <AlertCircle className="h-4 w-4"/>
+                        <AlertCircle className="h-4 w-4" />
                         <AlertTitle>Error</AlertTitle>
                         <AlertDescription>{error}</AlertDescription>
                     </Alert>
@@ -102,7 +102,7 @@ export default function TrackSubmissionPage() {
                     <Card className="shadow-md">
                         <CardHeader>
                             <CardTitle className="flex items-center gap-2">
-                                <History className="h-5 w-5 text-primary"/>
+                                <History className="h-5 w-5 text-primary" />
                                 Status History for {paperId}
                             </CardTitle>
                         </CardHeader>
@@ -110,12 +110,11 @@ export default function TrackSubmissionPage() {
                             <div className="relative space-y-8 pl-6 border-l-2 border-dashed border-border">
                                 {statusHistory.map((status, index) => (
                                     <div key={status.id} className="relative">
-                                        <div
-                                            className="absolute -left-[33px] top-1 flex h-10 w-10 items-center justify-center rounded-full bg-background ring-4 ring-primary">
+                                        <div className="absolute -left-[33px] top-1 flex h-10 w-10 items-center justify-center rounded-full bg-background ring-4 ring-primary">
                                             {index === 0 ? (
-                                                <FileClock className="h-5 w-5 text-primary"/>
+                                                <FileClock className="h-5 w-5 text-primary" />
                                             ) : (
-                                                <CheckCircle2 className="h-5 w-5 text-green-600"/>
+                                                <CheckCircle2 className="h-5 w-5 text-green-600" />
                                             )}
                                         </div>
                                         <div className="ml-4">
@@ -143,10 +142,9 @@ export default function TrackSubmissionPage() {
 
                 {searched && !isLoading && !error && statusHistory.length === 0 && (
                     <Alert>
-                        <AlertCircle className="h-4 w-4"/>
+                        <AlertCircle className="h-4 w-4" />
                         <AlertTitle>No Results</AlertTitle>
-                        <AlertDescription>No status history was found for that ID. Please check the ID and try
-                            again.</AlertDescription>
+                        <AlertDescription>No status history was found for that ID. Please check the ID and try again.</AlertDescription>
                     </Alert>
                 )}
             </div>

@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
+import {useState} from "react";
+import {useRouter} from "next/navigation";
+import {Button} from "@/components/ui/button";
 import {
     Card,
     CardContent,
@@ -10,10 +10,10 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { LogIn, AlertCircle } from "lucide-react";
+import {Input} from "@/components/ui/input";
+import {Label} from "@/components/ui/label";
+import {Alert, AlertDescription, AlertTitle} from "@/components/ui/alert";
+import {LogIn, AlertCircle} from "lucide-react";
 
 export default function AdminLoginPage() {
     const [email, setEmail] = useState("");
@@ -30,8 +30,8 @@ export default function AdminLoginPage() {
         try {
             const response = await fetch("/api/admin/auth/login", {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email, password }),
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({email, password}),
             });
 
             const data = await response.json();
@@ -40,7 +40,7 @@ export default function AdminLoginPage() {
                 throw new Error(data.error || "Login failed");
             }
 
-            // TODO: Store the token (e.g., in cookies or session storage)
+            // TODO: Store the token securely (e.g., in httpOnly cookies)
             console.log("Login successful, token:", data.token);
 
             // Redirect based on role
@@ -49,7 +49,7 @@ export default function AdminLoginPage() {
             } else if (data.role === "EDITOR") {
                 router.push("/editor/dashboard");
             } else {
-                router.push("/"); // Fallback
+                router.push("/"); // Fallback for other roles like FRESHER
             }
 
         } catch (err: any) {
@@ -94,14 +94,14 @@ export default function AdminLoginPage() {
 
                         {error && (
                             <Alert variant="destructive">
-                                <AlertCircle className="h-4 w-4" />
+                                <AlertCircle className="h-4 w-4"/>
                                 <AlertTitle>Login Failed</AlertTitle>
                                 <AlertDescription>{error}</AlertDescription>
                             </Alert>
                         )}
 
                         <Button type="submit" className="w-full" disabled={isLoading}>
-                            {isLoading ? "Signing In..." : <><LogIn className="mr-2 h-4 w-4" /> Sign In</>}
+                            {isLoading ? "Signing In..." : <><LogIn className="mr-2 h-4 w-4"/> Sign In</>}
                         </Button>
                     </form>
                 </CardContent>
