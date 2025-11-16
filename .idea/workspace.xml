@@ -6,10 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="3fbf7134-2adf-435b-806d-6f4c015e4c97" name="Changes" comment="adds an API documentation page and example endpoint details">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/globals.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/shared/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shared/Header.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ui/button.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ui/button.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -217,7 +213,8 @@
       <workItem from="1762971475740" duration="464000" />
       <workItem from="1762972863102" duration="1642000" />
       <workItem from="1762974597582" duration="2733000" />
-      <workItem from="1763230783106" duration="7721000" />
+      <workItem from="1763230783106" duration="7986000" />
+      <workItem from="1763289076274" duration="1356000" />
     </task>
     <task id="LOCAL-00001" summary="adds JSDoc comments across the codebase for improved documentation and readability">
       <option name="closed" value="true" />
