@@ -17,7 +17,7 @@ enum EmployeeRole {
 enum PaperStatus {
   SUBMITTED
   UNDER_REVIEW
-  REVIEWED
+  ACCEPTED
   REJECTED
   PUBLISHED
 }

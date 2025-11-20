@@ -142,7 +142,8 @@ export default function ArchivesPage() {
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 items-end">
                             <div className="space-y-2">
                                 <Label htmlFor="year-filter">Year</Label>
-                                <Select value={selectedYear} onValueChange={(value)=>setSelectedYear(value === "all" ? "" : value)}>
+                                <Select value={selectedYear}
+                                        onValueChange={(value) => setSelectedYear(value === "all" ? "" : value)}>
                                     <SelectTrigger id="year-filter">
                                         <SelectValue placeholder="All Years"/>
                                     </SelectTrigger>
@@ -157,7 +158,8 @@ export default function ArchivesPage() {
 
                             <div className="space-y-2">
                                 <Label htmlFor="month-filter">Month</Label>
-                                <Select value={selectedMonth} onValueChange={(value) =>setSelectedMonth(value === "all" ? "" : value)}>
+                                <Select value={selectedMonth}
+                                        onValueChange={(value) => setSelectedMonth(value === "all" ? "" : value)}>
                                     <SelectTrigger id="month-filter">
                                         <SelectValue placeholder="All Months"/>
                                     </SelectTrigger>
@@ -237,38 +239,42 @@ export default function ArchivesPage() {
                                                         </CardHeader>
                                                         <CardContent className="flex-grow space-y-4">
                                                             {archive.papers.length > 0 ? (
-                                                                archive.papers.map((paper) => (
-                                                                    <div
-                                                                        key={paper.id}
-                                                                        className="flex items-start justify-between gap-4"
-                                                                    >
-                                                                        <div className="flex-shrink-0 pt-1">
-                                                                            <FileText
-                                                                                className="h-5 w-5 text-muted-foreground"/>
-                                                                        </div>
-                                                                        <div className="flex-grow">
-                                                                            <h4 className="font-semibold text-foreground leading-snug">
-                                                                                {paper.name}
-                                                                            </h4>
-                                                                            {paper.keywords?.length > 0 && (
-                                                                                <p className="text-xs text-muted-foreground mt-1">
-                                                                                    {paper.keywords.join(', ')}
-                                                                                </p>
-                                                                            )}
-                                                                        </div>
-                                                                        {paper.publishUrl ? (
-                                                                            <Button asChild variant="ghost" size="icon"
-                                                                                    className="flex-shrink-0">
-                                                                                <Link href={paper.publishUrl}
-                                                                                      target="_blank"
-                                                                                      title="Download PDF">
-                                                                                    <Download
-                                                                                        className="h-5 w-5 text-primary"/>
-                                                                                </Link>
-                                                                            </Button>
-                                                                        ) : null}
-                                                                    </div>
-                                                                ))
+                                                                archive.papers.map((paper) => {
+                                                                        if (!paper.publishUrl) return null;
+                                                                        return <Link
+                                                                            href={`/journals/${archive.id}`}
+                                                                            key={paper.id}
+                                                                            className="flex items-start justify-between gap-4"
+                                                                        >
+                                                                            <div className="flex-shrink-0 pt-1">
+                                                                                <FileText
+                                                                                    className="h-5 w-5 text-muted-foreground"/>
+                                                                            </div>
+                                                                            <div className="flex-grow">
+                                                                                <h4 className="font-semibold text-foreground leading-snug">
+                                                                                    {paper.name}
+                                                                                </h4>
+                                                                                {paper.keywords?.length > 0 && (
+                                                                                    <p className="text-xs text-muted-foreground mt-1">
+                                                                                        {paper.keywords.join(', ')}
+                                                                                    </p>
+                                                                                )}
+                                                                            </div>
+                                                                            {paper.publishUrl ? (
+                                                                                <Button asChild variant="ghost" size="icon"
+                                                                                        className="flex-shrink-0">
+                                                                                    <Link href={paper.publishUrl}
+                                                                                          target="_blank"
+                                                                                          title="Download PDF"
+                                                                                    >
+                                                                                        <Download
+                                                                                            className="h-5 w-5 text-primary"/>
+                                                                                    </Link>
+                                                                                </Button>
+                                                                            ) : null}
+                                                                        </Link>
+                                                                    }
+                                                                )
                                                             ) : (
                                                                 <p className="text-sm text-muted-foreground italic">
                                                                     No matching papers found for this issue.

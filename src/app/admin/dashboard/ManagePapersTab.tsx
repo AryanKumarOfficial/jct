@@ -66,6 +66,8 @@ function PaperRow({paper, editors}: { paper: Paper; editors: Editor[] }) {
     const [isPublishing, setIsPublishing] = useState(false);
     const [file, setFile] = useState<File | null>(null);
 
+    console.log(`paper`,paper)
+
     const handleAssignEditor = async () => {
         if (!selectedEditor) {
             toast.error("Please select an editor.");

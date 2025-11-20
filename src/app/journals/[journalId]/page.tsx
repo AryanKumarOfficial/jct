@@ -71,7 +71,7 @@ export default async function JournalPage({params}: { params: Promise<{ journalI
             {/* Archives List */}
             <section className="mt-16 space-y-12">
                 {archives.length > 0 ? (
-                    archives.map((archive) => (
+                    archives.map((archive) =>
                         <Card key={archive.id} className="shadow-lg">
                             <CardHeader>
                                 <CardTitle className="text-2xl">
@@ -84,31 +84,33 @@ export default async function JournalPage({params}: { params: Promise<{ journalI
                             <CardContent>
                                 {archive.papers.length > 0 ? (
                                     <div className="space-y-4">
-                                        {archive.papers.map((paper) => (
-                                            <div key={paper.id}
-                                                 className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 border rounded-md bg-muted/30">
-                                                <div>
-                                                    <h4 className="font-semibold text-foreground">
-                                                        {paper.name}
-                                                    </h4>
-                                                    {/* <p className="text-sm text-muted-foreground">
+                                        {archive.papers.map((paper) => {
+                                                if (!paper.publishUrl) return null;
+                                                return <div key={paper.id}
+                                                            className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 border rounded-md bg-muted/30">
+                                                    <div>
+                                                        <h4 className="font-semibold text-foreground">
+                                                            {paper.name}
+                                                        </h4>
+                                                        {/* <p className="text-sm text-muted-foreground">
                             {paper.authors.map(a => `${a.firstName} ${a.lastName || ''}`).join(', ')}
                           </p> */}
+                                                    </div>
+                                                    {paper.publishUrl ? (
+                                                        <Button asChild variant="outline" className="mt-2 sm:mt-0">
+                                                            <Link href={paper.publishUrl} target="_blank">
+                                                                <Download className="mr-2 h-4 w-4"/>
+                                                                View PDF
+                                                            </Link>
+                                                        </Button>
+                                                    ) : (
+                                                        <Button variant="outline" disabled className="mt-2 sm:mt-0">
+                                                            (Not Published)
+                                                        </Button>
+                                                    )}
                                                 </div>
-                                                {paper.publishUrl ? (
-                                                    <Button asChild variant="outline" className="mt-2 sm:mt-0">
-                                                        <Link href={paper.publishUrl} target="_blank">
-                                                            <Download className="mr-2 h-4 w-4"/>
-                                                            View PDF
-                                                        </Link>
-                                                    </Button>
-                                                ) : (
-                                                    <Button variant="outline" disabled className="mt-2 sm:mt-0">
-                                                        (Not Published)
-                                                    </Button>
-                                                )}
-                                            </div>
-                                        ))}
+                                            }
+                                        )}
                                     </div>
                                 ) : (
                                     <p className="text-muted-foreground italic">
@@ -117,7 +119,7 @@ export default async function JournalPage({params}: { params: Promise<{ journalI
                                 )}
                             </CardContent>
                         </Card>
-                    ))
+                    )
                 ) : (
                     <div className="text-center py-12">
                         <BookOpen className="h-12 w-12 mx-auto text-muted-foreground"/>
