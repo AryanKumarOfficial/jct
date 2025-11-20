@@ -244,7 +244,7 @@ export default function PaperReviewPage({params}: { params: Promise<{ id: string
                                             </SelectTrigger>
                                             <SelectContent>
                                                 <SelectItem value="REVIEWED">Reviewed (Recommend Accept)</SelectItem>
-                                                <SelectItem value="DRAFT">Needs Revision</SelectItem>
+                                                <SelectItem value="UNDER_REVIEW">Needs Revision</SelectItem>
                                                 <SelectItem value="REJECTED">Recommend Reject</SelectItem>
                                             </SelectContent>
                                         </Select>

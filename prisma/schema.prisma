@@ -16,7 +16,7 @@ enum EmployeeRole {
 
 enum PaperStatus {
   SUBMITTED
-  DRAFT
+  UNDER_REVIEW
   REVIEWED
   REJECTED
   PUBLISHED
@@ -185,7 +185,7 @@ model WalletTransaction {
 model IdCounter {
   id    String @id @unique @default("paperCounter")
   year  Int
-  count Int
+  count Int    @default(100)
 }
 
 model Copyright {

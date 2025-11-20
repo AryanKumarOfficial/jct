@@ -202,7 +202,7 @@ function PaperRow({paper, editors}: { paper: Paper; editors: Editor[] }) {
                             className={status.isApproved ? "text-green-600" : "text-yellow-600"}
                         >
               Status: {status.status} (
-                            {status.isApproved ? "Approved" : "Pending"})
+                            {status.isApproved ? "APPROVED" : "PENDING"})
             </span>
                     ) : (
                         <span className="text-gray-500">No status.</span>
