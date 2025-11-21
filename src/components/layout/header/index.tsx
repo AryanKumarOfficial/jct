@@ -8,13 +8,33 @@ import {MobileNav} from "./mobile-nav";
 
 const Header = () => {
     const [scrolled, setScrolled] = useState(false);
+    const [rightPadding, setRightPadding] = useState("0px");
 
     useEffect(() => {
         const handleScroll = () => {
             setScrolled(window.scrollY > 10);
         };
+
+        // --- Layout Shift Fix (Robust) ---
+        // Radix UI adds 'padding-right' to the <body> when a Sheet/Dialog opens to prevent layout shift.
+        // Since our Header is 'fixed', it doesn't inherit this. We must observe the body and apply the same padding.
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.type === "attributes" && mutation.attributeName === "style") {
+                    const bodyPadding = document.body.style.paddingRight;
+                    setRightPadding(bodyPadding || "0px");
+                }
+            });
+        });
+
+        // Start observing the body for style changes
+        observer.observe(document.body, {attributes: true, attributeFilter: ["style"]});
         window.addEventListener("scroll", handleScroll);
-        return () => window.removeEventListener("scroll", handleScroll);
+
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+            observer.disconnect();
+        };
     }, []);
 
     return (
@@ -27,13 +47,13 @@ const Header = () => {
             initial={{y: -100}}
             animate={{y: 0}}
             transition={{type: "spring", stiffness: 100, damping: 20}}
-            // FIX: Prevents layout shift when the scrollbar is removed by the Sheet/Modal
-            style={{paddingRight: 'var(--removed-body-scroll-bar-size, 0px)'}}
+            // Apply the dynamic padding here
+            style={{paddingRight: rightPadding}}
         >
             <div className="container mx-auto px-4">
                 <div className="flex items-center justify-between">
-                    {/* Left: Logo (Consistent Size) */}
-                    <Logo/>
+                    {/* Pass scrolled prop if you want the logo to shrink, otherwise remove it */}
+                    <Logo scrolled={scrolled}/>
 
                     {/* Center: Desktop Nav */}
                     <DesktopNav/>
