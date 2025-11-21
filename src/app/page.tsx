@@ -4,7 +4,7 @@ import Features from "@/components/Home/Features";
 
 const Index = () => {
     return (
-        <div className="min-h-screen bg-background">
+        <div className="min-h-screen bg-background selection:bg-primary/30 selection:text-primary-foreground">
             <Hero/>
             <Features/>
         </div>
