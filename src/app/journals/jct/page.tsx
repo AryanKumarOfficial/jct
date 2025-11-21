@@ -124,21 +124,13 @@ export default async function JournalPage() {
             />
 
             {/* --- Hero Section --- */}
-            <section className="relative bg-muted/30 border-b border-border/50 pt-24 pb-16 overflow-hidden">
+            <section className="relative bg-muted/30 border-b border-border/50 pt-14 pb-16 overflow-hidden">
                 {/* Abstract Pattern Background */}
-                <div className="absolute inset-0 opacity-[0.03] pointer-events-none"
+                <div className="absolute inset-0 opacity-[1] pointer-events-none"
                      style={{ backgroundImage: `radial-gradient(circle at 2px 2px, currentColor 1px, transparent 0)`, backgroundSize: '32px 32px' }}
                 />
 
                 <div className="container mx-auto px-4 relative z-10">
-                    {/* Breadcrumbs */}
-                    <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-8">
-                        <Link href="/" className="hover:text-primary transition-colors">Home</Link>
-                        <ChevronRight className="h-4 w-4" />
-                        <span>Journals</span>
-                        <ChevronRight className="h-4 w-4" />
-                        <span className="text-foreground font-medium">{JOURNAL_ACRONYM}</span>
-                    </nav>
 
                     <div className="grid lg:grid-cols-3 gap-12 items-start">
                         <div className="lg:col-span-2 space-y-6">

@@ -11,7 +11,7 @@ const Header = () => {
 
     useEffect(() => {
         const handleScroll = () => {
-            setScrolled(window.scrollY > 20);
+            setScrolled(window.scrollY > 10);
         };
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
@@ -19,18 +19,20 @@ const Header = () => {
 
     return (
         <motion.header
-            className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-500 ease-in-out ${
+            className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 ease-in-out ${
                 scrolled
                     ? "bg-background/85 backdrop-blur-xl border-b border-border/40 shadow-sm py-2"
-                    : "bg-transparent border-b border-transparent py-4"
+                    : "bg-transparent border-b border-transparent py-3"
             }`}
             initial={{y: -100}}
             animate={{y: 0}}
             transition={{type: "spring", stiffness: 100, damping: 20}}
+            // FIX: Prevents layout shift when the scrollbar is removed by the Sheet/Modal
+            style={{paddingRight: 'var(--removed-body-scroll-bar-size, 0px)'}}
         >
             <div className="container mx-auto px-4">
                 <div className="flex items-center justify-between">
-                    {/* Left: Logo */}
+                    {/* Left: Logo (Consistent Size) */}
                     <Logo/>
 
                     {/* Center: Desktop Nav */}

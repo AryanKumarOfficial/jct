@@ -1,0 +1,50 @@
+"use client";
+
+import { useState } from "react";
+import { X, ArrowRight } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
+import Link from "next/link";
+
+export const AnnouncementBar = () => {
+    const [isVisible, setIsVisible] = useState(true);
+
+    if (!isVisible) return null;
+
+    return (
+        <AnimatePresence>
+            {isVisible && (
+                <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    className="bg-primary text-primary-foreground relative z-50 overflow-hidden"
+                >
+                    <div className="container mx-auto px-4 py-2 text-xs md:text-sm font-medium flex items-center justify-between gap-4">
+                        <div className="flex items-center gap-2 mx-auto md:mx-0">
+                            <span className="bg-white/20 px-1.5 py-0.5 rounded text-[10px] uppercase tracking-wider font-bold">
+                                New
+                            </span>
+                            <p>
+                                Call for Papers: Volume 14, Issue 2 is now open for submissions.
+                            </p>
+                            <Link
+                                href="/submit"
+                                className="hidden md:inline-flex items-center underline underline-offset-4 hover:text-white/80 transition-colors ml-2"
+                            >
+                                Submit Now <ArrowRight className="ml-1 h-3 w-3" />
+                            </Link>
+                        </div>
+
+                        <button
+                            onClick={() => setIsVisible(false)}
+                            className="p-1 hover:bg-white/20 rounded-full transition-colors"
+                            aria-label="Dismiss announcement"
+                        >
+                            <X className="h-4 w-4" />
+                        </button>
+                    </div>
+                </motion.div>
+            )}
+        </AnimatePresence>
+    );
+};

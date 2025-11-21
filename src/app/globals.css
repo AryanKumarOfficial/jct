@@ -167,6 +167,24 @@
 }
 
 @layer base {
+    /* near top of file or inside @layer base */
+    html {
+        overflow-y: scroll !important;
+    }
+
+    @supports (scrollbar-gutter: stable) {
+        html {
+            scrollbar-gutter: stable;
+        }
+    }
+
+    /* replace the universal * apply with box-sizing only */
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+    }
+
     * {
         @apply border-border outline-ring/50;
     }

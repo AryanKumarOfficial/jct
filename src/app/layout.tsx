@@ -151,7 +151,7 @@ export default function RootLayout({
             <Header />
 
             {/* Main container: centered, responsive padding and max-width for readability */}
-            <main className="flex-1 w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <main className="flex-1 w-full w-full mx-auto my-12 md:my-16 lg:my-20">
                 {children}
             </main>
 
