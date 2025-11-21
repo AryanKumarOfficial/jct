@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3fbf7134-2adf-435b-806d-6f4c015e4c97" name="Changes" comment="adds an API documentation page and example endpoint details" />
+    <list default="true" id="3fbf7134-2adf-435b-806d-6f4c015e4c97" name="Changes" comment="adds an API documentation page and example endpoint details">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -14,8 +16,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="tsconfig.json" />
-        <option value="TypeScript File" />
         <option value="TypeScript JSX File" />
+        <option value="TypeScript File" />
       </list>
     </option>
   </component>
@@ -54,8 +56,10 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;JavaScript Debug.copyright-template.html.executor&quot;: &quot;Run&quot;,
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;Shell Script.Git commit.executor&quot;: &quot;Run&quot;,
     &quot;Shell Script.Prisma Studio.executor&quot;: &quot;Run&quot;,
@@ -90,6 +94,9 @@
   </component>
   <component name="RunManager" selected="npm.dev">
     <configuration name="Next.js: debug client-side" type="JavascriptDebugType" uri="http://localhost:3000/">
+      <method v="2" />
+    </configuration>
+    <configuration name="copyright-template.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/jct/templates/copyright-template.html" useBuiltInWebServerPort="true">
       <method v="2" />
     </configuration>
     <configuration name="Git commit" type="ShConfigurationType">
@@ -146,11 +153,17 @@
     </configuration>
     <list>
       <item itemvalue="JavaScript Debug.Next.js: debug client-side" />
+      <item itemvalue="JavaScript Debug.copyright-template.html" />
       <item itemvalue="npm.Email server" />
       <item itemvalue="npm.dev" />
       <item itemvalue="Shell Script.Git commit" />
       <item itemvalue="Shell Script.Prisma Studio" />
     </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JavaScript Debug.copyright-template.html" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -214,6 +227,8 @@
       <workItem from="1763230783106" duration="7986000" />
       <workItem from="1763289076274" duration="20234000" />
       <workItem from="1763324393726" duration="1241000" />
+      <workItem from="1763617102578" duration="13675000" />
+      <workItem from="1763699392636" duration="2195000" />
     </task>
     <task id="LOCAL-00001" summary="adds JSDoc comments across the codebase for improved documentation and readability">
       <option name="closed" value="true" />
