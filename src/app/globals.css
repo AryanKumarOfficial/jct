@@ -51,9 +51,15 @@
     }
 }
 
-/* PREVENT LAYOUT SHIFT */
+/* PREVENT LAYOUT SHIFT - Enhanced Fix */
 html {
     scrollbar-gutter: stable;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+body {
+    overflow-x: hidden;
 }
 
 :root {
