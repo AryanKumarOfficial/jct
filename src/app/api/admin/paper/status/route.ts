@@ -6,13 +6,14 @@ import {type NextRequest, NextResponse} from "next/server";
 import type {Orders} from "razorpay/dist/types/orders";
 import {prisma} from "@/lib/prisma";
 import {razorpay} from "@/lib/razorpay";
-import {type PaperStatus, PaymentStatus} from "@/types/enums";
+import {PaymentStatus} from "@/types/enums";
 import {authorize} from "@/utils/authorize";
 import {getObjectUrl} from "@/utils/cloudflare";
 import {fileUpload} from "@/utils/operations";
 import {isPaperPaid} from "@/utils/payments";
 import {getTokenData} from "@/utils/token";
 import {sendStatusUpdateMail} from "@/lib/mail/methods/sendStatusUpdateMail";
+import {PaperStatus} from "@prisma/client";
 
 /**
  * Represents an amount of money in Indian Rupees.
@@ -81,7 +82,7 @@ export const PATCH = async (req: NextRequest): Promise<NextResponse> => {
                 comments: updatedStatus.comments
             });
         }
-        if (updatedStatus.status === "REVIEWED") {
+        if (updatedStatus.status === "ACCEPTED") {
             const authorId = primaryAuthor?.id;
             if (!authorId) {
                 return NextResponse.json(
