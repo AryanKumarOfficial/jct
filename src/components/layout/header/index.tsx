@@ -39,10 +39,11 @@ const Header = () => {
 
     return (
         <motion.header
-            className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 ease-in-out ${
+            role="banner"
+            className={`sticky top-0 z-50 w-full transition-all duration-300 ease-in-out supports-[backdrop-filter]:backdrop-blur-xl ${
                 scrolled
-                    ? "bg-background/85 backdrop-blur-xl border-b border-border/40 shadow-sm py-2"
-                    : "bg-transparent border-b border-transparent py-3"
+                    ? "bg-background/90 border-b border-border/80 shadow-md py-2"
+                    : "bg-background/70 border-b border-border/40 py-3"
             }`}
             initial={{y: -100}}
             animate={{y: 0}}
@@ -50,7 +51,7 @@ const Header = () => {
             // Apply the dynamic padding here
             style={{paddingRight: rightPadding}}
         >
-            <div className="container mx-auto px-4">
+            <div className="container max-w-screen-2xl mx-auto px-4">
                 <div className="flex items-center justify-between">
                     {/* Pass scrolled prop if you want the logo to shrink, otherwise remove it */}
                     <Logo scrolled={scrolled}/>

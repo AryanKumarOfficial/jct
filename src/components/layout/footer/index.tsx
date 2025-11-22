@@ -7,8 +7,8 @@ const Footer = () => {
     const currentYear = new Date().getFullYear();
 
     return (
-        <footer className="bg-muted/30 border-t border-border/50 pt-16 pb-8 mt-auto">
-            <div className="container mx-auto px-4">
+        <footer className="bg-muted/50 border-t border-border pt-16 pb-8 mt-auto supports-[backdrop-filter]:backdrop-blur-xl">
+            <div className="container max-w-screen-2xl mx-auto px-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
                     {/* Column 1: Brand & Mission */}
                     <div className="space-y-4">
@@ -28,6 +28,9 @@ const Footer = () => {
                         <h3 className="font-semibold text-foreground">Quick Links</h3>
                         <ul className="space-y-2 text-sm text-muted-foreground">
                             <FooterLink href="/">Home</FooterLink>
+                            <FooterLink href="/#aims">Aims & Scope</FooterLink>
+                            <FooterLink href="/#latest">Latest Articles</FooterLink>
+                            <FooterLink href="/#indexing">Indexing</FooterLink>
                             <FooterLink href="/about">About Us</FooterLink>
                             <FooterLink href="/editorial-board">Editorial Board</FooterLink>
                             <FooterLink href="/contact">Contact Support</FooterLink>
@@ -40,7 +43,6 @@ const Footer = () => {
                         <ul className="space-y-2 text-sm text-muted-foreground">
                             <FooterLink href="/submit">Submit Manuscript</FooterLink>
                             <FooterLink href="/author-guidelines">Author Guidelines</FooterLink>
-                            <FooterLink href="/processing-charges">APC Information</FooterLink>
                             <FooterLink href="/track">Track Your Paper</FooterLink>
                         </ul>
                     </div>
@@ -52,8 +54,8 @@ const Footer = () => {
                             <li className="flex items-start gap-3">
                                 <MapPin className="h-4 w-4 mt-0.5 text-primary shrink-0" />
                                 <span>
-                  123 Research Park,<br />
-                  Academic District, 462001
+                  Sector C, Indrapuri,<br />
+                  Bopal, Madhya Pradesh, 462022
                 </span>
                             </li>
                             <li className="flex items-center gap-3">
@@ -67,12 +69,12 @@ const Footer = () => {
                 </div>
 
                 {/* Bottom Bar */}
-                <div className="border-t border-border/50 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-muted-foreground">
+                <div className="border-t border-border pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-muted-foreground">
                     <p>© {currentYear} JCT Journals. All rights reserved.</p>
                     <div className="flex gap-6">
-                        <Link href="/privacy" className="hover:text-foreground transition-colors">Privacy Policy</Link>
-                        <Link href="/terms" className="hover:text-foreground transition-colors">Terms of Service</Link>
-                        <Link href="/sitemap" className="hover:text-foreground transition-colors">Sitemap</Link>
+                        <Link href="/privacy" className="hover:text-primary transition-colors">Privacy Policy</Link>
+                        <Link href="/terms" className="hover:text-primary transition-colors">Terms of Service</Link>
+                        <Link href="/sitemap" className="hover:text-primary transition-colors">Sitemap</Link>
                     </div>
                 </div>
             </div>
@@ -91,7 +93,7 @@ const FooterLink = ({ href, children }: { href: string; children: React.ReactNod
 const SocialIcon = ({ icon: Icon, href }: { icon: any; href: string }) => (
     <a
         href={href}
-        className="h-8 w-8 rounded-full bg-muted flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors"
+        className="h-8 w-8 rounded-full bg-muted flex items-center justify-center hover:bg-primary hover:text-primary-foreground hover:scale-110 transition-all duration-300"
     >
         <Icon className="h-4 w-4" />
     </a>

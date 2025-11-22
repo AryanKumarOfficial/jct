@@ -53,7 +53,7 @@ const Features = () => {
                         viewport={{once: true}}
                         className="text-3xl md:text-4xl font-bold mb-4 text-foreground"
                     >
-                        Why Publish With <span className="text-primary">JCT</span>?
+                        Why Publish With <span className="text-primary font-extrabold">JCT</span>?
                     </motion.h2>
                     <motion.p
                         initial={{opacity: 0, y: 20}}
@@ -77,18 +77,20 @@ const Features = () => {
                     {featuresData.map((feature, index) => (
                         <motion.div key={index} variants={cardVariants} className="h-full">
                             <Card
-                                className="group relative h-full p-6 md:p-8 bg-card/50 backdrop-blur-sm border-border/60 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 ease-in-out">
-
+                                className="group relative h-full p-8 md:p-10 bg-card/80 backdrop-blur-md border-2 border-border/50 hover:border-primary/70 hover:shadow-2xl hover:shadow-primary/15 transition-all duration-500 ease-in-out hover:-translate-y-2 rounded-2xl overflow-hidden">
+                                
+                                {/* Hover gradient effect */}
+                                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                                
                                 {/* Icon Container */}
-                                <div
-                                    className="mb-6 w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 group-hover:scale-110 transition-all duration-300">
-                                    <feature.icon className="h-7 w-7 text-primary"/>
+                                <div className="relative mb-6 w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center group-hover:from-primary group-hover:to-primary/80 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 shadow-lg shadow-primary/10">
+                                    <feature.icon className="h-8 w-8 text-primary group-hover:text-primary-foreground transition-colors duration-300"/>
                                 </div>
 
-                                <h3 className="text-xl font-bold mb-3 text-foreground group-hover:text-primary transition-colors duration-300">
+                                <h3 className="relative text-xl font-bold mb-4 text-foreground group-hover:text-primary transition-colors duration-300">
                                     {feature.title}
                                 </h3>
-                                <p className="text-muted-foreground leading-relaxed">
+                                <p className="relative text-muted-foreground leading-relaxed text-sm">
                                     {feature.description}
                                 </p>
                             </Card>

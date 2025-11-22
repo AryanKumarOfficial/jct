@@ -36,12 +36,15 @@ const Hero = () => {
     };
 
     return (
-        <section className="relative overflow-hidden bg-gradient-to-b from-primary-light/20 via-background to-background pt-24 pb-20 md:pt-32 md:pb-28">
+        <section className="relative overflow-hidden bg-gradient-to-br from-primary/5 via-background to-primary/5 pt-24 pb-20 md:pt-32 md:pb-28">
+            {/* Modern Gradient Orbs */}
+            <div className="absolute top-20 -left-40 w-96 h-96 bg-primary/10 rounded-full blur-3xl"></div>
+            <div className="absolute bottom-20 -right-40 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl"></div>
             {/* Abstract Background Pattern */}
-            <div className="absolute inset-0 opacity-[0.03] pointer-events-none"
+            <div className="absolute inset-0 opacity-[0.02] pointer-events-none"
                  style={{
                      backgroundImage: `radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0)`,
-                     backgroundSize: '40px 40px'
+                     backgroundSize: '60px 60px'
                  }}
             />
 
@@ -62,8 +65,8 @@ const Hero = () => {
 
                         {/* Main Title */}
                         <motion.div variants={itemVariants}>
-                            <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold text-foreground mb-6 tracking-tight leading-[1.1]">
-                                Journal of <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-green-400">Computing</span> Technologies
+                            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 tracking-tight leading-[1.1]">
+                                Journal of <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-primary to-emerald-500">Computing</span> Technologies
                             </h1>
                         </motion.div>
 
@@ -86,23 +89,23 @@ const Hero = () => {
                             </div>
                         </motion.div>
 
-                        {/* SEARCH BAR (New UX Element) */}
-                        <motion.div variants={itemVariants} className="w-full max-w-lg mx-auto mb-12 relative group">
-                            <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 to-green-400/20 rounded-xl blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
+                        {/* SEARCH BAR (Modern Glass-morphism) */}
+                        <motion.div variants={itemVariants} className="w-full max-w-2xl mx-auto mb-12 relative group">
+                            <div className="absolute -inset-0.5 bg-gradient-to-r from-primary/20 via-primary/10 to-emerald-400/20 rounded-2xl blur opacity-40 group-hover:opacity-60 transition duration-500"></div>
                             <form onSubmit={handleSearch} className="relative flex items-center">
-                                <Search className="absolute left-4 h-5 w-5 text-muted-foreground" />
+                                <Search className="absolute left-5 h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
                                 <Input
                                     placeholder="Search research papers, authors, or topics..."
-                                    className="h-14 pl-12 pr-4 rounded-xl text-base bg-background/80 backdrop-blur-xl border-primary/20 focus-visible:ring-primary/30 focus-visible:border-primary shadow-xl"
+                                    className="h-16 pl-14 pr-16 rounded-2xl text-base bg-card/95 backdrop-blur-2xl border-2 border-border/50 hover:border-primary/50 focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:border-primary shadow-2xl shadow-primary/5 transition-all"
                                     value={searchQuery}
                                     onChange={(e) => setSearchQuery(e.target.value)}
                                 />
                                 <Button
                                     type="submit"
                                     size="icon"
-                                    className="absolute right-2 h-10 w-10 rounded-lg bg-primary/10 text-primary hover:bg-primary hover:text-white transition-all"
+                                    className="absolute right-2 h-12 w-12 rounded-xl bg-primary text-primary-foreground hover:bg-primary-hover hover:scale-105 shadow-lg shadow-primary/30 transition-all"
                                 >
-                                    <ArrowRight className="h-4 w-4" />
+                                    <ArrowRight className="h-5 w-5" />
                                 </Button>
                             </form>
                             <div className="flex justify-center gap-3 mt-3 text-xs text-muted-foreground">

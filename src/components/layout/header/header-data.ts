@@ -8,6 +8,12 @@ export const NAV_LINKS = [
         description: "Access the Journal of Computing Technologies"
     },
     {
+        href: "/archives",
+        label: "Archives",
+        icon: BookOpen,
+        description: "Browse all past issues and articles"
+    },
+    {
         href: "/about",
         label: "About",
         icon: Info
@@ -27,4 +33,14 @@ export const NAV_LINKS = [
         label: "Contact",
         icon: Mail
     }
+];
+
+// Home page section anchors for quick navigation
+export const HOME_ANCHORS = [
+    { href: "/#aims", label: "Aims & Scope" },
+    { href: "/#latest", label: "Latest Articles" },
+    { href: "/#indexing", label: "Indexing" },
+    { href: "/#editorial", label: "Editorial Board" },
+    { href: "/#guidelines", label: "Guidelines" },
+    { href: "/#cfp", label: "Call for Papers" },
 ];

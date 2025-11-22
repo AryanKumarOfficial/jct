@@ -33,9 +33,9 @@ const stats = [
 
 const JournalStats = () => {
     return (
-        <section className="py-12 border-y border-border/50 bg-muted/10">
+        <section className="py-16 border-y border-border bg-muted/40">
             <div className="container mx-auto px-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     {stats.map((stat, index) => (
                         <motion.div
                             key={stat.label}
@@ -45,15 +45,15 @@ const JournalStats = () => {
                             transition={{delay: index * 0.1}}
                         >
                             <div
-                                className="flex items-center gap-4 p-4 rounded-lg hover:bg-background/50 transition-colors">
+                                className="flex items-center gap-5 p-6 rounded-2xl hover:bg-card/70 backdrop-blur-sm transition-all duration-300 hover:shadow-lg hover:shadow-primary/5 group border border-transparent hover:border-primary/20">
                                 <div
-                                    className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                                    <stat.icon className="h-6 w-6 text-primary"/>
+                                    className="h-16 w-16 rounded-2xl bg-gradient-to-br from-primary/15 to-primary/5 flex items-center justify-center flex-shrink-0 group-hover:from-primary group-hover:to-primary/80 group-hover:scale-110 transition-all duration-300 shadow-md shadow-primary/10">
+                                    <stat.icon className="h-8 w-8 text-primary group-hover:text-primary-foreground transition-colors duration-300"/>
                                 </div>
                                 <div>
-                                    <h3 className="text-2xl font-bold text-foreground">{stat.value}</h3>
-                                    <p className="text-sm font-medium text-foreground/80">{stat.label}</p>
-                                    <p className="text-xs text-muted-foreground">{stat.description}</p>
+                                    <h3 className="text-3xl font-bold bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent group-hover:from-primary group-hover:to-primary/80 transition-all">{stat.value}</h3>
+                                    <p className="text-sm font-semibold text-foreground/90 mt-1">{stat.label}</p>
+                                    <p className="text-xs text-muted-foreground mt-0.5">{stat.description}</p>
                                 </div>
                             </div>
                         </motion.div>

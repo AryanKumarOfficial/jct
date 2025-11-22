@@ -5,6 +5,7 @@ import "./globals.css";
 import Providers from "@/app/providers";
 import Header from "@/components/layout/header/index";
 import Footer from "@/components/layout/footer/index";
+import { AnnouncementBar } from "@/components/layout/announcement-bar";
 import { Toaster } from "@/components/ui/sonner";
 import { cn } from "@/lib/utils";
 
@@ -24,7 +25,7 @@ const SITE_URL = (() => {
     }
 })();
 
-const DEFAULT_OG = "/og-image.png";
+const DEFAULT_OG = "/images/logo.jpg";
 
 export const metadata: Metadata = {
     metadataBase: new URL(SITE_URL),
@@ -122,7 +123,7 @@ export default function RootLayout({
         ],
         contactPoint: {
             "@type": "ContactPoint",
-            telephone: "+91-0000000000",
+            telephone: "+91 92435 55355",
             contactType: "customer service",
             areaServed: ["Global"],
             availableLanguage: "English",
@@ -130,7 +131,7 @@ export default function RootLayout({
     };
 
     return (
-        <html lang="en" className="scroll-smooth" suppressHydrationWarning>
+        <html lang="en" className="scroll-smooth" suppressHydrationWarning style={{ scrollBehavior: 'smooth' }}>
         <head />
         <body
             className={cn(
@@ -147,11 +148,14 @@ export default function RootLayout({
         />
 
         <Providers>
+            {/* Announcement Bar */}
+            <AnnouncementBar />
+            
             {/* Header stays outside main so it doesn't affect layout flow */}
             <Header />
 
             {/* Main container: centered, responsive padding and max-width for readability */}
-            <main className="flex-1 w-full w-full mx-auto my-12 md:my-16 lg:my-20">
+            <main className="flex-1 w-full mx-auto">
                 {children}
             </main>
 
