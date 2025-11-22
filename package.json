@@ -12,7 +12,9 @@
     "format:check": "biome format",
     "lint:fix": "biome check --write",
     "postinstall": "prisma generate || true",
-    "dev:email": "email dev --port 8080"
+    "dev:email": "email dev --port 8080",
+    "pages:build": "pnpm dlx @cloudflare/next-on-pages",
+    "deploy": "pnpm run pages:build && wrangler pages deploy .vercel/output/static"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.890.0",
