@@ -7,6 +7,7 @@ import {getObjectUrl} from "@/utils/cloudflare";
 import puppeteer from "puppeteer";
 import path from "node:path";
 import fs from "node:fs/promises";
+import {author as Author} from "@/generated/prisma";
 
 export const POST = async (
     req: NextRequest,
@@ -46,7 +47,7 @@ export const POST = async (
 
         // 4. Security: Ownership Check
         // Ensure the logged-in user is actually an author of this paper
-        const isAuthor = paper.authors.some((author) => author.id === userId);
+        const isAuthor = paper.authors.some((author:Author) => author.id === userId);
         if (!isAuthor) {
             return NextResponse.json(
                 {error: "You are not authorized to sign copyright for this paper."},
