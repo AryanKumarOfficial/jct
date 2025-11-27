@@ -1,6 +1,8 @@
-import {toast} from "sonner";
+// app/page.tsx
+import { prisma } from "@/lib/prisma";
+import type { archive as Archive } from "@/generated/prisma"; // Keep your custom path
 
-export const dynamic = "force-dynamic";
+// COMPONENTS
 import Hero from "@/components/Home/Hero";
 import Features from "@/components/Home/Features";
 import JournalStats from "@/components/Home/JournalStats";
@@ -10,44 +12,91 @@ import LatestArticles from "@/components/Home/LatestArticles";
 import EditorialTeaser from "@/components/Home/EditorialTeaser";
 import EthicsGuidelines from "@/components/Home/EthicsGuidelines";
 import CallForPapers from "@/components/Home/CallForPapers";
-import {prisma} from "@/lib/prisma";
-import {archive as Archive} from "@/generated/prisma";
 
+export const revalidate = 3600;
+
+/**
+ * Fetch the latest archive metadata only.
+ * Removed `includes: { papers: true }` to reduce payload size.
+ */
 const fetchLatestArchive = async (): Promise<Archive> => {
-    const latestArchive = await prisma.archive.findFirst({
-        orderBy: {createdAt: "desc"}, // or year/volume if you prefer
+    const latest = await prisma.archive.findFirst({
+        orderBy: { createdAt: "desc" },
     });
 
-    if (!latestArchive) {
-        const dummyArchive: Omit<Archive, "createdAt" | "updatedAt" | "id" | "month"> = {
-            issue: 1,
-            year: new Date().getFullYear(),
-            volume: new Date().getFullYear() - 2012,
+    if (latest) return latest;
 
-        }
-        return dummyArchive as Archive;
-    }
-
-    return latestArchive as Archive;
-}
-
-const latestArchive = await fetchLatestArchive();
-
-
-const Index = () => {
-    return (
-        <>
-            <Hero/>
-            <AimsScope/>
-            <LatestArticles/>
-            <Indexing/>
-            <JournalStats/>
-            <Features/>
-            <EditorialTeaser/>
-            <EthicsGuidelines/>
-            <CallForPapers archive={latestArchive}/>
-        </>
-    );
+    // Fallback
+    const now = new Date();
+    return {
+        id: "fallback-archive",
+        volume: 0,
+        issue: 0,
+        month: now.toLocaleString("default", { month: "long" }),
+        year: now.getFullYear(),
+        createdAt: now,
+        updatedAt: now,
+    } as Archive;
 };
 
-export default Index;
+/**
+ * Fetch the latest 4 published papers.
+ * select specific fields to reduce bandwidth.
+ */
+const fetchLatestPapers = async () => {
+    return prisma.paper.findMany({
+        where: {
+            paperStatuses: {
+                some: {status: "PUBLISHED"},
+            },
+        },
+        take: 4,
+        orderBy: {createdAt: "desc"},
+        select: {
+            id: true,
+            name: true,
+            keywords: true,
+            submissionId: true,
+            // Only fetch necessary relation data
+            archive: {
+                select: {
+                    volume: true,
+                    issue: true,
+                    year: true,
+                }
+            },
+            authors: {
+                select: {
+                    firstName: true,
+                    lastName: true
+                }
+            }
+        },
+    });
+};
+
+export default async function Index() {
+    // Parallel data fetching
+    const [latestArchive, latestPapers] = await Promise.all([
+        fetchLatestArchive(),
+        fetchLatestPapers(),
+    ]);
+    console.log(latestPapers[0])
+
+    return (
+        <>
+            <Hero />
+            <AimsScope />
+            {/* Note: Make sure your LatestArticles component type accepts
+         the shape returned by the `select` in fetchLatestPapers
+      */}
+            {latestPapers.length > 0 && <LatestArticles papers={latestPapers} />}
+            <Indexing />
+            <JournalStats />
+            <Features />
+            <EditorialTeaser />
+            <EthicsGuidelines />
+            <CallForPapers archive={latestArchive} />
+        </>
+    );
+}
