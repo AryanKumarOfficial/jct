@@ -1,0 +1,207 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ENUMS
+enum EmployeeRole {
+  EDITOR
+  ADMIN
+  FRESHER
+}
+
+enum PaperStatus {
+  SUBMITTED
+  UNDER_REVIEW
+  ACCEPTED
+  REJECTED
+  PUBLISHED
+}
+
+enum paymentStatus {
+  FAILED
+  PENDING
+  SUCCESS
+}
+
+enum ActivityType {
+  PAPER_SUBMITTED
+  STATUS_CHANGED
+  COMMENT_ADDED
+  PAYMENT_SUCCESS
+  PAPER_PUBLISHED
+  EDITOR_ASSIGNED
+  EMPLOYEE_ADDED
+}
+
+enum WalletTransactionType {
+  CREDIT
+  DEBIT
+}
+
+// MODELS
+model paper {
+  id                 String              @id @unique @default(uuid(7))
+  submissionId       String              @unique
+  name               String
+  keywords           String[]            @default(["cse"])
+  authors            author[]
+  manuscriptId       String?
+  manuscriptUrl      String?
+  publishId          String?
+  publishUrl         String?
+  paperStatuses      status[]
+  archive            archive             @relation(fields: [archiveId], references: [id])
+  archiveId          String
+  transactions       transaction[]
+  activityLogs       ActivityLog[]
+  walletTransactions WalletTransaction[]
+
+  // add the editor
+  editor   employee? @relation(fields: [editorId], references: [id])
+  editorId String?
+
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  Copyright Copyright?
+}
+
+model author {
+  id           String        @id @unique @default(uuid(7))
+  firstName    String
+  lastName     String?
+  email        String        @unique
+  password     String
+  organisation String
+  country      String
+  phone        String
+  papers       paper[]
+  transactions transaction[]
+
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  ActivityLog ActivityLog[]
+}
+
+model status {
+  id          String      @id @unique @default(uuid(7))
+  status      PaperStatus @default(SUBMITTED)
+  isApproved  Boolean     @default(false)
+  paperId     String
+  paper       paper       @relation(fields: [paperId], references: [submissionId])
+  changedById String?
+  changedBy   employee?   @relation(fields: [changedById], references: [id])
+  comments    String[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+model employee {
+  id                 String              @id @unique @default(uuid(7))
+  firstName          String
+  lastName           String?
+  email              String              @unique
+  password           String
+  role               EmployeeRole        @default(FRESHER)
+  specialization     String?
+  isActive           Boolean             @default(true)
+  createdById        String?
+  createdBy          employee?           @relation("EmployeeCreater", fields: [createdById], references: [id])
+  createdEmployees   employee[]          @relation("EmployeeCreater")
+  status             status[]
+  activities         ActivityLog[]
+  walletBalance      Float               @default(0.0)
+  walletTransactions WalletTransaction[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  paper     paper[]
+}
+
+model archive {
+  id     String  @id @unique @default(uuid(7))
+  volume Int
+  issue  Int
+  month  String
+  year   Int
+  papers paper[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([volume, issue, year])
+}
+
+model transaction {
+  id                String        @id @unique @default(uuid(7))
+  razorpayOrderId   String        @unique
+  razorpayPaymentId String?
+  amount            Int
+  status            paymentStatus @default(PENDING)
+  paperId           String
+  paper             paper         @relation(fields: [paperId], references: [id])
+  authorId          String
+  author            author        @relation(fields: [authorId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ActivityLog {
+  id        String       @id @default(uuid(7))
+  paper     paper?       @relation(fields: [paperId], references: [id])
+  paperId   String?
+  actor     employee?    @relation(fields: [actorId], references: [id])
+  actorId   String?
+  author    author?      @relation(fields: [authorId], references: [id])
+  authorId  String?
+  activity  ActivityType
+  details   String?
+  createdAt DateTime     @default(now())
+
+  @@index([paperId])
+  @@index([actorId])
+}
+
+model WalletTransaction {
+  id             String                @id @default(uuid(7))
+  employee       employee              @relation(fields: [employeeId], references: [id])
+  employeeId     String
+  type           WalletTransactionType
+  amount         Float
+  notes          String?
+  relatedPaper   paper?                @relation(fields: [relatedPaperId], references: [id])
+  relatedPaperId String?
+
+  createdAt DateTime @default(now())
+
+  @@index([employeeId])
+}
+
+model IdCounter {
+  id    String @id @unique @default("paperCounter")
+  year  Int
+  count Int    @default(100)
+}
+
+model Copyright {
+  id              String          @id @unique @default(uuid(7))
+  copyrightStatus CopyrightStatus @default(PENDING)
+  pdfKey          String
+  pdfUrl          String
+  paperId         String          @unique
+  paper           paper           @relation(fields: [paperId], references: [id])
+
+  signedAt  DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum CopyrightStatus {
+  PENDING
+  SIGNED
+}

@@ -30,7 +30,6 @@ import {
     UserPlus,
     Trash2,
     AlertCircle,
-    CheckCircle2,
 } from "lucide-react";
 import {motion, AnimatePresence} from "motion/react";
 import {toast} from "sonner";

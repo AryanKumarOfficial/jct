@@ -1,3 +1,4 @@
+"use client";
 import React from 'react'
 import {Award, BookOpen, TrendingUp, Users} from "lucide-react";
 import {motion} from "motion/react";

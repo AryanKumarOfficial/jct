@@ -1,5 +1,7 @@
 // types/enums.ts
 
+import {type archive} from "@/generated/prisma";
+
 /**
  * Enum representing the roles of an employee in the system.
  *
@@ -12,9 +14,9 @@
  * - FRESHER: Represents a new employee or beginner role with restricted access.
  */
 export enum EmployeeRole {
-  EDITOR = "EDITOR",
-  ADMIN = "ADMIN",
-  FRESHER = "FRESHER",
+    EDITOR = "EDITOR",
+    ADMIN = "ADMIN",
+    FRESHER = "FRESHER",
 }
 
 /**
@@ -38,20 +40,20 @@ export enum EmployeeRole {
  * - REJECTED: Indicates that the paper was not accepted for publication.
  */
 export enum PaperStatus {
-  DRAFT = "DRAFT",
-  SUBMITTED = "SUBMITTED",
-  REVIEWED = "REVIEWED",
-  PUBLISHED = "PUBLISHED",
-  REJECTED = "REJECTED",
+    DRAFT = "DRAFT",
+    SUBMITTED = "SUBMITTED",
+    REVIEWED = "REVIEWED",
+    PUBLISHED = "PUBLISHED",
+    REJECTED = "REJECTED",
 }
 
 /**
  *
  */
 export enum PaymentStatus {
-  FAILED = "FAILED",
-  PENDING = "PENDING",
-  SUCCESS = "SUCCESS",
+    FAILED = "FAILED",
+    PENDING = "PENDING",
+    SUCCESS = "SUCCESS",
 }
 
 /**
@@ -61,13 +63,13 @@ export enum PaymentStatus {
  * such as those related to document management, workflow changes, or user interactions.
  */
 export enum ActivityType {
-  PAPER_SUBMITTED = "PAPER_SUBMITTED",
-  STATUS_CHANGED = "STATUS_CHANGED",
-  COMMENT_ADDED = "COMMENT_ADDED",
-  PAYMENT_SUCCESS = "PAYMENT_SUCCESS",
-  PAPER_PUBLISHED = "PAPER_PUBLISHED",
-  EDITOR_ASSIGNED = "EDITOR_ASSIGNED",
-  EMPLOYEE_ADDED = "EMPLOYEE_ADDED",
+    PAPER_SUBMITTED = "PAPER_SUBMITTED",
+    STATUS_CHANGED = "STATUS_CHANGED",
+    COMMENT_ADDED = "COMMENT_ADDED",
+    PAYMENT_SUCCESS = "PAYMENT_SUCCESS",
+    PAPER_PUBLISHED = "PAPER_PUBLISHED",
+    EDITOR_ASSIGNED = "EDITOR_ASSIGNED",
+    EMPLOYEE_ADDED = "EMPLOYEE_ADDED",
 }
 
 /**
@@ -81,6 +83,9 @@ export enum ActivityType {
  * - DEBIT: Represents a transaction where funds are deducted from the wallet.
  */
 export enum WalletTransactionType {
-  CREDIT = "CREDIT",
-  DEBIT = "DEBIT",
+    CREDIT = "CREDIT",
+    DEBIT = "DEBIT",
+}
+
+export interface Archive extends archive {
 }

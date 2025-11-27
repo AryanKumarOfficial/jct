@@ -52,17 +52,13 @@
 }
 
 /* PREVENT LAYOUT SHIFT + SINGLE SCROLL CONTAINER */
-/* Keep scrollbar space reserved to avoid layout shift when modals open */
 html {
     scrollbar-gutter: stable both-edges;
-    /* Let the page decide when it needs a scrollbar */
     overflow-y: auto;
     overflow-x: hidden;
-    /* Prevent overscroll chaining/bounce that can cause nested scrollbars on some platforms */
     overscroll-behavior: none;
 }
 
-/* Make body the single vertical scroll container */
 body {
     overflow-x: hidden;
     overflow-y: auto;
@@ -72,136 +68,139 @@ body {
     --radix-accordion-content-height: auto;
     --radius: 0.625rem;
 
-    /* --- JCT Brand Colors: Green Logo + Clean Professional Theme --- */
-    --background: oklch(0.99 0.003 100); /* Clean off-white */
-    --foreground: oklch(0.20 0.015 100); /* Deep charcoal */
+    /* --- Mid-Light Lime Pastel Theme --- */
 
-    --card: oklch(1 0 0);
-    --card-foreground: oklch(0.20 0.015 100);
+    /* Background: A very soft, warm lime-cream (Not pure white) */
+    --background: #F4F9E4;
 
-    --popover: oklch(1 0 0);
-    --popover-foreground: oklch(0.20 0.015 100);
+    /* Foreground: Deep Moss Green (Softer than black) */
+    --foreground: #3A471C;
 
-    /* Primary: Logo Green (vibrant lime/chartreuse) */
-    --primary: oklch(0.65 0.20 140);
-    --primary-foreground: oklch(1 0 0);
+    /* Card: Clean white to pop against the mid-light background */
+    --card: #FFFFFF;
+    --card-foreground: #3A471C;
 
-    --primary-hover: oklch(0.58 0.18 140);
-    --primary-light: oklch(0.96 0.04 140);
+    --popover: #FFFFFF;
+    --popover-foreground: #3A471C;
 
-    --secondary: oklch(0.96 0.01 100);
-    --secondary-foreground: oklch(0.25 0.015 100);
+    /* Primary: The darkest of the base trio (#95BB27) */
+    --primary: #95BB27;
+    --primary-foreground: #FFFFFF;
 
-    --muted: oklch(0.97 0.008 100);
-    --muted-foreground: oklch(0.48 0.01 100);
+    --primary-hover: #84A622;
+    --primary-light: #EBF3D1; /* Very light primary tint */
 
-    --accent: oklch(0.96 0.03 140);
-    --accent-foreground: oklch(0.25 0.015 100);
+    /* Secondary: The middle base color (#BDD24B) used softly */
+    --secondary: #F0F6D6; /* Very light pastel version of middle base */
+    --secondary-foreground: #5A6B2A;
 
-    /* Accent Red from certificate */
-    --accent-red: oklch(0.52 0.16 25);
-    --accent-red-foreground: oklch(1 0 0);
+    /* Muted: Gentle grey-green */
+    --muted: #E2E8CF;
+    --muted-foreground: #788560;
 
-    --destructive: oklch(0.55 0.19 27);
-    --destructive-foreground: oklch(1 0 0);
+    /* Accent: The brightest base color (#DFF858) */
+    --accent: #DFF858;
+    --accent-foreground: #3A471C;
 
-    --border: oklch(0.90 0.01 100);
-    --input: oklch(0.90 0.01 100);
-    --ring: oklch(0.65 0.20 140);
+    /* Destructive: Soft Terracotta/Red */
+    --destructive: #E06C6C;
+    --destructive-foreground: #FFFFFF;
 
-    --header-blur: oklch(0.99 0.003 100 / 0.85);
+    /* Borders: Soft lime-grey */
+    --border: #D6E0B8;
+    --input: #DEE8C5;
+    --ring: #95BB27;
+
+    --header-blur: rgba(244, 249, 228, 0.85); /* Matches background #F4F9E4 */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
-    --sidebar: oklch(0.98 0.008 100);
-    --sidebar-background: oklch(0.98 0.008 100);
-    --sidebar-foreground: oklch(0.20 0.015 100);
-    --sidebar-primary: oklch(0.65 0.20 140);
-    --sidebar-primary-foreground: oklch(1 0 0);
-    --sidebar-accent: oklch(0.96 0.03 140);
-    --sidebar-accent-foreground: oklch(0.25 0.015 100);
-    --sidebar-border: oklch(0.90 0.01 100);
-    --sidebar-ring: oklch(0.65 0.20 140);
+    /* Sidebar - Slightly darker than bg to distinguish */
+    --sidebar: #EEF5DC;
+    --sidebar-background: #EEF5DC;
+    --sidebar-foreground: #3A471C;
+    --sidebar-primary: #95BB27;
+    --sidebar-primary-foreground: #FFFFFF;
+    --sidebar-accent: #DFF858;
+    --sidebar-accent-foreground: #3A471C;
+    --sidebar-border: #D6E0B8;
+    --sidebar-ring: #95BB27;
 
-    /* Chart colors - Green palette with accents */
-    --chart-1: oklch(0.65 0.20 140); /* Logo Green */
-    --chart-2: oklch(0.60 0.16 160); /* Teal */
-    --chart-3: oklch(0.70 0.18 120); /* Yellow-Green */
-    --chart-4: oklch(0.52 0.16 25); /* Certificate Red */
-    --chart-5: oklch(0.75 0.14 100); /* Warm Yellow */
+    /* Charts based on the palette */
+    --chart-1: #95BB27; /* Primary Base */
+    --chart-2: #BDD24B; /* Secondary Base */
+    --chart-3: #DFF858; /* Accent Base */
+    --chart-4: #E0AB55; /* Warm Orange compliment */
+    --chart-5: #63B3ED; /* Soft Blue contrast */
 
-    /* Scrollbar theming */
+    /* Scrollbar */
     --scrollbar-width: 12px;
-    --scrollbar-track: var(--muted);
-    /* slightly tinted green thumb for light mode */
-    --scrollbar-thumb: oklch(0.84 0.04 140);
-    --scrollbar-thumb-hover: oklch(0.78 0.05 140);
+    --scrollbar-track: #F4F9E4;
+    --scrollbar-thumb: #C5D69E;
+    --scrollbar-thumb-hover: #95BB27;
 }
 
 .dark {
-    /* --- JCT Dark Mode: Clean Slate Background with Green Accents --- */
-    /* Pure neutral dark background, no green tint */
-    --background: oklch(0.18 0.005 240);
-    --foreground: oklch(0.98 0.003 100);
+    /* --- Deep Forest Theme (Dark Mode) --- */
 
-    /* Cards slightly elevated with minimal tint */
-    --card: oklch(0.22 0.008 240);
-    --card-foreground: oklch(0.98 0.003 100);
+    /* Background: Deep rich forest green/black */
+    --background: #121A08;
 
-    --popover: oklch(0.22 0.008 240);
-    --popover-foreground: oklch(0.98 0.003 100);
+    /* Foreground: Pale Lime White */
+    --foreground: #F1F5E6;
 
-    /* Primary: Bright logo green that pops */
-    --primary: oklch(0.72 0.19 140);
-    --primary-foreground: oklch(0.10 0.01 140);
+    /* Card: Slightly lighter moss */
+    --card: #1C2610;
+    --card-foreground: #F1F5E6;
 
-    --primary-hover: oklch(0.78 0.18 140);
-    --primary-light: oklch(0.28 0.08 140);
+    --popover: #1C2610;
+    --popover-foreground: #F1F5E6;
 
-    --secondary: oklch(0.28 0.01 240);
-    --secondary-foreground: oklch(0.98 0.003 100);
+    /* Primary: Bright Lime to pop on dark */
+    --primary: #95BB27;
+    --primary-foreground: #0E1405;
 
-    --muted: oklch(0.28 0.01 240);
-    --muted-foreground: oklch(0.68 0.01 100);
+    --primary-hover: #BDD24B;
+    --primary-light: #2A3614;
 
-    --accent: oklch(0.28 0.015 140);
-    --accent-foreground: oklch(0.98 0.003 100);
+    /* Secondary: Muted olive */
+    --secondary: #2C3618;
+    --secondary-foreground: #DFF858;
 
-    /* Accent Red from certificate, adjusted for dark */
-    --accent-red: oklch(0.62 0.18 25);
-    --accent-red-foreground: oklch(1 0 0);
+    --muted: #242E15;
+    --muted-foreground: #9CA882;
 
-    --destructive: oklch(0.62 0.18 27);
-    --destructive-foreground: oklch(1 0 0);
+    --accent: #2C3618;
+    --accent-foreground: #DFF858;
 
-    --border: oklch(0.30 0.01 240);
-    --input: oklch(0.30 0.01 240);
-    --ring: oklch(0.72 0.19 140);
+    --destructive: #7F2F2F;
+    --destructive-foreground: #FFEAEA;
 
-    --header-blur: oklch(0.18 0.005 240 / 0.90);
+    --border: #2E3B1C;
+    --input: #2E3B1C;
+    --ring: #95BB27;
 
-    --sidebar: oklch(0.16 0.005 240);
-    --sidebar-background: oklch(0.16 0.005 240);
-    --sidebar-foreground: oklch(0.98 0.003 100);
-    --sidebar-primary: oklch(0.72 0.19 140);
-    --sidebar-primary-foreground: oklch(0.10 0.01 140);
-    --sidebar-accent: oklch(0.28 0.015 140);
-    --sidebar-accent-foreground: oklch(0.98 0.003 100);
-    --sidebar-border: oklch(0.30 0.01 240);
-    --sidebar-ring: oklch(0.72 0.19 140);
+    --header-blur: rgba(18, 26, 8, 0.9);
 
-    /* Chart colors optimized for dark background */
-    --chart-1: oklch(0.72 0.19 140);
-    --chart-2: oklch(0.68 0.16 160);
-    --chart-3: oklch(0.75 0.18 120);
-    --chart-4: oklch(0.62 0.18 25);
-    --chart-5: oklch(0.80 0.15 100);
+    --sidebar: #0E1405;
+    --sidebar-background: #0E1405;
+    --sidebar-foreground: #F1F5E6;
+    --sidebar-primary: #95BB27;
+    --sidebar-primary-foreground: #0E1405;
+    --sidebar-accent: #2C3618;
+    --sidebar-accent-foreground: #DFF858;
+    --sidebar-border: #2E3B1C;
+    --sidebar-ring: #95BB27;
 
-    /* Scrollbar theming (dark) */
-    --scrollbar-width: 12px;
-    --scrollbar-track: oklch(0.22 0.008 240);
-    /* bright greenish thumb with sufficient contrast */
-    --scrollbar-thumb: oklch(0.40 0.09 140);
-    --scrollbar-thumb-hover: oklch(0.48 0.10 140);
+    /* Charts adjusted for dark mode */
+    --chart-1: #DFF858; /* Brightest Lime */
+    --chart-2: #95BB27;
+    --chart-3: #BDD24B;
+    --chart-4: #E06C6C;
+    --chart-5: #63B3ED;
+
+    --scrollbar-track: #121A08;
+    --scrollbar-thumb: #2E3B1C;
+    --scrollbar-thumb-hover: #4A5C2E;
 }
 
 @layer base {
@@ -214,7 +213,6 @@ body {
     }
 
     html, body {
-        /* Use min-height to avoid creating an extra scroll context */
         min-height: 100%;
         background-color: var(--background);
         color: var(--foreground);
@@ -223,11 +221,8 @@ body {
         transition: background-color 0.3s ease, color 0.3s ease;
     }
 
-    /* Respect reduced motion preferences */
     @media (prefers-reduced-motion: reduce) {
-        *,
-        *::before,
-        *::after {
+        *, *::before, *::after {
             animation-duration: 0.01ms !important;
             animation-iteration-count: 1 !important;
             transition-duration: 0.01ms !important;
@@ -235,37 +230,33 @@ body {
         }
     }
 
-    /* Cross-browser scrollbar styles (keeps body as single scroll container) */
     html, body {
-        scrollbar-width: thin; /* Firefox */
+        scrollbar-width: thin;
         scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
     }
 
-    /* WebKit */
+    /* WebKit Scrollbar */
     *::-webkit-scrollbar {
         width: var(--scrollbar-width);
         height: var(--scrollbar-width);
     }
+
     *::-webkit-scrollbar-track {
         background: var(--scrollbar-track);
     }
+
     *::-webkit-scrollbar-thumb {
         background-color: var(--scrollbar-thumb);
         border-radius: 999px;
         border: 3px solid var(--scrollbar-track);
     }
+
     *:hover::-webkit-scrollbar-thumb {
         background-color: var(--scrollbar-thumb-hover);
     }
-    @media (prefers-reduced-transparency: reduce) {
-        *::-webkit-scrollbar-thumb {
-            /* reduce translucency effects by using solid colors */
-            background-image: none;
-        }
-    }
 
     :focus {
-        outline: 2px solid hsl(var(--ring));
+        outline: 2px solid var(--ring);
         outline-offset: 2px;
     }
 
@@ -326,21 +317,9 @@ body {
     }
 }
 
-.card {
-    padding: 2em;
-}
-
-.read-the-docs {
-    color: #888;
-}
-
 #root {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 2rem;
+    /*max-width: 1280px;*/
+    /*margin: 0 auto;*/
+    /*padding: 2rem;*/
     text-align: center;
-}
-
-.rounded-theme {
-    border-radius: var(--radius)
 }
