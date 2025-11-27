@@ -19,7 +19,7 @@ import {
     Edit3,
     Save,
 } from "lucide-react";
-import ManagePapersTab from "@/app/admin/dashboard/ManagePapersTab";
+import ManagePapersTab from "@/app/admin/dashboard/components/ManagePapersTab";
 import ManageUsersTab from "@/app/admin/dashboard/ManageUsersTab";
 
 type Archive = {

@@ -163,28 +163,31 @@ export const PATCH = async (req: NextRequest): Promise<NextResponse> => {
 export const POST = async (req: NextRequest): Promise<NextResponse> => {
     try {
         await authorize(req, "ADMIN");
-        // 1. Handle multipart/form-data for file uploads
+
+        // 1. Handle multipart/form-data
         const formData = await req.formData();
         const status = formData.get("status") as PaperStatus;
         const commentsJson = formData.get("comments") as string | null;
-        const paperId = formData.get("paperId") as string;
+        const paperId = formData.get("paperId") as string; // This is the submissionId (e.g. JCT_25...)
         const file = formData.get("file") as File | null;
 
-        if (!Array.isArray(commentsJson)) {
-            return NextResponse.json(
-                {error: "Comments must be an array"},
-                {status: 400},
-            );
-        }
+        // FIX 1: Parse comments JSON safely instead of checking Array.isArray on the string
         let comments: string[] = [];
         if (commentsJson) {
             try {
-                comments = JSON.parse(commentsJson);
+                const parsed = JSON.parse(commentsJson);
+                if (Array.isArray(parsed)) {
+                    comments = parsed;
+                } else {
+                    // Handle case where parsed JSON is just a string or object
+                    comments = [String(parsed)];
+                }
             } catch (e) {
-                // fallback or single string
+                // Fallback: treat the raw string as a single comment if parsing fails
                 comments = [commentsJson];
             }
         }
+
         if (!status || !paperId) {
             return NextResponse.json(
                 {error: "Status and paperId must be provided"},
@@ -192,15 +195,14 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
             );
         }
 
-
         const decodedData = await getTokenData(req);
         if (!decodedData.success) {
             return NextResponse.json({error: "Token not found"}, {status: 400});
         }
 
-        // Get internal paper ID if needed, though some queries use submissionId
-        const paperObj = await prisma.paper.findUnique({where: {submissionId: paperId}});
-        const internalId = paperObj?.id;
+        // Get internal paper ID
+        const paperObj = await prisma.paper.findUnique({ where: { submissionId: paperId } });
+        const internalId = paperObj?.id; // This is the UUID
 
         if (!internalId) {
             return NextResponse.json({error: "Paper not found"}, {status: 404});
@@ -224,7 +226,8 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
 
             const [updatedPaper, newStatus] = await prisma.$transaction([
                 prisma.paper.update({
-                    where: {id: paperId},
+                    // FIX 2: Use internalId (UUID) for 'id', or use 'submissionId: paperId'
+                    where: { id: internalId },
                     data: {
                         publishId: objectKey,
                         publishUrl: fileUrl,
@@ -239,15 +242,12 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
                         isApproved: true,
                     },
                     include: {
-                        paper: {
-                            include: {
-                                authors: true
-                            }
-                        },
+                        paper: { include: { authors: true } },
                     },
                 }),
             ]);
-            // notify on publication
+
+            // Notify on publication
             const author = newStatus.paper.authors[0];
             if (author) {
                 await sendStatusUpdateMail({
@@ -264,21 +264,16 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
             const newStatus = await prisma.status.create({
                 data: {
                     status,
-                    paperId,
+                    paperId, // references submissionId
                     comments,
                     changedById: decodedData.data.id,
-                    isApproved: true, // admin actions are always approved
+                    isApproved: true,
                 },
                 include: {
-                    paper: {
-                        include: {
-                            authors: true
-                        }
-                    },
+                    paper: { include: { authors: true } },
                 },
             });
 
-            // Notify on Admin direct status change
             const author = newStatus.paper.authors[0];
             if (author) {
                 await sendStatusUpdateMail({

@@ -5,13 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3fbf7134-2adf-435b-806d-6f4c015e4c97" name="Changes" comment="sync pnpm">
-      <change afterPath="$PROJECT_DIR$/src/app/unauthorized/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/admin/dashboard/components/ManagePapersTab.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/admin/dashboard/components/PaperDetailsSheet.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/admin/dashboard/components/PaperRow.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/admin/dashboard/types.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/track/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/track/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/edge.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/edge.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/wasm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/wasm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/proxy.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/proxy.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/admin/dashboard/ManagePapersTab.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/admin/dashboard/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/admin/dashboard/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/api/paper/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/paper/route.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/types/enums.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/enums.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,6 +99,8 @@
       <recent name="D:\WEB DEVELOPMENT\FREELANCING\jct\email" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\ARYAN\WEB DEVELOPMENT\FREELANCING\jct\src\app\admin\dashboard" />
+      <recent name="D:\ARYAN\WEB DEVELOPMENT\FREELANCING\jct\src\app\author\dashboard\components" />
       <recent name="D:\WEB DEVELOPMENT\FREELANCING\jct\src\app\api\admin\paper" />
     </key>
   </component>
@@ -235,7 +241,7 @@
       <workItem from="1763324393726" duration="1241000" />
       <workItem from="1763617102578" duration="13675000" />
       <workItem from="1763699392636" duration="12006000" />
-      <workItem from="1763839705131" duration="25903000" />
+      <workItem from="1763839705131" duration="29965000" />
     </task>
     <task id="LOCAL-00001" summary="adds JSDoc comments across the codebase for improved documentation and readability">
       <option name="closed" value="true" />

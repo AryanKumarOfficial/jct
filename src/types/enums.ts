@@ -40,11 +40,11 @@ export enum EmployeeRole {
  * - REJECTED: Indicates that the paper was not accepted for publication.
  */
 export enum PaperStatus {
-    DRAFT = "DRAFT",
     SUBMITTED = "SUBMITTED",
-    REVIEWED = "REVIEWED",
-    PUBLISHED = "PUBLISHED",
+    UNDER_REVIEW = "UNDER_REVIEW",
+    ACCEPTED = "ACCEPTED",
     REJECTED = "REJECTED",
+    PUBLISHED = "PUBLISHED",
 }
 
 /**
