@@ -70,7 +70,7 @@ export const POST = async (
         // 5. Prepare Data for PDF
         const primaryAuthor = paper.authors[0]; // Assuming primary author signs, or the specific logged in author
         // Ideally, we use the name of the person actually signing:
-        const signingAuthor = paper.authors.find((a) => a.id === userId) || primaryAuthor;
+        const signingAuthor = paper.authors.find((a:Author) => a.id === userId) || primaryAuthor;
 
         const authorName = `${signingAuthor.firstName} ${signingAuthor.lastName || ""}`.trim();
         const paperTitle = paper.name;
