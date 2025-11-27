@@ -1,14 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, Suspense, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Search, Loader2, AlertCircle, CheckCircle2, FileClock, History } from "lucide-react";
+import { useSearchParams } from "next/navigation";
 
-// Define the structure of a status update based on your API response
+// Define the structure of a status update
 interface Status {
     id: string;
     status: string;
@@ -20,22 +21,26 @@ interface Status {
     } | null;
 }
 
-export default function TrackSubmissionPage() {
-    const [paperId, setPaperId] = useState("");
+function TrackSubmissionContent() {
+    const searchParams = useSearchParams();
+    // Initialize state directly from URL if present
+    const [paperId, setPaperId] = useState(searchParams.get("id") || "");
     const [statusHistory, setStatusHistory] = useState<Status[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [searched, setSearched] = useState(false);
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
+    // Reusable fetch function
+    const fetchStatus = useCallback(async (id: string) => {
+        if (!id.trim()) return;
+
         setIsLoading(true);
         setError(null);
         setSearched(true);
         setStatusHistory([]);
 
         try {
-            const response = await fetch(`/api/author/status?paperId=${paperId}`);
+            const response = await fetch(`/api/author/status?paperId=${encodeURIComponent(id)}`);
             const data = await response.json();
 
             if (!response.ok) {
@@ -44,10 +49,24 @@ export default function TrackSubmissionPage() {
 
             setStatusHistory(data);
         } catch (err: any) {
-            setError(err.message);
+            setError(err instanceof Error ? err.message : "An unexpected error occurred.");
         } finally {
             setIsLoading(false);
         }
+    }, []);
+
+    // Effect: Automatically fetch status if ID is present in URL on mount
+    useEffect(() => {
+        const urlId = searchParams.get("id");
+        if (urlId) {
+            setPaperId(urlId); // Sync input with URL
+            fetchStatus(urlId);
+        }
+    }, [searchParams, fetchStatus]);
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        await fetchStatus(paperId);
     };
 
     return (
@@ -144,10 +163,25 @@ export default function TrackSubmissionPage() {
                     <Alert>
                         <AlertCircle className="h-4 w-4" />
                         <AlertTitle>No Results</AlertTitle>
-                        <AlertDescription>No status history was found for that ID. Please check the ID and try again.</AlertDescription>
+                        <AlertDescription>
+                            No status history was found for that ID. Please check the ID and try again.
+                        </AlertDescription>
                     </Alert>
                 )}
             </div>
         </div>
+    );
+}
+
+// Suspense wrapper to handle useSearchParams safely in Next.js
+export default function TrackSubmissionPage() {
+    return (
+        <Suspense fallback={
+            <div className="flex h-screen items-center justify-center">
+                <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            </div>
+        }>
+            <TrackSubmissionContent />
+        </Suspense>
     );
 }
