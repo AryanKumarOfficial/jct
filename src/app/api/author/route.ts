@@ -70,12 +70,13 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
         let keywords: string[] | undefined;
         if (keywordsStr) {
             try {
-                keywords = JSON.parse(keywordsStr);
-                if (!Array.isArray(keywords))
+                const parsed = JSON.parse(keywordsStr);
+                if (!Array.isArray(parsed))
                     return NextResponse.json(
                         {error: "keywords must be an array"},
                         {status: 400},
                     );
+                keywords = parsed.length > 0 ? parsed : undefined;
             } catch (e) {
                 return NextResponse.json(
                     {

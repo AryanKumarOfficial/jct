@@ -1,6 +1,6 @@
 import StatusUpdateEmail from "@/../emails/StatusUpdateEmail";
-import { renderTemplate } from "@/lib/mail/methods/renderTemplate";
-import { sendMail } from "@/lib/mail/sendMail";
+import {renderTemplate} from "@/lib/mail/methods/renderTemplate";
+import {sendMail} from "@/lib/mail/sendMail";
 
 interface SendStatusUpdateMailProps {
     email: string;
@@ -9,10 +9,12 @@ interface SendStatusUpdateMailProps {
     submissionId: string;
     newStatus: string;
     comments?: string[];
+    paymentLink?: string;
+    amount?: number;
 }
 
 /**
- * Sends a status update email to the author.
+ * Sends a status update email to the author, optionally with a payment link.
  */
 export async function sendStatusUpdateMail({
                                                email,
@@ -21,6 +23,8 @@ export async function sendStatusUpdateMail({
                                                submissionId,
                                                newStatus,
                                                comments,
+                                               paymentLink,
+                                               amount
                                            }: SendStatusUpdateMailProps): Promise<void> {
     try {
         const content = await renderTemplate(StatusUpdateEmail, {
@@ -29,6 +33,8 @@ export async function sendStatusUpdateMail({
             submissionId,
             newStatus,
             comments,
+            paymentLink,
+            amount
         });
 
         await sendMail({
@@ -38,6 +44,5 @@ export async function sendStatusUpdateMail({
         });
     } catch (e) {
         console.error(`Error sending status update email: `, e);
-        // We don't throw here to prevent failing the entire transaction if email fails
     }
 }

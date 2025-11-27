@@ -65,7 +65,7 @@ const usePaperActions = (paper: Paper, onRefresh: () => void) => {
         const formData = new FormData();
         formData.append("status", status);
         formData.append("paperId", paper.submissionId);
-        formData.append("comments", JSON.stringify(["Admin manual override"]));
+        formData.append("comments", JSON.stringify(["Status Updated"]));
         const res = await fetch("/api/admin/paper/status", {method: "POST", body: formData});
         if (!res.ok) throw new Error("Status update failed");
     }, `Status set to ${status}`);

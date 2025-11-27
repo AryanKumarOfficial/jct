@@ -6,11 +6,10 @@ import {
     Heading,
     Hr,
     Html,
-    Img,
     Preview,
     Section,
-    Tailwind,
     Text,
+    Tailwind,
 } from "@react-email/components";
 import * as React from "react";
 
@@ -20,106 +19,84 @@ interface StatusUpdateEmailProps {
     submissionId: string;
     newStatus: string;
     comments?: string[];
+    paymentLink?: string;
+    amount?: number;
 }
 
-const baseUrl = process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
-    : "http://localhost:3000";
-
-const logoUrl = "https://placehold.co/120x50/f0f9ff/0ea5e9?text=JCT+Journal";
-
-export const StatusUpdateEmail = ({
-                                      firstName = "Author",
-                                      paperTitle = "A Novel Approach to AI",
-                                      submissionId = "JCT-25-001",
-                                      newStatus = "REVIEWED",
-                                      comments = [],
-                                  }: StatusUpdateEmailProps) => {
-    // Helper to format status for display
-    const formattedStatus = newStatus.replace(/_/g, " ").toUpperCase();
-
-    // Dynamic color based on status
-    const statusColor =
-        newStatus === "PUBLISHED"
-            ? "text-green-600"
-            : newStatus === "REJECTED"
-                ? "text-red-600"
-                : "text-blue-600";
+export default function StatusUpdateEmail({
+                                              firstName,
+                                              paperTitle,
+                                              submissionId,
+                                              newStatus,
+                                              comments = [],
+                                              paymentLink,
+                                              amount,
+                                          }: StatusUpdateEmailProps) {
+    const isAccepted = newStatus === "ACCEPTED" && paymentLink;
 
     return (
         <Html>
-            <Tailwind
-                config={{
-                    theme: {
-                        extend: {
-                            colors: {
-                                brand: "#0891b2",
-                            },
-                        },
-                    },
-                }}
-            >
-                <Head />
-                <Preview>Update on your submission: {submissionId}</Preview>
-                <Body className="bg-gray-100 font-sans text-gray-800">
-                    <Container className="bg-white border border-gray-200 rounded-lg shadow-sm my-12 mx-auto p-8 max-w-xl">
-                        <Section className="text-center">
-                            <Img src={logoUrl} width="120" alt="JCT Logo" className="mx-auto" />
-                        </Section>
-
-                        <Heading className="text-xl font-semibold text-center mt-6">
-                            Status Update
+            <Head/>
+            <Preview>Status Update for {submissionId}</Preview>
+            <Tailwind>
+                <Body className="bg-white my-auto mx-auto font-sans">
+                    <Container
+                        className="border border-solid border-[#eaeaea] rounded my-[40px] mx-auto p-[20px] w-[465px]">
+                        <Heading className="text-black text-[24px] font-normal text-center p-0 my-[30px] mx-0">
+                            JCT Journal Status Update
                         </Heading>
-
-                        <Text className="text-base leading-7">Dear {firstName},</Text>
-
-                        <Text className="text-base leading-7">
-                            The status of your paper <strong>"{paperTitle}"</strong> ({submissionId}) has been updated.
+                        <Text className="text-black text-[14px] leading-[24px]">
+                            Dear <strong>{firstName}</strong>,
+                        </Text>
+                        <Text className="text-black text-[14px] leading-[24px]">
+                            The status of your paper titled <strong>"{paperTitle}"</strong> (ID: {submissionId}) has
+                            been updated to:
                         </Text>
 
-                        <Section className="bg-gray-50 border border-gray-200 rounded p-4 text-center my-4">
-                            <Text className="text-sm text-gray-500 m-0 uppercase tracking-wider">
-                                Current Status
+                        <Section className="text-center my-[20px]">
+                            <Text className="text-blue-600 font-bold text-[20px] uppercase tracking-wider">
+                                {newStatus.replace("_", " ")}
                             </Text>
-                            <Heading
-                                as="h2"
-                                className={`text-2xl font-bold m-0 mt-2 ${statusColor}`}
-                            >
-                                {formattedStatus}
-                            </Heading>
                         </Section>
 
-                        {comments && comments.length > 0 && (
-                            <Section className="my-6">
-                                <Text className="font-semibold mb-2">Editor/Reviewer Comments:</Text>
-                                <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 italic text-gray-700">
-                                    {comments.map((comment, idx) => (
-                                        <Text key={idx} className="m-0 mb-2 last:mb-0">
-                                            "{comment}"
-                                        </Text>
-                                    ))}
-                                </div>
+                        {comments.length > 0 && (
+                            <Section className="bg-gray-50 p-4 rounded-md mb-[20px]">
+                                <Text className="font-bold m-0 mb-2 text-gray-700">Comments from
+                                    Reviewers/Editor:</Text>
+                                {comments.map((comment, index) => (
+                                    <Text key={index} className="text-gray-600 text-[14px] m-0 mb-1">
+                                        • {comment}
+                                    </Text>
+                                ))}
                             </Section>
                         )}
 
-                        <Section className="text-center mt-8">
-                            <Button
-                                className="bg-brand text-white font-semibold rounded-md px-6 py-3"
-                                href={`${baseUrl}/track`}
-                            >
-                                View Submission Dashboard
-                            </Button>
-                        </Section>
+                        {isAccepted && (
+                            <Section className="text-center my-[32px]">
+                                <Text className="text-black text-[14px] leading-[24px] mb-4">
+                                    Congratulations! To proceed with the publication, please complete the publication
+                                    fee payment of <strong>₹{amount}</strong>.
+                                </Text>
+                                <Button
+                                    className="bg-[#000000] rounded text-white text-[12px] font-semibold no-underline text-center px-5 py-3"
+                                    href={paymentLink}
+                                >
+                                    Pay Publication Fee Now
+                                </Button>
+                                <Text className="text-gray-500 text-[12px] mt-4">
+                                    Or use this link: <a href={paymentLink}
+                                                         className="text-blue-600 underline">{paymentLink}</a>
+                                </Text>
+                            </Section>
+                        )}
 
-                        <Hr className="border-t border-gray-300 my-8" />
-                        <Text className="text-xs text-center text-gray-500">
-                            JCT Journal System • Automated Notification
+                        <Hr className="border border-solid border-[#eaeaea] my-[26px] mx-0 w-full"/>
+                        <Text className="text-[#666666] text-[12px] leading-[24px]">
+                            This is an automated message. Please do not reply to this email.
                         </Text>
                     </Container>
                 </Body>
             </Tailwind>
         </Html>
     );
-};
-
-export default StatusUpdateEmail;
+}

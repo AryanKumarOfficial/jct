@@ -20,20 +20,37 @@ export const GET = async (req: NextRequest): Promise<NextResponse> => {
         const searchParams = req.nextUrl.searchParams;
         const mode = searchParams.get(`mode`);
         if (mode === `latest`) {
-                const latestArchive = await prisma.archive.findFirst({
-                    orderBy: {createdAt: "desc"},
-                    include: {papers: true},
-                });
+            const latestArchive = await prisma.archive.findFirst({
+                orderBy: {createdAt: "desc"},
+                include: {
+                    papers: true
+                },
+            });
             return NextResponse.json([latestArchive]);
         }
         const archives = await prisma.archive.findMany({
+            where: {
+                papers: {
+                    some: {
+                        paperStatuses: {
+                            some: {
+                                status: `PUBLISHED`
+                            }
+                        }
+                    }
+                }
+            },
             orderBy: [
                 {year: "desc"}, // 1. first, by the most recent year
                 {volume: "desc"}, // 2. Then, by the highest volume number
                 {issue: "desc"}, // 3. finally, order by the highest issue number
             ],
             include: {
-                papers: true,
+                papers: {
+                    include: {
+                        authors: true
+                    }
+                },
                 _count: true,
             },
         });

@@ -162,7 +162,6 @@ export default function RootLayout({
             <Footer />
 
             {/* Global toasts (client component) — keep inside Providers so theme/context works */}
-            <Toaster position="top-center" richColors />
         </Providers>
         </body>
         </html>
