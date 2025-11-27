@@ -1,39 +1,54 @@
-import {type NextRequest, NextResponse} from "next/server";
-import {decodeJwtToken} from "@/utils/token";
+import { type NextRequest, NextResponse } from "next/server";
+import { decodeJwtToken } from "@/utils/token";
 
 /**
  * Handles authorization for incoming requests by validating a provided JWT token and user's role.
  *
- * This asynchronous function retrieves the authorization token from the request headers,
- * decodes it, and checks if the user's role matches the required role. If the token is
- * missing or the role does not match, it returns an appropriate HTTP response with error
- * details and status code.
+ * Checks if the user's role in the token matches the required role.
  *
- * @param {NextRequest} req - The HTTP request object containing the authorization header.
- * @param {string} [role="AUTHOR"] - The required user role to access the resource. Defaults to "AUTHOR".
- * @returns {Promise<NextResponse>} A NextResponse object representing the result of the authorization check.
+ * @param {NextRequest} req - The HTTP request object.
+ * @param {string} [role="AUTHOR"] - The required user role (e.g., "AUTHOR", "ADMIN", "EDITOR").
+ * @returns {Promise<NextResponse | void>} Returns a NextResponse if unauthorized, otherwise returns void (undefined) to allow continuation.
  */
-export const authorize = async (req: NextRequest, role: string = "AUTHOR"): Promise<NextResponse | void> => {
+export const authorize = async (
+    req: NextRequest,
+    role: string = "AUTHOR"
+): Promise<NextResponse | void> => {
     const token = req.cookies?.get?.("authToken")?.value ?? null;
+
     if (!token) {
         return NextResponse.json(
-            {error: `Authorization token is missing at middleware`},
-            {status: 401},
+            { error: "Authorization token is missing" },
+            { status: 401 }
         );
     }
 
-    let payload;
     try {
+        const payload = await decodeJwtToken({ token });
 
-        payload = await decodeJwtToken({token});
+        if (!payload) {
+            return NextResponse.json(
+                { error: "Invalid or expired token" },
+                { status: 401 }
+            );
+        }
+
+        // Role-based Access Control (RBAC)
+        // If the required role is ADMIN, we might strictly require ADMIN.
+        // If the role is AUTHOR, we strictly require AUTHOR.
+        if (payload.role !== role) {
+            return NextResponse.json(
+                { error: `Access forbidden: Requires ${role} privileges` },
+                { status: 403 }
+            );
+        }
+
+        // Authorization successful - function completes without returning a response
     } catch (e) {
-        return NextResponse.json({error: "Invalid or expired token"}, {status: 401});
+        console.error("Authorization error:", e);
+        return NextResponse.json(
+            { error: "Internal Server Error during authorization" },
+            { status: 500 }
+        );
     }
-    if (!payload || payload.role !== role) {
-        console.log(`payload:`, payload)
-        console.log(`User role: ${payload?.role} does not match required role: ${role}`)
-        return NextResponse.json({error: `Only a ${role} can perform this action`}, {status: 403});
-    }
-
-
 };
