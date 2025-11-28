@@ -1,7 +1,23 @@
-import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
-import { authorize } from "@/utils/authorize";
-import { getTokenData } from "@/utils/token";
+import {NextRequest, NextResponse} from "next/server";
+import {prisma} from "@/lib/prisma";
+import {authorize} from "@/utils/authorize";
+import {getTokenData} from "@/utils/token";
+import type {Prisma} from "@prisma/client";
+
+import {type status as Status} from "@/generated/prisma";
+
+type AuthorWithPapers = Prisma.authorGetPayload<{
+    include: {
+        papers: {
+            include: {
+                paperStatuses: true,
+                Copyright: true
+            };
+            orderBy?: any
+        }
+    }
+}>;
+
 
 export const GET = async (req: NextRequest) => {
     try {
@@ -12,28 +28,28 @@ export const GET = async (req: NextRequest) => {
         // 2. Get User ID from Token
         const tokenData = await getTokenData(req);
         if (!tokenData.success) {
-            return NextResponse.json({ error: "Invalid token" }, { status: 401 });
+            return NextResponse.json({error: "Invalid token"}, {status: 401});
         }
 
         // 3. Fetch Author Details & Papers
-        const author = await prisma.author.findUnique({
-            where: { id: tokenData.data.id },
+        const author = (await prisma.author.findUnique({
+            where: {id: tokenData.data.id},
             include: {
                 papers: {
-                    orderBy: { createdAt: "desc" },
+                    orderBy: {createdAt: "desc"},
                     include: {
                         paperStatuses: {
-                            orderBy: { createdAt: "desc" }, // Get latest status first
+                            orderBy: {createdAt: "desc"}, // Get latest status first
                             take: 1,
                         },
                         Copyright: true, // Check if copyright exists/is signed
                     },
                 },
             },
-        });
+        })) as AuthorWithPapers | null;
 
         if (!author) {
-            return NextResponse.json({ error: "Author not found" }, { status: 404 });
+            return NextResponse.json({error: "Author not found"}, {status: 404});
         }
 
         // 4. Format data for the dashboard
@@ -48,7 +64,7 @@ export const GET = async (req: NextRequest) => {
             },
             stats: {
                 total: author.papers.length,
-                accepted: author.papers.filter(p => p.paperStatuses[0]?.status === 'ACCEPTED').length,
+                accepted: author.papers.filter((p) => p.paperStatuses[0]?.status === 'ACCEPTED').length,
                 published: author.papers.filter(p => p.paperStatuses[0]?.status === 'PUBLISHED').length,
             },
             papers: author.papers.map((paper) => {
@@ -72,8 +88,8 @@ export const GET = async (req: NextRequest) => {
     } catch (error) {
         console.error("Dashboard API Error:", error);
         return NextResponse.json(
-            { error: "Internal Server Error" },
-            { status: 500 }
+            {error: "Internal Server Error"},
+            {status: 500}
         );
     }
 };
