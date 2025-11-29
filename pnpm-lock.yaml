@@ -111,6 +111,9 @@ importers:
       nodemailer:
         specifier: ^7.0.6
         version: 7.0.6
+      pg:
+        specifier: ^8.16.3
+        version: 8.16.3
       puppeteer:
         specifier: ^24.25.0
         version: 24.25.0(typescript@5.9.3)
@@ -160,6 +163,9 @@ importers:
       '@types/node':
         specifier: ^20
         version: 20.19.19
+      '@types/pg':
+        specifier: ^8.15.6
+        version: 8.15.6
       '@types/react':
         specifier: 19.2.6
         version: 19.2.6
@@ -2067,6 +2073,9 @@ packages:
 
   '@types/normalize-path@3.0.2':
     resolution: {integrity: sha512-DO++toKYPaFn0Z8hQ7Tx+3iT9t77IJo/nDiqTXilgEP+kPNIYdpS9kh3fXuc53ugqwp9pxC1PVjCpV1tQDyqMA==}
+
+  '@types/pg@8.15.6':
+    resolution: {integrity: sha512-NoaMtzhxOrubeL/7UZuNTrejB4MPAJ0RpxZqXQf2qXuVlTPuG6Y8p4u9dKRaue4yjmC7ZhzVO2/Yyyn25znrPQ==}
 
   '@types/prismjs@1.26.5':
     resolution: {integrity: sha512-AUZTa7hQ2KY5L7AmtSiqxlhWxb4ina0yd8hNbl4TWuqnv/pFP0nDMb3YrfSBf4hJVGLh2YEIBfKaBW/9UEl6IQ==}
@@ -6944,6 +6953,12 @@ snapshots:
       - aws-crt
 
   '@types/normalize-path@3.0.2': {}
+
+  '@types/pg@8.15.6':
+    dependencies:
+      '@types/node': 20.19.19
+      pg-protocol: 1.10.3
+      pg-types: 2.2.0
 
   '@types/prismjs@1.26.5': {}
 
