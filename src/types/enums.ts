@@ -1,6 +1,6 @@
 // types/enums.ts
 
-import {type archive} from "@prisma/client";
+import {type archive} from "@/generated/prisma";
 
 /**
  * Enum representing the roles of an employee in the system.
