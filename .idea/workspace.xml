@@ -5,32 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3fbf7134-2adf-435b-806d-6f4c015e4c97" name="Changes" comment="sync pnpm">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prisma/schema.prisma" beforeDir="false" afterPath="$PROJECT_DIR$/prisma/schema.prisma" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/browser.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/client.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/commonInputTypes.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/enums.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/internal/class.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/internal/prismaNamespace.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/internal/prismaNamespaceBrowser.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/ActivityLog.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/Copyright.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/IdCounter.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/WalletTransaction.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/archive.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/author.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/employee.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/paper.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/status.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/transaction.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/prisma.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/prisma.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/types/enums.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/enums.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,9 +44,6 @@
 }</component>
   <component name="PackageJsonUpdateNotifier">
     <dismissed value="$PROJECT_DIR$/package.json" />
-  </component>
-  <component name="PrismaServiceSettings">
-    <option name="lspServerPackageName" value="D:\ARYAN\WEB DEVELOPMENT\FREELANCING\jct\node_modules\@prisma\language-server" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7
