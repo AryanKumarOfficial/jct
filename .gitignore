@@ -39,7 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-src/genrated
+src/generated
 debug.log
 
 .idea/
