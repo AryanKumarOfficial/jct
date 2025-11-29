@@ -1,0 +1,24 @@
+version: "3.9"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+      target: dev
+    container_name: next_dev
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: development
+      DATABASE_URL: ${DATABASE_URL}
+      WATCHPACK_POLLING: "true"
+    volumes:
+      - .:/app:cached
+      - /app/.next
+    command: >
+      sh -c "
+        pnpm prisma generate &&
+        pnpm dev
+      "

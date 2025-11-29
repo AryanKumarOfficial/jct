@@ -6,7 +6,7 @@
 
 # Docker related files (so they aren't copied into the image itself)
 Dockerfile
-Dockerfile.*
+Dockerfile-dev
 docker-compose*.yml
 .dockerignore
 .docker

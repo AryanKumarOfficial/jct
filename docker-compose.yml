@@ -1,62 +1,14 @@
-version: '3.8'
+version: "3.9"
 
 services:
-  # PostgresSQL Database Service
-  db:
-    image: postgres:15
-    container_name: myapp_db_dev
-    restart: unless-stopped
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: next_prod
     environment:
-      POSTGRES_USER: ${POSTGRES_USER:-postgres}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
-      POSTGRES_DB: ${POSTGRES_DB:-myapp}
+      NODE_ENV: production
+      DATABASE_URL: ${DATABASE_URL}
     ports:
-      - "5432:5432"
-    volumes:
-      - db_data:/var/lib/postgresql/data
-    healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-myapp} || exit 1" ]
-      interval: 5s
-      timeout: 3s
-      retries: 5
-    networks:
-      - myapp_network
-
-
-  # Next.js Application Service
-#  app:
-#    build:
-#      context: .
-#      dockerfile: Dockerfile
-#      target: dev
-#    container_name: myapp_next_dev
-#    restart: unless-stopped
-#    ports:
-#      - "3000:3000"
-#    environment:
-#      NODE_ENV: development
-#      PORT: 3000
-#      HOSTNAME: "0.0.0.0"
-#      DATABASE_URL: "postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@db:5432/${POSTGRES_DB:-myapp}?schema=public"
-#      WATCHPACK_POLLING: "true"
-#    volumes:
-#      - .:/app:cached          # Improve file change detection performance
-#      - /app/node_modules      # Prevent overwriting node_modules
-#      - /app/.next             # Keep .next cache inside container
-#    depends_on:
-#      db:
-#        condition: service_healthy
-#    networks:
-#      - myapp_network
-#    command: >
-#      sh -c "
-#        npx prisma migrate dev --name init &&
-#        npm run dev
-#      "
-#
-volumes:
-  db_data:
-
-networks:
-  myapp_network:
-    driver: bridge
+      - "3000:3000"
+    restart: always

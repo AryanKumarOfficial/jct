@@ -4,7 +4,6 @@ import {authorize} from "@/utils/authorize";
 import {getTokenData} from "@/utils/token";
 import type {Prisma} from "@prisma/client";
 
-import {type status as Status} from "@/generated/prisma";
 
 type AuthorWithPapers = Prisma.authorGetPayload<{
     include: {
