@@ -2,7 +2,7 @@ import {NextRequest, NextResponse} from "next/server";
 import {prisma} from "@/lib/prisma";
 import {authorize} from "@/utils/authorize";
 import {getTokenData} from "@/utils/token";
-import type {Prisma} from "@prisma/client";
+import type {Prisma} from "@/generated/prisma";
 
 
 type AuthorWithPapers = Prisma.authorGetPayload<{

@@ -3,7 +3,7 @@ import { type NextRequest, NextResponse } from "next/server";
 import { sendNewEditorMail } from "@/lib/mail/methods/sendNewEditorMail";
 import { prisma } from "@/lib/prisma";
 import { authorize } from "@/utils/authorize";
-import { Prisma } from "@prisma/client"; // 1. Import Prisma types
+import { Prisma } from "@/generated/prisma"; // 1. Import Prisma types
 
 /**
  * Handles the HTTP POST request for creating a new employee.

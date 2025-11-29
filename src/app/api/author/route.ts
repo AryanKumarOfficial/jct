@@ -1,6 +1,6 @@
 // app/api/paper/route.ts
 
-import {Prisma} from "@prisma/client";
+import {Prisma} from "@/generated/prisma";
 import bcryptjs from "bcryptjs";
 import {lookup} from "mime-types";
 import {type NextRequest, NextResponse} from "next/server";

@@ -17,6 +17,7 @@ node_modules
 
 # Build artifacts and caches
 .next
+src/generated
 out
 dist
 build

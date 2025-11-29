@@ -5,19 +5,47 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3fbf7134-2adf-435b-806d-6f4c015e4c97" name="Changes" comment="sync pnpm">
-      <change afterPath="$PROJECT_DIR$/k8s/deployment.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/k8s/ingress.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/k8s/secret-db.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/k8s/service.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.dockerignore" beforeDir="false" afterPath="$PROJECT_DIR$/.dockerignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/prisma.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/prisma.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/prisma/schema.prisma" beforeDir="false" afterPath="$PROJECT_DIR$/prisma/schema.prisma" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/api/admin/auth/create/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/admin/auth/create/route.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/api/author/dashboard/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/author/dashboard/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/edge.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/edge.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/wasm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/wasm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/api/author/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/author/route.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/client.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/client.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/default.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/default.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/edge.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/edge.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/index-browser.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/index.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/libquery_engine-linux-musl-openssl-3.0.x.so.node" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/query_engine-windows.dll.node" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/query_engine_bg.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/query_engine_bg.wasm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/runtime/edge-esm.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/runtime/edge.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/runtime/index-browser.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/runtime/index-browser.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/runtime/library.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/runtime/library.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/runtime/react-native.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/runtime/wasm-compiler-edge.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/runtime/wasm-engine-edge.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/schema.prisma" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/wasm-edge-light-loader.mjs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/wasm-worker-loader.mjs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/wasm.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/wasm.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lib/prisma.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/prisma.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,6 +82,9 @@
 }</component>
   <component name="PackageJsonUpdateNotifier">
     <dismissed value="$PROJECT_DIR$/package.json" />
+  </component>
+  <component name="PrismaServiceSettings">
+    <option name="lspServerPackageName" value="D:\ARYAN\WEB DEVELOPMENT\FREELANCING\jct\node_modules\@prisma\language-server" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7
@@ -250,7 +281,11 @@
       <workItem from="1763699392636" duration="12006000" />
       <workItem from="1763839705131" duration="46620000" />
       <workItem from="1764395599624" duration="42000" />
-      <workItem from="1764428926755" duration="1014000" />
+      <workItem from="1764428926755" duration="2418000" />
+      <workItem from="1764447618677" duration="82000" />
+      <workItem from="1764447703305" duration="9000" />
+      <workItem from="1764447756771" duration="95000" />
+      <workItem from="1764447906246" duration="4703000" />
     </task>
     <task id="LOCAL-00001" summary="adds JSDoc comments across the codebase for improved documentation and readability">
       <option name="closed" value="true" />
@@ -299,7 +334,8 @@
     <option name="version" value="3" />
     <option name="exactExcludedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/utils/cloudflare.js" />
+        <option value="$PROJECT_DIR$/src/generated/prisma/client.js" />
+        <option value="$PROJECT_DIR$/src/generated/prisma/client.d.ts" />
       </list>
     </option>
   </component>
