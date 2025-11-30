@@ -1,15 +1,16 @@
 import React, {JSX} from "react";
-import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
+import type {Metadata, Viewport} from "next";
+import {Inter} from "next/font/google";
 import "./globals.css";
 import Providers from "@/app/providers";
 import Header from "@/components/layout/header/index";
 import Footer from "@/components/layout/footer/index";
-import { AnnouncementBar } from "@/components/layout/announcement-bar";
-import { Toaster } from "@/components/ui/sonner";
-import { cn } from "@/lib/utils";
+import {AnnouncementBar} from "@/components/layout/announcement-bar";
+import {Toaster} from "@/components/ui/sonner";
+import {cn} from "@/lib/utils";
+import Script from "next/script";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const inter = Inter({subsets: ["latin"], variable: "--font-inter"});
 
 // --- App constants ---
 const APP_NAME = "JCT Journals";
@@ -43,7 +44,7 @@ export const metadata: Metadata = {
         "Engineering Research",
         "Scientific Publishing",
     ],
-    authors: [{ name: "JCT Journals Editorial Board" }],
+    authors: [{name: "JCT Journals Editorial Board"}],
     creator: APP_NAME,
     publisher: APP_NAME,
     formatDetection: {
@@ -97,8 +98,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
     themeColor: [
-        { media: "(prefers-color-scheme: light)", color: "white" },
-        { media: "(prefers-color-scheme: dark)", color: "black" },
+        {media: "(prefers-color-scheme: light)", color: "white"},
+        {media: "(prefers-color-scheme: dark)", color: "black"},
     ],
     width: "device-width",
     initialScale: 1,
@@ -131,8 +132,8 @@ export default function RootLayout({
     };
 
     return (
-        <html lang="en" className="scroll-smooth" suppressHydrationWarning style={{ scrollBehavior: 'smooth' }}>
-        <head />
+        <html lang="en" className="scroll-smooth" suppressHydrationWarning style={{scrollBehavior: 'smooth'}}>
+        <head/>
         <body
             className={cn(
                 inter.className,
@@ -144,22 +145,25 @@ export default function RootLayout({
             key="ld-json"
             type="application/ld+json"
             // JSON-LD is intentionally small — stringify once for safety
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            dangerouslySetInnerHTML={{__html: JSON.stringify(jsonLd)}}
         />
-
+        <Script
+            src={"https://checkout.razorpay.com/v1/checkout.js"}
+            strategy={"lazyOnload"}
+        />
         <Providers>
             {/* Announcement Bar */}
-            <AnnouncementBar />
-            
+            <AnnouncementBar/>
+
             {/* Header stays outside main so it doesn't affect layout flow */}
-            <Header />
+            <Header/>
 
             {/* Main container: centered, responsive padding and max-width for readability */}
             <main className="flex-1 w-full mx-auto">
                 {children}
             </main>
 
-            <Footer />
+            <Footer/>
 
             {/* Global toasts (client component) — keep inside Providers so theme/context works */}
         </Providers>

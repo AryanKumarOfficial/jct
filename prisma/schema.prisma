@@ -27,6 +27,7 @@ enum paymentStatus {
   FAILED
   PENDING
   SUCCESS
+  COMPLETED
 }
 
 enum ActivityType {
