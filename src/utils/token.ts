@@ -33,7 +33,6 @@ export const decodeJwtToken = async ({token}: { token: string }) => {
         const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY as string);
 
         if (typeof decoded === "object" && decoded !== null) {
-            console.log(`token decoded successfully`, decoded as CustomJwtPayload);
             return decoded as CustomJwtPayload;
         }
         return null;

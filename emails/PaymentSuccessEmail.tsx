@@ -92,15 +92,15 @@ export const PaymentSuccessEmail = ({
                         <Hr className="border-gray-200 my-4" />
 
                         <div className="flex justify-between mb-2">
-                            <Text className="m-0 text-sm font-semibold text-gray-500">Payment ID</Text>
+                            <Text className="m-0 text-sm font-semibold text-gray-500 mr-2">Payment ID:</Text>
                             <Text className="m-0 text-sm text-gray-800 font-mono">{paymentId}</Text>
                         </div>
                         <div className="flex justify-between mb-2">
-                            <Text className="m-0 text-sm font-semibold text-gray-500">Order ID</Text>
+                            <Text className="m-0 text-sm font-semibold text-gray-500 mr-2">Order ID:</Text>
                             <Text className="m-0 text-sm text-gray-800 font-mono">{orderId}</Text>
                         </div>
                         <div className="flex justify-between">
-                            <Text className="m-0 text-sm font-semibold text-gray-500">Date</Text>
+                            <Text className="m-0 text-sm font-semibold text-gray-500 mr-2">Date:</Text>
                             <Text className="m-0 text-sm text-gray-800">{date}</Text>
                         </div>
                     </Section>
