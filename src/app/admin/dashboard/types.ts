@@ -1,4 +1,4 @@
-import { PaperStatus } from "@/types/enums";
+import {PaperStatus} from "@/types/enums";
 
 export interface Author {
     id: string;
@@ -14,6 +14,19 @@ export interface Status {
     paperId: string;
     comments: string[];
     createdAt: string;
+}
+
+export interface Copyright {
+    id: string;
+    copyrightStatus: "PENDING" | "SIGNED";
+    pdfUrl: string | null;
+    signedAt: string;
+}
+
+export interface Transaction {
+    id: string;
+    status: string;
+    amount: number;
 }
 
 export interface Editor {
@@ -33,4 +46,6 @@ export interface Paper {
     authors: Author[];
     paperStatuses: Status[];
     createdAt: string;
+    Copyright?: Copyright | null;
+    transactions?: Transaction[];
 }

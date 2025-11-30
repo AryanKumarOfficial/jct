@@ -1,5 +1,5 @@
-import { prisma } from "@/lib/prisma";
-import { NextResponse } from "next/server";
+import {prisma} from "@/lib/prisma";
+import {NextResponse} from "next/server";
 
 export const GET = async () => {
     try {
@@ -24,6 +24,19 @@ export const GET = async () => {
                     orderBy: {
                         createdAt: 'desc'
                     }
+                },
+                Copyright: true,
+                transactions: {
+                    where: {
+                        status: {
+                            in: ["SUCCESS", "COMPLETED"]
+                        }
+                    },
+                    select: {
+                        id: true,
+                        status: true,
+                        amount: true
+                    }
                 }
             },
             orderBy: {
@@ -32,11 +45,11 @@ export const GET = async () => {
         });
 
         if (!papers) {
-            return NextResponse.json({ error: `No Papers Found` }, { status: 404 });
+            return NextResponse.json({error: `No Papers Found`}, {status: 404});
         }
         return NextResponse.json(papers);
     } catch (e) {
         console.log(`Failed to fetch Papers`, e);
-        return NextResponse.json({ error: `Internal Server Error` }, { status: 500 })
+        return NextResponse.json({error: `Internal Server Error`}, {status: 500})
     }
 }

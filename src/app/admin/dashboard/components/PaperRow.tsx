@@ -21,7 +21,7 @@ import {
     AlertTriangle,
     Loader2,
     Calendar,
-    FileText
+    FileText, Lock
 } from "lucide-react";
 import {toast} from "sonner";
 import {PaperStatus} from "@/types/enums";
@@ -101,7 +101,7 @@ export const PaperRow = memo(function PaperRow({paper, editors, onRefresh}: {
     const latestStatus = paper.paperStatuses[0];
     const statusEnum = latestStatus?.status || "SUBMITTED";
     const isPending = latestStatus && !latestStatus.isApproved;
-
+    const isPaid = paper.transactions && paper.transactions.length > 0 && (paper.transactions[0].status === "COMPLETED" || paper.transactions[0].status === "SUCCESS");
     // Status Badge Logic
     const getStatusBadge = () => {
         const styles = {
@@ -161,8 +161,7 @@ export const PaperRow = memo(function PaperRow({paper, editors, onRefresh}: {
             </td>
 
             <td className="p-4 align-middle text-right">
-                <div
-                    className="flex items-center justify-end gap-2 opacity-0 transition-opacity group-hover:opacity-100">
+                <div className="flex items-center justify-end gap-2 opacity-0 transition-opacity group-hover:opacity-100">
                     <PaperDetailsSheet paper={paper}/>
 
                     <DropdownMenu>
@@ -175,20 +174,17 @@ export const PaperRow = memo(function PaperRow({paper, editors, onRefresh}: {
                             <DropdownMenuLabel>Actions</DropdownMenuLabel>
                             <DropdownMenuSeparator/>
 
-                            {/* Approve Status */}
                             {isPending && (
-                                <DropdownMenuItem onClick={() => approveStatus(latestStatus.id)}
-                                                  className="text-green-600 focus:text-green-700">
+                                <DropdownMenuItem onClick={() => approveStatus(latestStatus.id)} className="text-green-600">
                                     <CheckCircle2 className="mr-2 h-4 w-4"/> Approve Status
                                 </DropdownMenuItem>
                             )}
 
-                            {/* Assign Editor Submenu */}
                             <DropdownMenuSub>
                                 <DropdownMenuSubTrigger>
                                     <UserPlus className="mr-2 h-4 w-4"/> Assign Editor
                                 </DropdownMenuSubTrigger>
-                                <DropdownMenuSubContent className="max-h-[200px] overflow-y-auto">
+                                <DropdownMenuSubContent>
                                     {editors.map(e => (
                                         <DropdownMenuItem key={e.id} onClick={() => assignEditor(e.id)}>
                                             {e.firstName} {e.lastName}
@@ -197,10 +193,14 @@ export const PaperRow = memo(function PaperRow({paper, editors, onRefresh}: {
                                 </DropdownMenuSubContent>
                             </DropdownMenuSub>
 
-                            {/* Override Status Submenu */}
+                            {/* [MODIFIED] Restrict Force Status if Paid */}
                             <DropdownMenuSub>
-                                <DropdownMenuSubTrigger>
-                                    <AlertTriangle className="mr-2 h-4 w-4"/> Force Status
+                                <DropdownMenuSubTrigger disabled={isPaid && statusEnum !== "PUBLISHED"}>
+                                    {isPaid && statusEnum !== "PUBLISHED" ? (
+                                        <><Lock className="mr-2 h-4 w-4"/> Locked (Paid)</>
+                                    ) : (
+                                        <><AlertTriangle className="mr-2 h-4 w-4"/> Force Status</>
+                                    )}
                                 </DropdownMenuSubTrigger>
                                 <DropdownMenuSubContent>
                                     {Object.values(PaperStatus).map(s => (
@@ -212,26 +212,34 @@ export const PaperRow = memo(function PaperRow({paper, editors, onRefresh}: {
                             </DropdownMenuSub>
 
                             {/* Publish Option */}
+                            {/* [MODIFIED] Only show if Accepted AND Paid */}
                             {statusEnum === "ACCEPTED" && !isPending && (
                                 <div className="p-2 border-t mt-1">
-                                    <p className="mb-2 text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">Publish
-                                        Paper</p>
-                                    <div className="flex gap-2">
-                                        <Input
-                                            type="file"
-                                            accept=".pdf"
-                                            className="h-7 text-[10px] px-2 py-1"
-                                            onChange={(e) => setPublishFile(e.target.files?.[0] || null)}
-                                        />
-                                        <Button
-                                            size="icon"
-                                            className="h-7 w-7 shrink-0"
-                                            disabled={!publishFile}
-                                            onClick={() => publishFile && publishPaper(publishFile)}
-                                        >
-                                            <UploadCloud className="h-3 w-3"/>
-                                        </Button>
-                                    </div>
+                                    <p className="mb-2 text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">
+                                        Publish Paper
+                                    </p>
+                                    {!isPaid ? (
+                                        <div className="text-xs text-red-500 px-1 mb-1">
+                                            Payment Pending
+                                        </div>
+                                    ) : (
+                                        <div className="flex gap-2">
+                                            <Input
+                                                type="file"
+                                                accept=".pdf"
+                                                className="h-7 text-[10px] px-2 py-1"
+                                                onChange={(e) => setPublishFile(e.target.files?.[0] || null)}
+                                            />
+                                            <Button
+                                                size="icon"
+                                                className="h-7 w-7 shrink-0"
+                                                disabled={!publishFile}
+                                                onClick={() => publishFile && publishPaper(publishFile)}
+                                            >
+                                                <UploadCloud className="h-3 w-3"/>
+                                            </Button>
+                                        </div>
+                                    )}
                                 </div>
                             )}
                         </DropdownMenuContent>

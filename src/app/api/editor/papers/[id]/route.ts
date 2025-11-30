@@ -31,7 +31,20 @@ export const GET = async (
         // Find paper by submissionId
         const paper = await prisma.paper.findFirst({
             where: {submissionId: id},
-            include: {archive: true},
+            include: {
+                archive: true,
+                Copyright: true,
+                transactions: {
+                    where: {
+                        status: {
+                            in: ["SUCCESS", "COMPLETED"]
+                        }
+                    },
+                    select: {
+                        status: true
+                    }
+                }
+            },
         });
 
         if (!paper) {

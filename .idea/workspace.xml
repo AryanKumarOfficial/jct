@@ -5,8 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3fbf7134-2adf-435b-806d-6f4c015e4c97" name="Changes" comment="sync pnpm">
-      <change beforePath="$PROJECT_DIR$/emails/PaymentSuccessEmail.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/emails/PaymentSuccessEmail.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/token.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/token.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/admin/dashboard/components/ManagePapersTab.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/admin/dashboard/components/ManagePapersTab.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/admin/dashboard/components/PaperDetailsSheet.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/admin/dashboard/components/PaperDetailsSheet.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/admin/dashboard/components/PaperRow.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/admin/dashboard/components/PaperRow.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/admin/dashboard/types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/admin/dashboard/types.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/api/editor/papers/[id]/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/editor/papers/[id]/route.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/api/paper/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/paper/route.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -244,7 +249,7 @@
       <workItem from="1764447703305" duration="9000" />
       <workItem from="1764447756771" duration="95000" />
       <workItem from="1764447906246" duration="6972000" />
-      <workItem from="1764495331860" duration="7594000" />
+      <workItem from="1764495331860" duration="9274000" />
     </task>
     <task id="LOCAL-00001" summary="adds JSDoc comments across the codebase for improved documentation and readability">
       <option name="closed" value="true" />
