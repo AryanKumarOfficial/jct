@@ -1,10 +1,10 @@
 "use client";
-import {useState, useEffect} from "react";
-import {motion} from "motion/react";
-import {Logo} from "./logo";
-import {DesktopNav} from "./desktop-nav";
-import {ActionButtons} from "./action-buttons";
-import {MobileNav} from "./mobile-nav";
+import { useState, useEffect } from "react";
+import { Logo } from "./logo";
+import { DesktopNav } from "./desktop-nav";
+import { ActionButtons } from "./action-buttons";
+import { MobileNav } from "./mobile-nav";
+import { cn } from "@/lib/utils";
 
 const Header = () => {
     const [scrolled, setScrolled] = useState(false);
@@ -12,12 +12,11 @@ const Header = () => {
 
     useEffect(() => {
         const handleScroll = () => {
-            setScrolled(window.scrollY > 10);
+            // Add background/shadow only after scrolling down a bit
+            setScrolled(window.scrollY > 20);
         };
 
-        // --- Layout Shift Fix (Robust) ---
-        // Radix UI adds 'padding-right' to the <body> when a Sheet/Dialog opens to prevent layout shift.
-        // Since our Header is 'fixed', it doesn't inherit this. We must observe the body and apply the same padding.
+        // Prevent layout shift when Radix UI locks body scroll
         const observer = new MutationObserver((mutations) => {
             mutations.forEach((mutation) => {
                 if (mutation.type === "attributes" && mutation.attributeName === "style") {
@@ -27,8 +26,7 @@ const Header = () => {
             });
         });
 
-        // Start observing the body for style changes
-        observer.observe(document.body, {attributes: true, attributeFilter: ["style"]});
+        observer.observe(document.body, { attributes: true, attributeFilter: ["style"] });
         window.addEventListener("scroll", handleScroll);
 
         return () => {
@@ -38,35 +36,36 @@ const Header = () => {
     }, []);
 
     return (
-        <motion.header
-            role="banner"
-            className={`sticky top-0 z-50 w-full transition-all duration-300 ease-in-out supports-[backdrop-filter]:backdrop-blur-xl ${
+        <header
+            style={{ paddingRight: rightPadding }}
+            className={cn(
+                // 'sticky top-0' keeps it pinned to the top of the viewport
+                "sticky top-0 z-50 w-full border-b transition-all duration-300 ease-in-out",
                 scrolled
-                    ? "bg-background/90 border-b border-border/80 shadow-md py-2"
-                    : "bg-background/70 border-b border-border/40 py-3"
-            }`}
-            initial={{y: -100}}
-            animate={{y: 0}}
-            transition={{type: "spring", stiffness: 100, damping: 20}}
-            // Apply the dynamic padding here
-            style={{paddingRight: rightPadding}}
+                    ? "bg-background/80 backdrop-blur-xl border-border/40 shadow-sm py-2" // "Floating" look when scrolled
+                    : "bg-background/0 border-transparent py-4" // Clean look when at top
+            )}
         >
-            <div className="container max-w-screen-2xl mx-auto px-4">
+            <div className="container max-w-screen-2xl mx-auto px-6 md:px-8">
                 <div className="flex items-center justify-between">
-                    {/* Pass scrolled prop if you want the logo to shrink, otherwise remove it */}
-                    <Logo scrolled={scrolled}/>
+                    {/* Left: Brand */}
+                    <div className="flex-shrink-0 w-[200px] transition-all duration-300">
+                        <Logo scrolled={scrolled} />
+                    </div>
 
-                    {/* Center: Desktop Nav */}
-                    <DesktopNav/>
+                    {/* Center: Navigation */}
+                    <div className="hidden lg:flex flex-1 justify-center">
+                        <DesktopNav />
+                    </div>
 
-                    {/* Right: Actions & Mobile Menu */}
-                    <div className="flex items-center gap-2 md:gap-3">
-                        <ActionButtons/>
-                        <MobileNav/>
+                    {/* Right: Actions */}
+                    <div className="flex items-center justify-end gap-4 w-[200px]">
+                        <ActionButtons />
+                        <MobileNav />
                     </div>
                 </div>
             </div>
-        </motion.header>
+        </header>
     );
 };
 

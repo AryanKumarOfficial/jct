@@ -1,4 +1,4 @@
-import { FileText, Users, Info, BookOpen, Mail } from "lucide-react";
+import {FileText, Users, Info, BookOpen, Mail, Search} from "lucide-react";
 
 export const NAV_LINKS = [
     {
@@ -8,9 +8,10 @@ export const NAV_LINKS = [
         description: "Access the Journal of Computing Technologies"
     },
     {
-        href: "/about",
-        label: "About",
-        icon: Info
+        href: "/track",
+        label: "Track Paper",
+        icon: Search,
+        description: "Check the status of your submission"
     },
     {
         href: "/author-guidelines",
@@ -23,18 +24,22 @@ export const NAV_LINKS = [
         icon: Users
     },
     {
+        href: "/about",
+        label: "About",
+        icon: Info
+    },
+    {
         href: "/contact",
         label: "Contact",
         icon: Mail
     }
 ];
 
-// Home page section anchors for quick navigation
 export const HOME_ANCHORS = [
-    { href: "/#aims", label: "Aims & Scope" },
-    { href: "/#latest", label: "Latest Articles" },
-    { href: "/#indexing", label: "Indexing" },
-    { href: "/#editorial", label: "Editorial Board" },
-    { href: "/#guidelines", label: "Guidelines" },
-    { href: "/#cfp", label: "Call for Papers" },
+    {href: "/#aims", label: "Aims & Scope"},
+    {href: "/#latest", label: "Latest Articles"},
+    {href: "/#indexing", label: "Indexing"},
+    {href: "/#editorial", label: "Editorial Board"},
+    {href: "/#guidelines", label: "Guidelines"},
+    {href: "/#cfp", label: "Call for Papers"},
 ];

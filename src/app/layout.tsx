@@ -136,7 +136,7 @@ export default function RootLayout({
         <body
             className={cn(
                 inter.className,
-                "antialiased min-h-screen flex flex-col bg-background text-foreground selection:bg-primary/20 selection:text-primary"
+                "antialiased min-h-screen flex flex-col bg-background text-foreground"
             )}
         >
         {/* Structured data for SEO */}

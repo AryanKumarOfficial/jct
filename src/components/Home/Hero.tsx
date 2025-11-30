@@ -17,7 +17,7 @@ const Hero = () => {
         e.preventDefault();
         if (searchQuery.trim()) {
             // Redirect to your archives page with query
-            router.push(`/archives?keyword=${encodeURIComponent(searchQuery)}`);
+            router.push(`/journals/jct?q=${encodeURIComponent(searchQuery)}`);
         }
     };
 
