@@ -214,7 +214,7 @@ export default function AuthorDashboard() {
                                                                         className="bg-green-600 hover:bg-green-700 text-white"
                                                                         asChild
                                                                     >
-                                                                        <Link href={`/author/copyright/${paper.id}`}>
+                                                                        <Link href={`/author/copyright/${paper.submissionId}`}>
                                                                             Sign Copyright
                                                                         </Link>
                                                                     </Button>
