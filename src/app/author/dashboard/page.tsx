@@ -133,7 +133,7 @@ export default function AuthorDashboardClient() {
                 color: "#0f172a", // Dark blue/slate to match UI
             },
             handler: async function (response: any) {
-                // Payment succeeded on Razorpay side
+                // Payment succeeded on the Razorpay side
                 toast.success("Payment successful! Verifying details...");
 
                 try {
