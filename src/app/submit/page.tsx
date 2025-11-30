@@ -221,14 +221,16 @@ const SubmitPage: React.FC = () => {
                                 </h3>
 
                                 <div className="space-y-2">
-                                    <Label htmlFor="paperName">Paper Title</Label>
+                                    <Label htmlFor="paperName">Paper Title<span
+                                        className={"text-red-600"}>*</span></Label>
                                     <Input id="paperName" {...register("paperName")}
                                            placeholder="A Novel Approach to..."/>
                                 </div>
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div className="space-y-2">
-                                        <Label htmlFor="archiveId">Journal / Archive Issue</Label>
+                                        <Label htmlFor="archiveId">Journal / Archive Issue<span
+                                            className={"text-red-600"}>*</span></Label>
                                         <Controller
                                             control={control}
                                             name="archiveId"
@@ -319,18 +321,41 @@ const SubmitPage: React.FC = () => {
                                             className="p-4 border rounded-md space-y-4 relative bg-background"
                                         >
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                                <Input
-                                                    placeholder="First Name" {...register(`authors.${index}.firstName` as const)} />
-                                                <Input
-                                                    placeholder="Last Name" {...register(`authors.${index}.lastName` as const)} />
-                                                <Input type="email"
-                                                       placeholder="Email" {...register(`authors.${index}.email` as const)} />
-                                                <Input type="tel"
-                                                       placeholder="Phone" {...register(`authors.${index}.phone` as const)} />
-                                                <Input
-                                                    placeholder="Organisation / Affiliation" {...register(`authors.${index}.organisation` as const)} />
-                                                <Input
-                                                    placeholder="Country" {...register(`authors.${index}.country` as const)} />
+                                                <div className="space-y-2">
+                                                    <Label htmlFor={`authors-${index}-firstName`}>First Name <span
+                                                        className="text-destructive">*</span></Label>
+                                                    <Input
+                                                        id={`authors-${index}-firstName`} {...register(`authors.${index}.firstName` as const)} />
+                                                </div>
+                                                <div className="space-y-2">
+                                                    <Label htmlFor={`authors-${index}-lastName`}>Last Name</Label>
+                                                    <Input
+                                                        id={`authors-${index}-lastName`} {...register(`authors.${index}.lastName` as const)} />
+                                                </div>
+                                                <div className="space-y-2">
+                                                    <Label htmlFor={`authors-${index}-email`}>Email <span
+                                                        className="text-destructive">*</span></Label>
+                                                    <Input id={`authors-${index}-email`}
+                                                           type="email"  {...register(`authors.${index}.email` as const)} />
+                                                </div>
+                                                <div className="space-y-2">
+                                                    <Label htmlFor={`authors-${index}-phone`}>Phone <span
+                                                        className="text-destructive">*</span></Label>
+                                                    <Input id={`authors-${index}-phone`}
+                                                           type="tel"  {...register(`authors.${index}.phone` as const)} />
+                                                </div>
+                                                <div className="space-y-2">
+                                                    <Label htmlFor={`authors-${index}-organisation`}>Organisation /
+                                                        Affiliation <span className="text-destructive">*</span></Label>
+                                                    <Input
+                                                        id={`authors-${index}-organisation`}  {...register(`authors.${index}.organisation` as const)} />
+                                                </div>
+                                                <div className="space-y-2">
+                                                    <Label htmlFor={`authors-${index}-country`}>Country <span
+                                                        className="text-destructive">*</span></Label>
+                                                    <Input
+                                                        id={`authors-${index}-country`}  {...register(`authors.${index}.country` as const)} />
+                                                </div>
                                             </div>
 
                                             {fields.length > 1 && (
@@ -367,7 +392,8 @@ const SubmitPage: React.FC = () => {
                             {/* 3. Upload */}
                             <div className="space-y-6">
                                 <h3 className="text-xl font-semibold text-primary border-b pb-2">3. Upload
-                                    Manuscript</h3>
+                                    Manuscript<span
+                                        className={"text-red-600 ml-1"}>*</span></h3>
 
                                 <Label
                                     htmlFor="file-upload"
