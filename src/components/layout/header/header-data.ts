@@ -8,12 +8,6 @@ export const NAV_LINKS = [
         description: "Access the Journal of Computing Technologies"
     },
     {
-        href: "/archives",
-        label: "Archives",
-        icon: BookOpen,
-        description: "Browse all past issues and articles"
-    },
-    {
         href: "/about",
         label: "About",
         icon: Info
