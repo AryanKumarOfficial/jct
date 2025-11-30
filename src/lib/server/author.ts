@@ -21,6 +21,7 @@ export async function fetchAuthorDataRaw(userId: string) {
                     submissionId: true,
                     name: true,
                     createdAt: true,
+                    publishUrl: true,
                     paperStatuses: {
                         orderBy: { createdAt: "desc" },
                         take: 1,
@@ -75,6 +76,7 @@ export function transformToDashboard(raw: Awaited<ReturnType<typeof fetchAuthorD
             status: currentStatus,
             actionRequired: currentStatus === "ACCEPTED" && (!isCopyrightSigned || !isPaid),
             isCopyrightSigned,
+            publishUrl:p.publishUrl,
             payment: {
                 isPaid,
                 status: paymentStatus,

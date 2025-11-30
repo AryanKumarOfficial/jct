@@ -12,6 +12,7 @@ export interface PaperItem {
     title: string;
     createdAt: string;
     status: "SUBMITTED" | "UNDER_REVIEW" | "ACCEPTED" | "REJECTED" | "PUBLISHED";
+    publishUrl: string | null; // Added this field
     actionRequired: boolean;
     isCopyrightSigned: boolean;
     payment: PaymentDetails;
