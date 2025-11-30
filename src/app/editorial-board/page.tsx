@@ -2,10 +2,12 @@ import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 import {User, Building} from "lucide-react";
 import type {Metadata} from "next";
 
-export const metadata: Metadata = {
-    title: "Editorial Board",
-    description: "Meet the editorial board of JCT Journals.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+    return {
+        title: "Editorial Board",
+        description: `Meet the editorial board of JCT Journals.`,
+    };
+}
 
 // Placeholder data for board members
 const boardMembers = [

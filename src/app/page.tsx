@@ -1,6 +1,6 @@
 // app/page.tsx
-import { prisma } from "@/lib/prisma";
-import type { archive as Archive } from "@/generated/prisma"; // Keep your custom path
+import {prisma} from "@/lib/prisma";
+import type {archive as Archive} from "@/generated/prisma"; // Keep your custom path
 
 // COMPONENTS
 import Hero from "@/components/Home/Hero";
@@ -12,16 +12,22 @@ import LatestArticles from "@/components/Home/LatestArticles";
 import EditorialTeaser from "@/components/Home/EditorialTeaser";
 import EthicsGuidelines from "@/components/Home/EthicsGuidelines";
 import CallForPapers from "@/components/Home/CallForPapers";
+import {Metadata} from "next";
 
 export const revalidate = 3600;
 
+export async function generateMetadata(): Promise<Metadata> {
+    return {
+        title: "Home",
+        description: `Access peer-reviewed research in Computer Science...`,
+    };
+}
 /**
  * Fetch the latest archive metadata only.
- * Removed `includes: { papers: true }` to reduce payload size.
  */
 const fetchLatestArchive = async (): Promise<Archive> => {
     const latest = await prisma.archive.findFirst({
-        orderBy: { createdAt: "desc" },
+        orderBy: {createdAt: "desc"},
     });
 
     if (latest) return latest;
@@ -32,7 +38,7 @@ const fetchLatestArchive = async (): Promise<Archive> => {
         id: "fallback-archive",
         volume: 0,
         issue: 0,
-        month: now.toLocaleString("default", { month: "long" }),
+        month: now.toLocaleString("default", {month: "long"}),
         year: now.getFullYear(),
         createdAt: now,
         updatedAt: now,
@@ -85,18 +91,14 @@ export default async function Index() {
 
     return (
         <>
-            <Hero />
-            <AimsScope />
-            {/* Note: Make sure your LatestArticles component type accepts
-         the shape returned by the `select` in fetchLatestPapers
-      */}
-            {latestPapers.length > 0 && <LatestArticles papers={latestPapers} />}
-            <Indexing />
-            <JournalStats />
-            <Features />
-            <EditorialTeaser />
-            <EthicsGuidelines />
-            <CallForPapers archive={latestArchive} />
+            <Hero/>
+            <AimsScope/>
+            <Indexing/>
+            <JournalStats/>
+            <Features/>
+            <EditorialTeaser/>
+            <EthicsGuidelines/>
+            <CallForPapers archive={latestArchive}/>
         </>
     );
 }

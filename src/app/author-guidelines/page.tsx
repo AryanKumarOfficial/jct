@@ -3,10 +3,12 @@ import { FileText, ClipboardCheck, Users, Percent } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 
-export const metadata: Metadata = {
-    title: "Author Guidelines",
-    description: "Guidelines for manuscript preparation and submission to JCT Journals.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+    return {
+        title: "Author Guidelines",
+        description: `Guidelines for manuscript preparation and submission to JCT Journals`,
+    };
+}
 
 const AuthorGuidelinesPage = () => {
     return (

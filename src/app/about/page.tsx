@@ -2,10 +2,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BookOpen, Globe, Target } from "lucide-react";
 import type { Metadata } from "next";
 
-export const metadata: Metadata = {
-    title: "About JCT",
-    description: "Learn about the Journal of Computing Technologies, our mission, vision, and scope.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+    return {
+        title: "About JCT",
+        description: `Learn about the Journal of Computing Technologies, our mission, vision, and scope.`,
+    };
+}
 
 const AboutPage = () => {
     return (

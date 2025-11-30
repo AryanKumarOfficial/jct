@@ -6,7 +6,6 @@ import Providers from "@/app/providers";
 import Header from "@/components/layout/header/index";
 import Footer from "@/components/layout/footer/index";
 import {AnnouncementBar} from "@/components/layout/announcement-bar";
-import {Toaster} from "@/components/ui/sonner";
 import {cn} from "@/lib/utils";
 import Script from "next/script";
 

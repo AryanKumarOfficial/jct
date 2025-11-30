@@ -28,6 +28,8 @@ const PUBLIC_EXCEPTIONS = [
     "/api/author/auth",
     "/api/admin/auth",
     "/unauthorized",
+    '/author-guidelines',
+    "/editorial-board"
 ];
 
 export async function proxy(request: NextRequest) {
