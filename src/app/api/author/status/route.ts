@@ -17,7 +17,7 @@ import {prisma} from "@/lib/prisma";
 export const GET = async (req: NextRequest): Promise<NextResponse> => {
     try {
         const searchParams = req.nextUrl.searchParams;
-        const paperId = searchParams.get(`paperId`);
+        const paperId = searchParams.get(`paperId`); //submission id
         if (!paperId) {
             return NextResponse.json(
                 {error: `Paper id is required`},
@@ -43,11 +43,25 @@ export const GET = async (req: NextRequest): Promise<NextResponse> => {
             include: {
                 paper: {
                     include: {
-                        authors: true,
+                        authors: {
+                            select: {firstName: true, lastName: true, email: true, phone: true}
+                        },
+                        transactions: {
+                            take: 1,
+                            select: {id: true, status: true, amount: true, razorpayOrderId: true},
+                            orderBy: {
+                                createdAt: "desc"
+                            }
+                        },
                         Copyright: true
                     }
                 },
-                changedBy: true,
+                changedBy: {
+                    select: {
+                        firstName: true,
+                        lastName: true
+                    }
+                },
             },
         });
 

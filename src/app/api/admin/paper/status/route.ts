@@ -164,11 +164,11 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
 
         if (!paperObj) return NextResponse.json({error: "Paper not found"}, {status: 404});
 
+
         // 2. Handle PUBLISH (with File)
         if (file && status === "PUBLISHED") {
             const hasPaid = await isPaperPaid(paperObj.id);
 
-            // NOTE: Uncomment below to strictly enforce payment before publishing
             if (!hasPaid) return NextResponse.json({error: "Payment pending."}, {status: 402});
 
             const fileName = file.name;
@@ -179,7 +179,6 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
             await fileUpload({key: objectKey, buffer, contentType});
             const fileUrl = await getObjectUrl(objectKey);
 
-            // FIX: We rely on 'newStatus' to get author details, as updatedPaper won't have relations
             const [updatedPaper, newStatus] = await prisma.$transaction([
                 prisma.paper.update({
                     where: {id: paperObj.id},
