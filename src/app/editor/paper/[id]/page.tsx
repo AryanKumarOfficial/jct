@@ -7,7 +7,7 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/c
 import {Textarea} from "@/components/ui/textarea";
 import {Label} from "@/components/ui/label";
 import {Alert, AlertDescription, AlertTitle} from "@/components/ui/alert";
-import {Loader2, AlertCircle, History, Download, Send, CheckCircle2} from "lucide-react";
+import {Loader2, AlertCircle, History, Download, Send, CheckCircle2, Lock} from "lucide-react";
 import Link from "next/link";
 
 interface Status {
@@ -23,7 +23,8 @@ interface PaperDetails {
     submissionId: string;
     keywords: string[];
     manuscriptUrl: string | null;
-    // other fields you may have: manuscriptId, archiveId, publishId, etc.
+    Copyright?: { copyrightStatus: string; pdfUrl: string | null } | null;
+    transactions?: { status: string }[];
 }
 
 export default function PaperReviewPage({params}: { params: Promise<{ id: string }> }) {
@@ -39,7 +40,9 @@ export default function PaperReviewPage({params}: { params: Promise<{ id: string
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitError, setSubmitError] = useState<string | null>(null);
     const [submitSuccess, setSubmitSuccess] = useState(false);
-
+    const isPaid = paper?.transactions && paper.transactions.length > 0 &&
+        (paper.transactions[0].status === "SUCCESS" || paper.transactions[0].status === "COMPLETED");
+    const isCopyrightSigned = paper?.Copyright?.copyrightStatus === "SIGNED";
     // Fetch paper (and try to fetch history)
     useEffect(() => {
         const fetchPaper = async () => {
@@ -223,6 +226,28 @@ export default function PaperReviewPage({params}: { params: Promise<{ id: string
                             )}
                         </CardContent>
                     </Card>
+                    {/* Publication Status Card */}
+                    <Card className="shadow-md">
+                        <CardHeader>
+                            <CardTitle>Publication Prerequisites</CardTitle>
+                            <CardDescription>Status of author requirements for publication.</CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                            <div className="flex gap-6">
+                                <div className="flex items-center gap-2">
+                                    <div className={`h-2 w-2 rounded-full ${isPaid ? "bg-green-500" : "bg-red-500"}`} />
+                                    <span className="text-sm font-medium">Payment: {isPaid ? "Received" : "Pending"}</span>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                    <div className={`h-2 w-2 rounded-full ${isCopyrightSigned ? "bg-green-500" : "bg-red-500"}`} />
+                                    <span className="text-sm font-medium">Copyright: {isCopyrightSigned ? "Signed" : "Pending"}</span>
+                                    {isCopyrightSigned && paper?.Copyright?.pdfUrl && (
+                                        <a href={paper.Copyright.pdfUrl} target="_blank" className="text-xs text-blue-600 underline ml-1">View PDF</a>
+                                    )}
+                                </div>
+                            </div>
+                        </CardContent>
+                    </Card>
 
                     {/* Review Form */}
                     <Card className="shadow-md">
@@ -234,6 +259,15 @@ export default function PaperReviewPage({params}: { params: Promise<{ id: string
                             </CardDescription>
                         </CardHeader>
                         <CardContent>
+                            {isPaid?(
+                                <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg text-blue-800 flex items-center gap-3">
+                                    <Lock className="h-5 w-5" />
+                                    <div>
+                                        <p className="font-semibold">Review Locked</p>
+                                        <p className="text-sm">Payment has been processed. Status cannot be reverted.</p>
+                                    </div>
+                                </div>
+                                ):(
                             <form onSubmit={handleSubmitReview} className="space-y-6">
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                     <div className="space-y-2">
@@ -243,7 +277,7 @@ export default function PaperReviewPage({params}: { params: Promise<{ id: string
                                                 <SelectValue placeholder="Select a status..."/>
                                             </SelectTrigger>
                                             <SelectContent>
-                                                <SelectItem value="REVIEWED">Reviewed (Recommend Accept)</SelectItem>
+                                                <SelectItem value="ACCEPTED">Reviewed</SelectItem>
                                                 <SelectItem value="UNDER_REVIEW">Needs Revision</SelectItem>
                                                 <SelectItem value="REJECTED">Recommend Reject</SelectItem>
                                             </SelectContent>
@@ -286,6 +320,7 @@ export default function PaperReviewPage({params}: { params: Promise<{ id: string
                                     Submit Review
                                 </Button>
                             </form>
+                            )}
                         </CardContent>
                     </Card>
                 </div>
