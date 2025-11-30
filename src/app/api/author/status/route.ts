@@ -42,8 +42,9 @@ export const GET = async (req: NextRequest): Promise<NextResponse> => {
             ],
             include: {
                 paper: {
-                    include:{
+                    include: {
                         authors: true,
+                        Copyright: true
                     }
                 },
                 changedBy: true,

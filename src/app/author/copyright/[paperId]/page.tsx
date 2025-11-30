@@ -37,6 +37,10 @@ interface PaperDetails {
     name: string;
     submissionId: string;
     authors: Author[];
+    // Added Copyright interface to match API response
+    Copyright?: {
+        copyrightStatus: "PENDING" | "SIGNED";
+    } | null;
 }
 
 export default function SignCopyrightPage({
@@ -62,8 +66,7 @@ export default function SignCopyrightPage({
             if (!paperId) return;
             setIsLoading(true);
             try {
-                // We reuse the existing status API to get paper details associated with this ID
-                // Ideally, you might want a dedicated endpoint like /api/author/papers/[id]
+                // Reuse existing status API
                 const response = await fetch(`/api/author/status?paperId=${paperId}`);
                 const data = await response.json();
 
@@ -71,13 +74,14 @@ export default function SignCopyrightPage({
                     throw new Error(data.error || "Failed to fetch paper details.");
                 }
 
-                // The status API returns an array of history items. We extract the paper object from the first one.
                 if (Array.isArray(data) && data.length > 0) {
-                    // NOTE: Ensure your Status API includes `authors` in the `paper` include relation.
-                    // If it doesn't, you might need to update the GET /api/author/status endpoint
-                    // to include: { paper: { include: { authors: true } } }
-                    const paperData = data[0].paper;
+                    const paperData = data[0].paper as PaperDetails;
                     setPaper(paperData);
+
+                    // Check if copyright is already signed and show success immediately
+                    if (paperData.Copyright?.copyrightStatus === "SIGNED") {
+                        setSignSuccess(true);
+                    }
                 } else {
                     throw new Error("Paper details not found.");
                 }
@@ -143,7 +147,7 @@ export default function SignCopyrightPage({
         );
     }
 
-    // Success State
+    // Success State (Used for both "Just Signed" and "Already Signed")
     if (signSuccess) {
         return (
             <div className="container mx-auto max-w-xl py-20 px-4">
@@ -160,7 +164,7 @@ export default function SignCopyrightPage({
                         The copyright transfer form has been successfully generated, signed, and stored securely. You
                         can now proceed with the publication process.
                     </p>
-                    <Button variant="outline" onClick={() => window.location.href = '/track'}>
+                    <Button variant="outline" onClick={() => window.location.href = '/author/dashboard'}>
                         Return to Dashboard
                     </Button>
                 </motion.div>
@@ -169,14 +173,12 @@ export default function SignCopyrightPage({
     }
 
     // Determine valid signer name for validation
-    // We check if the typed name matches any of the authors (case-insensitive)
     const isValidSignature = paper?.authors?.some(
         (a) =>
             `${a.firstName} ${a.lastName || ""}`.trim().toLowerCase() ===
             signatureName.trim().toLowerCase()
     );
 
-    // Current date for preview
     const today = new Date().toLocaleDateString("en-IN", {
         year: "numeric",
         month: "long",
