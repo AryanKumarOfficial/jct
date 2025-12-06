@@ -27,7 +27,6 @@ const getStatusColor = (status: string) => {
 };
 
 const Papers = ({data, mutate}: { data: DashboardData, mutate: KeyedMutator<DashboardData> }) => {
-    console.log(`data`, data.papers[0].payment.isPaid)
     const router = useRouter();
     const [processingPaymentId, setProcessingPaymentId] = useState<string | null>(null);
 

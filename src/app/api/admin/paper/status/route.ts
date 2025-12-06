@@ -62,7 +62,6 @@ async function handleAcceptedPayment(paperId: string, submissionId: string, auth
             description: `Payment for JCT ${submissionId}`,
         })
 
-        console.log(`url`, res)
         // 3. Save to DB
         transaction = await prisma.transaction.create({
             data: {

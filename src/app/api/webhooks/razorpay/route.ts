@@ -106,6 +106,63 @@ export const POST = async (req: NextRequest) => {
             return NextResponse.json({status: "ok"});
         }
 
+        if (event === "payment.failed") {
+            const payment = payload.payment.entity;
+            const webhookOrderId = payment.order_id;
+            const paperId = payment.notes?.paperId;
+
+            console.log(`Payment failed for Order: ${webhookOrderId}`);
+            // 1. Find the transaction
+            let existingTx = await prisma.transaction.findUnique({
+                where: {
+                    razorpayOrderId: webhookOrderId || ""
+                }
+            })
+            if (!existingTx && paperId) {
+                existingTx = await prisma.transaction.findFirst({
+                    where: {
+                        paperId,
+                        status: {
+                            in: [PaymentStatus.PENDING, PaymentStatus.FAILED]
+                        }
+                    },
+                    orderBy: {
+                        createdAt: "desc"
+                    }
+                })
+            }
+            if (existingTx) {
+                // SAFETY CHECK: Never mark a successful transaction as failed
+                if (existingTx.status === PaymentStatus.SUCCESS || existingTx.status === PaymentStatus.COMPLETED) {
+                    console.log("Ignored failure event for already successful transaction.");
+                    return NextResponse.json({status: "ignored_already_success"});
+                }
+                // 2. Atomic Update and Log
+                await prisma.$transaction(async (tx) => {
+                    await tx.transaction.update({
+                        where: {id: existingTx.id},
+                        data: {
+                            status: PaymentStatus.FAILED
+                        }
+                    })
+
+                    // 3. Log the failure
+                    await tx.activityLog.create({
+                        data: {
+                            activity: "STATUS_CHANGED",
+                            details: `Payment failed: ${payment.error_description}` || `Unknown error`,
+                            paperId: existingTx.paperId,
+                            authorId: existingTx.authorId
+                        },
+                    });
+                })
+
+            }
+
+            return NextResponse.json({status: "ok_failed_recorded"});
+
+        }
+
         return NextResponse.json({status: "ignored"});
 
     } catch (error) {

@@ -34,8 +34,6 @@ const ContactPage = () => {
         e.preventDefault();
         setIsSubmitting(true);
         setSubmitStatus(null);
-        // TODO: Implement actual form submission logic here
-        console.log("Form Data:", formData);
         // Simulate API call
         await new Promise((resolve) => setTimeout(resolve, 1500));
         // Simulate success

@@ -96,7 +96,6 @@ function TrackSubmissionContent() {
     const latestStatusObj = statusHistory[0];
     const currentStatus = latestStatusObj?.status;
     const paperDetails = latestStatusObj?.paper;
-    console.log(paperDetails);
     // Check if any successful transaction exists
     const isPaid = paperDetails?.transactions && paperDetails.transactions.length > 0 && (paperDetails.transactions[0].status === "SUCCESS" || paperDetails.transactions[0].status === "COMPLETED");
     const isAccepted = currentStatus === "ACCEPTED" || currentStatus === "PUBLISHED";

@@ -87,7 +87,6 @@ export default async function Index() {
         fetchLatestArchive(),
         fetchLatestPapers(),
     ]);
-    console.log(latestPapers[0])
 
     return (
         <>

@@ -40,8 +40,6 @@ export default function AdminLoginPage() {
                 throw new Error(data.error || "Login failed");
             }
 
-            // TODO: Store the token securely (e.g., in httpOnly cookies)
-            console.log("Login successful, token:", data.token);
 
             // Redirect based on role
             if (data.role === "ADMIN") {
