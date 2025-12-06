@@ -1,7 +1,6 @@
 // types/enums.ts
 
-import {type archive, $Enums} from "@/generated/prisma";
-
+import {$Enums, type archive} from "@/generated/prisma";
 
 /**
  * Enum representing the roles of an employee in the system.
@@ -40,17 +39,17 @@ export enum EmployeeRole {
  *
  * - REJECTED: Indicates that the paper was not accepted for publication.
  */
-export type PaperStatus = $Enums.paymentStatus;
-
-/**
- *
- */
-export enum PaymentStatus {
-    FAILED = "FAILED",
-    PENDING = "PENDING",
-    SUCCESS = "SUCCESS",
+export enum PaperStatus {
+    SUBMITTED = "SUBMITTED",
+    UNDER_REVIEW = "UNDER_REVIEW",
+    ACCEPTED = "ACCEPTED",
+    REJECTED = "REJECTED",
+    PUBLISHED = "PUBLISHED",
 }
 
+export const PaymentStatus = {
+    ...$Enums.paymentStatus
+} as const;
 /**
  * Enum representing different types of activities that can occur within a system.
  *
