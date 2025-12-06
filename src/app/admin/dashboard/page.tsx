@@ -1,6 +1,6 @@
 "use client";
 
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect,  useState} from "react";
 import {Button} from "@/components/ui/button";
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
 import {Input} from "@/components/ui/input";
@@ -12,16 +12,17 @@ import {
     Loader2,
     AlertCircle,
     CheckCircle2,
-    Archive as ArchiveIcon,
+    Archive,
     Users,
     FileText,
     Trash2,
     Edit3,
-    Save, Activity,
+    Save, Activity, FileUp,
 } from "lucide-react";
 import ManagePapersTab from "@/app/admin/dashboard/components/ManagePapersTab";
 import ManageUsersTab from "@/app/admin/dashboard/ManageUsersTab";
 import ActivityLogTab from "@/app/admin/dashboard/components/ActivityLogTab";
+import DataMigrationTab from "@/app/admin/dashboard/components/DataMigrationTab";
 
 type Archive = {
     id: string;
@@ -386,13 +387,13 @@ export default function AdminDashboard() {
             <h1 className="text-4xl font-bold mb-8">Admin Dashboard</h1>
 
             <Tabs defaultValue="papers" className="w-full">
-                <TabsList className="grid w-full grid-cols-4 gap-4">
+                <TabsList className="grid w-full grid-cols-5 gap-4">
                     <TabsTrigger value="papers">
                         <FileText className="mr-2 h-4 w-4"/>
                         Manage Papers
                     </TabsTrigger>
                     <TabsTrigger value="archives">
-                        <ArchiveIcon className="mr-2 h-4 w-4"/>
+                        <Archive className="mr-2 h-4 w-4"/>
                         Manage Archives
                     </TabsTrigger>
                     <TabsTrigger value="users">
@@ -402,6 +403,10 @@ export default function AdminDashboard() {
                     <TabsTrigger value="activity">
                         <Activity className="mr-2 h-4 w-4"/>
                         Activity
+                    </TabsTrigger>
+                    <TabsTrigger value="bulk-upload">
+                        <FileUp className="mr-2 h-4 w-4"/>
+                        Bulk Upload
                     </TabsTrigger>
                 </TabsList>
 
@@ -440,6 +445,9 @@ export default function AdminDashboard() {
                 </TabsContent>
                 <TabsContent value="activity" className="mt-6">
                     <ActivityLogTab/>
+                </TabsContent>
+                <TabsContent value="bulk-upload" className="mt-6">
+                    <DataMigrationTab/>
                 </TabsContent>
             </Tabs>
         </div>

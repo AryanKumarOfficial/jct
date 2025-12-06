@@ -4,11 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3fbf7134-2adf-435b-806d-6f4c015e4c97" name="Changes" comment="adds activity log support for papers and updates types for improved data handling">
-      <change afterPath="$PROJECT_DIR$/src/app/admin/dashboard/components/ActivityLogTab.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/api/admin/activity/route.ts" afterDir="false" />
+    <list default="true" id="3fbf7134-2adf-435b-806d-6f4c015e4c97" name="Changes" comment="adds activity log UI and API for improved system event tracking">
+      <change afterPath="$PROJECT_DIR$/src/app/admin/dashboard/components/DataMigrationTab.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/admin/paper/[id]/delete/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/admin/upload/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/excel-parser.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/admin/dashboard/components/PaperDetailsSheet.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/admin/dashboard/components/PaperDetailsSheet.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/admin/dashboard/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/admin/dashboard/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/api/admin/data/migrate/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/admin/data/migrate/route.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/schemas/migrationSchema.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/schemas/migrationSchema.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,8 +25,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="tsconfig.json" />
-        <option value="TypeScript File" />
         <option value="TypeScript JSX File" />
+        <option value="TypeScript File" />
       </list>
     </option>
   </component>
@@ -45,6 +51,9 @@
 }</component>
   <component name="PackageJsonUpdateNotifier">
     <dismissed value="$PROJECT_DIR$/package.json" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7
@@ -262,7 +271,7 @@
       <workItem from="1764447906246" duration="6972000" />
       <workItem from="1764495331860" duration="18837000" />
       <workItem from="1764582988723" duration="20000" />
-      <workItem from="1765043218179" duration="11041000" />
+      <workItem from="1765043218179" duration="15835000" />
     </task>
     <task id="LOCAL-00001" summary="adds JSDoc comments across the codebase for improved documentation and readability">
       <option name="closed" value="true" />
@@ -360,7 +369,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765058444665</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="adds activity log UI and API for improved system event tracking">
+      <option name="closed" value="true" />
+      <created>1765059537792</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1765059537792</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -386,6 +403,7 @@
     <MESSAGE value="records payment failure event in webhook and removes obsolete console logs" />
     <MESSAGE value="implements bulk migration API for importing papers and authors, adds schema validation, and improves utility functions" />
     <MESSAGE value="adds activity log support for papers and updates types for improved data handling" />
-    <option name="LAST_COMMIT_MESSAGE" value="adds activity log support for papers and updates types for improved data handling" />
+    <MESSAGE value="adds activity log UI and API for improved system event tracking" />
+    <option name="LAST_COMMIT_MESSAGE" value="adds activity log UI and API for improved system event tracking" />
   </component>
 </project>

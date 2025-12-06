@@ -3,7 +3,7 @@ import { z } from "zod";
 export const authorImportSchema = z.object({
     firstName: z.string(),
     lastName: z.string().optional(),
-    email: z.email(),
+    email: z.string().email(),
     organisation: z.string(),
     country: z.string(),
     phone: z.string(),
@@ -12,20 +12,22 @@ export const authorImportSchema = z.object({
 export const paperImportSchema = z.object({
     title: z.string(),
     keywords: z.array(z.string()).default([]),
-    // Archive Details
     volume: z.number(),
     issue: z.number(),
     month: z.string(),
     year: z.number(),
-    // File (Optional: if you have URLs from an old system)
+
+    // Both URL and ID are optional/nullable because:
+    // 1. They might not exist in the Excel sheet (legacy data)
+    // 2. We add them dynamically during the upload process
     publishUrl: z.string().optional().nullable(),
-    // Authors
+    publishId: z.string().optional().nullable(),
+
     authors: z.array(authorImportSchema).min(1),
-    // Optional: Force a specific submission date
-    createdAt: z.iso.datetime().optional(),
+    createdAt: z.string().optional(),
 });
 
 export const bulkImportSchema = z.array(paperImportSchema);
 
-export type MigrationPayload = z.infer<typeof bulkImportSchema>;
-export type AuthorImportSchema = z.infer<typeof authorImportSchema>;
+// This generates the TypeScript interface automatically
+export type MigrationPayload = z.infer<typeof paperImportSchema>;

@@ -1,11 +1,11 @@
-import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
-import { authorize } from "@/utils/authorize";
-import { bulkImportSchema } from "@/schemas/migrationSchema";
+import {NextRequest, NextResponse} from "next/server";
+import {prisma} from "@/lib/prisma";
+import {authorize} from "@/utils/authorize";
+import {bulkImportSchema} from "@/schemas/migrationSchema";
 import bcryptjs from "bcryptjs";
-import { PaperStatus } from "@/types/enums";
-import { treeifyError } from "zod";
-import { generateAuthorPassword, normalizeAndCapitalize } from "@/utils/typography";
+import {PaperStatus} from "@/types/enums";
+import {treeifyError} from "zod";
+import {generateAuthorPassword, normalizeAndCapitalize} from "@/utils/typography";
 
 export const POST = async (req: NextRequest) => {
     try {
@@ -18,8 +18,8 @@ export const POST = async (req: NextRequest) => {
 
         if (!parseResult.success) {
             return NextResponse.json(
-                { error: "Validation failed", details: treeifyError(parseResult.error) },
-                { status: 400 }
+                {error: "Validation failed", details: treeifyError(parseResult.error)},
+                {status: 400}
             );
         }
 
@@ -31,22 +31,20 @@ export const POST = async (req: NextRequest) => {
             errors: [] as any[],
         };
 
-        // 3. Process sequentially (Fixes Race Conditions & Connection Pool issues)
+        // 3. Process sequentially to prevent Race Conditions
         for (const [index, entry] of papersToImport.entries()) {
             try {
-                // Run operations for THIS paper in a transaction
-                // If paper creation fails, the author upserts in this specific step roll back
-                // (though usually, keeping authors is fine, transaction ensures consistency)
                 await prisma.$transaction(async (tx) => {
 
-                    // A. Handle Archive
+                    // A. Resolve Archive (Upsert)
+                    // We verify if this volume/issue exists, or create it.
+                    const archiveId = `migrated_vol${entry.volume}_iss${entry.issue}_${entry.year}`;
+
                     const archive = await tx.archive.upsert({
-                        where: {
-                            id: `migrated_vol${entry.volume}_iss${entry.issue}_${entry.year}`,
-                        },
+                        where: {id: archiveId},
                         update: {},
                         create: {
-                            id: `migrated_vol${entry.volume}_iss${entry.issue}_${entry.year}`,
+                            id: archiveId,
                             volume: entry.volume,
                             issue: entry.issue,
                             month: normalizeAndCapitalize(entry.month),
@@ -54,16 +52,37 @@ export const POST = async (req: NextRequest) => {
                         },
                     });
 
-                    // B. Handle Authors
-                    // We can use Promise.all here because authors within ONE paper are usually unique
+                    // B. DUPLICATE CHECK (Fixes the issue)
+                    // Check if a paper with this Title already exists in this Archive
+                    const existingPaper = await tx.paper.findFirst({
+                        where: {
+                            name: {
+                                equals: entry.title,
+                                mode: "insensitive" // Case-insensitive check
+                            },
+                            archiveId: archive.id
+                        }
+                    });
+
+                    if (existingPaper) {
+                        throw new Error("Duplicate: Paper already exists in this archive.");
+                    }
+
+                    // C. Handle Authors
                     const authorPromises = entry.authors.map(async (auth) => {
+                        // Check if author exists by email first to avoid re-hashing password unnecessarily
+                        const existingAuthor = await tx.author.findUnique({
+                            where: {email: auth.email}
+                        });
+
+                        if (existingAuthor) return existingAuthor;
+
+                        // Create new author if not exists
                         const passString = generateAuthorPassword(auth);
                         const defaultHash = await bcryptjs.hash(passString, 10);
 
-                        return tx.author.upsert({
-                            where: { email: auth.email },
-                            update: {},
-                            create: {
+                        return tx.author.create({
+                            data: {
                                 firstName: auth.firstName,
                                 lastName: auth.lastName,
                                 email: auth.email,
@@ -77,23 +96,24 @@ export const POST = async (req: NextRequest) => {
 
                     const authors = await Promise.all(authorPromises);
 
-                    // C. Generate ID
+                    // D. Generate ID
                     const date = entry.createdAt ? new Date(entry.createdAt) : new Date();
                     const yearDecade = date.getFullYear().toString().slice(-2);
                     const monthNum = (date.getMonth() + 1).toString().padStart(2, "0");
                     const uniqueSuffix = Math.floor(Math.random() * 10000).toString().padStart(4, "0");
                     const submissionId = `MIG_${yearDecade}${monthNum}${uniqueSuffix}`;
 
-                    // D. Create Paper
+                    // E. Create Paper
                     await tx.paper.create({
                         data: {
                             submissionId,
                             name: entry.title,
                             keywords: entry.keywords,
                             archiveId: archive.id,
+                            publishId: entry.publishId,
                             publishUrl: entry.publishUrl,
                             authors: {
-                                connect: authors.map((a) => ({ id: a.id })),
+                                connect: authors.map((a) => ({id: a.id})),
                             },
                             createdAt: entry.createdAt ? new Date(entry.createdAt) : undefined,
                             paperStatuses: {
@@ -108,31 +128,32 @@ export const POST = async (req: NextRequest) => {
                     });
                 });
 
-                // If transaction finishes without error:
+                // Transaction committed successfully
                 results.success++;
 
             } catch (err: any) {
-                // If the transaction fails, it rolls back this specific paper only
+                // Transaction rolled back
                 results.failed++;
                 results.errors.push({
-                    row: index + 1,
+                    row: index + 1, // 1-based index for the UI
                     title: entry.title,
-                    error: err.message
+                    error: err.message || "Unknown database error"
                 });
-                console.error(`Migration failed for row ${index}:`, err);
+                console.error(`Migration failed for row ${index + 1}:`, err.message);
             }
         }
 
+        // Return summary so Frontend can generate the Error Sheet
         return NextResponse.json({
-            message: "Migration completed",
+            message: "Batch processed",
             summary: results
         });
 
     } catch (error) {
         console.error("Migration Fatal Error:", error);
         return NextResponse.json(
-            { error: "Internal Server Error" },
-            { status: 500 }
+            {error: "Internal Server Error"},
+            {status: 500}
         );
     }
 };
