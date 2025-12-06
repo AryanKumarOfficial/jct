@@ -17,10 +17,11 @@ import {
     FileText,
     Trash2,
     Edit3,
-    Save,
+    Save, Activity,
 } from "lucide-react";
 import ManagePapersTab from "@/app/admin/dashboard/components/ManagePapersTab";
 import ManageUsersTab from "@/app/admin/dashboard/ManageUsersTab";
+import ActivityLogTab from "@/app/admin/dashboard/components/ActivityLogTab";
 
 type Archive = {
     id: string;
@@ -385,7 +386,7 @@ export default function AdminDashboard() {
             <h1 className="text-4xl font-bold mb-8">Admin Dashboard</h1>
 
             <Tabs defaultValue="papers" className="w-full">
-                <TabsList className="grid w-full grid-cols-3 max-w-lg">
+                <TabsList className="grid w-full grid-cols-4 gap-4">
                     <TabsTrigger value="papers">
                         <FileText className="mr-2 h-4 w-4"/>
                         Manage Papers
@@ -397,6 +398,10 @@ export default function AdminDashboard() {
                     <TabsTrigger value="users">
                         <Users className="mr-2 h-4 w-4"/>
                         Manage Users
+                    </TabsTrigger>
+                    <TabsTrigger value="activity">
+                        <Activity className="mr-2 h-4 w-4"/>
+                        Activity
                     </TabsTrigger>
                 </TabsList>
 
@@ -432,6 +437,9 @@ export default function AdminDashboard() {
                             <ManageUsersTab/>
                         </CardContent>
                     </Card>
+                </TabsContent>
+                <TabsContent value="activity" className="mt-6">
+                    <ActivityLogTab/>
                 </TabsContent>
             </Tabs>
         </div>
