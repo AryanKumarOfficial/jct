@@ -43,7 +43,6 @@ export const authorize = async (
             );
         }
 
-        // Authorization successful - function completes without returning a response
     } catch (e) {
         console.error("Authorization error:", e);
         return NextResponse.json(

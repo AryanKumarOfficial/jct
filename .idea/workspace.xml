@@ -4,9 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3fbf7134-2adf-435b-806d-6f4c015e4c97" name="Changes" comment="handles the payment via a payment link in webhook">
+    <list default="true" id="3fbf7134-2adf-435b-806d-6f4c015e4c97" name="Changes" comment="records payment failure event in webhook and removes obsolete console logs">
+      <change afterPath="$PROJECT_DIR$/src/app/api/admin/data/migrate/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/schemas/migrationSchema.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/webhooks/razorpay/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/webhooks/razorpay/route.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/authorize.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/authorize.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/typography.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/typography.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,7 +88,7 @@
     "npm.Email server.executor": "Run",
     "npm.build.executor": "Run",
     "npm.dev.executor": "Run",
-    "settings.editor.selected.configurable": "preferences.toDoOptions",
+    "settings.editor.selected.configurable": "ml.llm.AIAssistantPromptsLibrary",
     "to.speed.mode.migration.done": "true",
     "ts.external.directory.path": "D:\\ARYAN\\WEB DEVELOPMENT\\FREELANCING\\jct\\node_modules\\typescript\\lib",
     "vue.rearranger.settings.migration": "true"
@@ -96,6 +99,7 @@
       <recent name="D:\WEB DEVELOPMENT\FREELANCING\jct\email" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\ARYAN\WEB DEVELOPMENT\FREELANCING\jct\src\app\api\admin" />
       <recent name="D:\ARYAN\WEB DEVELOPMENT\FREELANCING\jct\src\app\admin\dashboard" />
       <recent name="D:\ARYAN\WEB DEVELOPMENT\FREELANCING\jct\src\app\author\dashboard\components" />
       <recent name="D:\WEB DEVELOPMENT\FREELANCING\jct\src\app\api\admin\paper" />
@@ -259,7 +263,7 @@
       <workItem from="1764447906246" duration="6972000" />
       <workItem from="1764495331860" duration="18837000" />
       <workItem from="1764582988723" duration="20000" />
-      <workItem from="1765043218179" duration="8105000" />
+      <workItem from="1765043218179" duration="9892000" />
     </task>
     <task id="LOCAL-00001" summary="adds JSDoc comments across the codebase for improved documentation and readability">
       <option name="closed" value="true" />
@@ -333,7 +337,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765047861175</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="records payment failure event in webhook and removes obsolete console logs">
+      <option name="closed" value="true" />
+      <created>1765056508808</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1765056508808</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -355,6 +367,8 @@
     <MESSAGE value="dynamically redirects admin users to their destination" />
     <MESSAGE value="adds webhook for razorpay" />
     <MESSAGE value="handles the payment via a payment link in webhook" />
-    <option name="LAST_COMMIT_MESSAGE" value="handles the payment via a payment link in webhook" />
+    <MESSAGE value="optimises the webhook" />
+    <MESSAGE value="records payment failure event in webhook and removes obsolete console logs" />
+    <option name="LAST_COMMIT_MESSAGE" value="records payment failure event in webhook and removes obsolete console logs" />
   </component>
 </project>
