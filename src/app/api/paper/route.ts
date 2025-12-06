@@ -37,6 +37,26 @@ export const GET = async () => {
                         status: true,
                         amount: true
                     }
+                },
+                activityLogs: {
+                    orderBy: {
+                        createdAt: "desc"
+                    },
+                    include: {
+                        actor: {
+                            select: {
+                                firstName: true,
+                                lastName: true,
+                                role: true
+                            }
+                        },
+                        author:{
+                            select:{
+                                firstName:true,
+                                lastName:true
+                            }
+                        }
+                    }
                 }
             },
             orderBy: {

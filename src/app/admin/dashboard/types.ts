@@ -1,4 +1,5 @@
 import {PaperStatus} from "@/types/enums";
+import {ActivityType} from "@/generated/prisma";
 
 export interface Author {
     id: string;
@@ -35,6 +36,26 @@ export interface Editor {
     lastName: string | null;
 }
 
+export interface ActivityLog {
+    id: string;
+    activity: ActivityType;
+    details: string | null;
+    createdAt: string;
+    actor?: {
+        firstName: string;
+        lastName: string | null;
+        role: string;
+    } | null;
+    author?: {
+        firstName: string;
+        lastName: string | null;
+    } | null;
+    paper?: {
+        name: string;
+        submissionId: string;
+    } | null;
+}
+
 export interface Paper {
     id: string;
     submissionId: string;
@@ -48,4 +69,5 @@ export interface Paper {
     createdAt: string;
     Copyright?: Copyright | null;
     transactions?: Transaction[];
+    activityLogs?: ActivityLog[];
 }

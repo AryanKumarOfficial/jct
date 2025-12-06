@@ -4,12 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3fbf7134-2adf-435b-806d-6f4c015e4c97" name="Changes" comment="records payment failure event in webhook and removes obsolete console logs">
-      <change afterPath="$PROJECT_DIR$/src/app/api/admin/data/migrate/route.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/schemas/migrationSchema.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/authorize.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/authorize.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/typography.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/typography.ts" afterDir="false" />
+    <list default="true" id="3fbf7134-2adf-435b-806d-6f4c015e4c97" name="Changes" comment="implements bulk migration API for importing papers and authors, adds schema validation, and improves utility functions">
+      <change beforePath="$PROJECT_DIR$/src/app/admin/dashboard/types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/admin/dashboard/types.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/api/paper/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/paper/route.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -263,7 +260,7 @@
       <workItem from="1764447906246" duration="6972000" />
       <workItem from="1764495331860" duration="18837000" />
       <workItem from="1764582988723" duration="20000" />
-      <workItem from="1765043218179" duration="9892000" />
+      <workItem from="1765043218179" duration="10174000" />
     </task>
     <task id="LOCAL-00001" summary="adds JSDoc comments across the codebase for improved documentation and readability">
       <option name="closed" value="true" />
@@ -345,7 +342,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765056508808</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="implements bulk migration API for importing papers and authors, adds schema validation, and improves utility functions">
+      <option name="closed" value="true" />
+      <created>1765058097767</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1765058097767</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -369,6 +374,7 @@
     <MESSAGE value="handles the payment via a payment link in webhook" />
     <MESSAGE value="optimises the webhook" />
     <MESSAGE value="records payment failure event in webhook and removes obsolete console logs" />
-    <option name="LAST_COMMIT_MESSAGE" value="records payment failure event in webhook and removes obsolete console logs" />
+    <MESSAGE value="implements bulk migration API for importing papers and authors, adds schema validation, and improves utility functions" />
+    <option name="LAST_COMMIT_MESSAGE" value="implements bulk migration API for importing papers and authors, adds schema validation, and improves utility functions" />
   </component>
 </project>
