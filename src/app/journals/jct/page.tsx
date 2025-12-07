@@ -360,9 +360,11 @@ export default async function JournalPage({
                                                     <CardContent className="p-5">
                                                         <div className="flex flex-col gap-4">
                                                             <div className="space-y-2">
-                                                                <h3 className="text-lg font-bold text-foreground leading-snug group-hover:text-primary transition-colors">
-                                                                    {paper.name}
-                                                                </h3>
+                                                                <Link href={`/paper/${paper.submissionId}`}>
+                                                                    <h3 className="text-lg font-bold text-foreground leading-snug group-hover:text-primary transition-colors">
+                                                                        {paper.name}
+                                                                    </h3>
+                                                                </Link>
                                                                 <div
                                                                     className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
                                                                     <span className="flex items-center gap-1">

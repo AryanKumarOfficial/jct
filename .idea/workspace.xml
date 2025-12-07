@@ -4,7 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3fbf7134-2adf-435b-806d-6f4c015e4c97" name="Changes" comment="enhances the data migration UI with improved validation, logging, and error reporting; adds file match handling, live progress updates, and failure downloads" />
+    <list default="true" id="3fbf7134-2adf-435b-806d-6f4c015e4c97" name="Changes" comment="chore(deps): upgrade Next.js to 16.0.7 - security patch for CVE-2025-66478">
+      <change afterPath="$PROJECT_DIR$/src/app/paper/[id]/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/paper/not-found.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/paper/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/robots.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/sitemap.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/journals/jct/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/journals/jct/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Home/LatestArticles.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Home/LatestArticles.tsx" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -14,8 +24,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="tsconfig.json" />
-        <option value="TypeScript JSX File" />
         <option value="TypeScript File" />
+        <option value="TypeScript JSX File" />
       </list>
     </option>
   </component>
@@ -59,47 +69,48 @@
     <option name="sortByType" value="true" />
     <option name="sortKey" value="BY_TYPE" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "JavaScript Debug.copyright-template.html.executor": "Run",
-    "KUBERNETES_SUPPRESS_CONFIG_CLUSTER_SUGGESTION": "true",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "Shell Script.Git commit.executor": "Run",
-    "Shell Script.Prisma Studio.executor": "Run",
-    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "main",
-    "javascript.nodejs.core.library.configured.version": "24.11.1",
-    "javascript.nodejs.core.library.typings.version": "24.10.1",
-    "js.debugger.nextJs.config.created.client": "true",
-    "junie.onboarding.icon.badge.shown": "true",
-    "last_opened_file_path": "D:/ARYAN/WEB DEVELOPMENT/FREELANCING/jct",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_interpreter_path": "node",
-    "nodejs_package_manager_path": "npm",
-    "npm.Email server.executor": "Run",
-    "npm.build.executor": "Run",
-    "npm.dev.executor": "Run",
-    "settings.editor.selected.configurable": "ml.llm.AIAssistantPromptsLibrary",
-    "to.speed.mode.migration.done": "true",
-    "ts.external.directory.path": "D:\\ARYAN\\WEB DEVELOPMENT\\FREELANCING\\jct\\node_modules\\typescript\\lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;JavaScript Debug.copyright-template.html.executor&quot;: &quot;Run&quot;,
+    &quot;KUBERNETES_SUPPRESS_CONFIG_CLUSTER_SUGGESTION&quot;: &quot;true&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;Shell Script.Git commit.executor&quot;: &quot;Run&quot;,
+    &quot;Shell Script.Prisma Studio.executor&quot;: &quot;Run&quot;,
+    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;24.11.1&quot;,
+    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;24.10.1&quot;,
+    &quot;js.debugger.nextJs.config.created.client&quot;: &quot;true&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/ARYAN/WEB DEVELOPMENT/FREELANCING/jct&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_interpreter_path&quot;: &quot;node&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;npm.Email server.executor&quot;: &quot;Run&quot;,
+    &quot;npm.build.executor&quot;: &quot;Run&quot;,
+    &quot;npm.dev.executor&quot;: &quot;Run&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;ml.llm.AIAssistantPromptsLibrary&quot;,
+    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;D:\\ARYAN\\WEB DEVELOPMENT\\FREELANCING\\jct\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\WEB DEVELOPMENT\FREELANCING\jct\email" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\ARYAN\WEB DEVELOPMENT\FREELANCING\jct\src\app\api\admin" />
-      <recent name="D:\ARYAN\WEB DEVELOPMENT\FREELANCING\jct\src\app\admin\dashboard" />
-      <recent name="D:\ARYAN\WEB DEVELOPMENT\FREELANCING\jct\src\app\author\dashboard\components" />
-      <recent name="D:\WEB DEVELOPMENT\FREELANCING\jct\src\app\api\admin\paper" />
+      <recent name="D:\ARYAN\WEB DEVELOPMENT\FREELANCING\jct\src\app\paper" />
+      <recent name="D:\ARYAN\WEB DEVELOPMENT\FREELANCING\jct\src\app\paper\[id]" />
+      <recent name="D:\ARYAN\WEB DEVELOPMENT\FREELANCING\jct\src\app" />
+      <recent name="D:\ARYAN\WEB DEVELOPMENT\FREELANCING\jct\src\app\(paperGroup)\paper" />
+      <recent name="D:\ARYAN\WEB DEVELOPMENT\FREELANCING\jct\src\app\(paperGroup)" />
     </key>
   </component>
   <component name="RunManager" selected="npm.dev">
@@ -260,7 +271,8 @@
       <workItem from="1764447906246" duration="6972000" />
       <workItem from="1764495331860" duration="18837000" />
       <workItem from="1764582988723" duration="20000" />
-      <workItem from="1765043218179" duration="17942000" />
+      <workItem from="1765043218179" duration="20258000" />
+      <workItem from="1765068726325" duration="1362000" />
     </task>
     <task id="LOCAL-00001" summary="adds JSDoc comments across the codebase for improved documentation and readability">
       <option name="closed" value="true" />
@@ -382,7 +394,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765065896152</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="chore(deps): upgrade Next.js to 16.0.7 - security patch for CVE-2025-66478">
+      <option name="closed" value="true" />
+      <created>1765066649383</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1765066649383</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -411,6 +431,7 @@
     <MESSAGE value="adds activity log UI and API for improved system event tracking" />
     <MESSAGE value="adds data migration UI for bulk importing papers and PDFs, integrates progress tracking, file upload handling, and error reporting" />
     <MESSAGE value="enhances the data migration UI with improved validation, logging, and error reporting; adds file match handling, live progress updates, and failure downloads" />
-    <option name="LAST_COMMIT_MESSAGE" value="enhances the data migration UI with improved validation, logging, and error reporting; adds file match handling, live progress updates, and failure downloads" />
+    <MESSAGE value="chore(deps): upgrade Next.js to 16.0.7 - security patch for CVE-2025-66478" />
+    <option name="LAST_COMMIT_MESSAGE" value="chore(deps): upgrade Next.js to 16.0.7 - security patch for CVE-2025-66478" />
   </component>
 </project>

@@ -58,7 +58,7 @@ const LatestArticles = ({papers}: LatestArticlesProps) => {
                         </p>
                     </div>
                     <Link
-                        href="/archives"
+                        href="/journals/jct"
                         className="shrink-0 inline-flex items-center px-3 py-2 rounded-full border border-border/60 bg-card/50 hover:bg-primary/10 text-xs md:text-sm transition-colors"
                     >
                         View all archives →

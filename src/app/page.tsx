@@ -22,6 +22,7 @@ export async function generateMetadata(): Promise<Metadata> {
         description: `Access peer-reviewed research in Computer Science...`,
     };
 }
+
 /**
  * Fetch the latest archive metadata only.
  */
@@ -92,6 +93,9 @@ export default async function Index() {
         <>
             <Hero/>
             <AimsScope/>
+            {latestPapers.length > 0 &&
+                <LatestArticles papers={latestPapers}/>
+            }
             <Indexing/>
             <JournalStats/>
             <Features/>
