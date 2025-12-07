@@ -1,4 +1,4 @@
-import  {AuthorImportSchema} from "@/schemas/migrationSchema"
+import  {AuthorImportPayload} from "@/schemas/migrationSchema"
 
 export function normalizeAndCapitalize(str: string) {
     return str
@@ -9,6 +9,6 @@ export function normalizeAndCapitalize(str: string) {
         .join(" ");
 }
 
-export function generateAuthorPassword(author: AuthorImportSchema): string {
+export function generateAuthorPassword(author: AuthorImportPayload): string {
     return `${author.firstName.trim().slice(0, 4)}${author.phone.trim().slice(-4)}\``
 }

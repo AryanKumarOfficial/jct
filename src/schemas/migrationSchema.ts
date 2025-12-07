@@ -31,3 +31,4 @@ export const bulkImportSchema = z.array(paperImportSchema);
 
 // This generates the TypeScript interface automatically
 export type MigrationPayload = z.infer<typeof paperImportSchema>;
+export type AuthorImportPayload = z.infer<typeof authorImportSchema>;

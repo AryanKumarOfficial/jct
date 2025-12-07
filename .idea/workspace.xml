@@ -4,17 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3fbf7134-2adf-435b-806d-6f4c015e4c97" name="Changes" comment="adds activity log UI and API for improved system event tracking">
-      <change afterPath="$PROJECT_DIR$/src/app/admin/dashboard/components/DataMigrationTab.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/api/admin/paper/[id]/delete/route.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/api/admin/upload/route.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/excel-parser.ts" afterDir="false" />
+    <list default="true" id="3fbf7134-2adf-435b-806d-6f4c015e4c97" name="Changes" comment="enhances the data migration UI with improved validation, logging, and error reporting; adds file match handling, live progress updates, and failure downloads">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/admin/dashboard/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/admin/dashboard/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/admin/data/migrate/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/admin/data/migrate/route.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/admin/dashboard/components/DataMigrationTab.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/admin/dashboard/components/DataMigrationTab.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/schemas/migrationSchema.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/schemas/migrationSchema.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/excel-parser.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/excel-parser.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/typography.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/typography.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -271,7 +266,7 @@
       <workItem from="1764447906246" duration="6972000" />
       <workItem from="1764495331860" duration="18837000" />
       <workItem from="1764582988723" duration="20000" />
-      <workItem from="1765043218179" duration="15835000" />
+      <workItem from="1765043218179" duration="17498000" />
     </task>
     <task id="LOCAL-00001" summary="adds JSDoc comments across the codebase for improved documentation and readability">
       <option name="closed" value="true" />
@@ -377,7 +372,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765059537792</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="adds data migration UI for bulk importing papers and PDFs, integrates progress tracking, file upload handling, and error reporting">
+      <option name="closed" value="true" />
+      <created>1765064474969</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1765064474969</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -404,6 +407,8 @@
     <MESSAGE value="implements bulk migration API for importing papers and authors, adds schema validation, and improves utility functions" />
     <MESSAGE value="adds activity log support for papers and updates types for improved data handling" />
     <MESSAGE value="adds activity log UI and API for improved system event tracking" />
-    <option name="LAST_COMMIT_MESSAGE" value="adds activity log UI and API for improved system event tracking" />
+    <MESSAGE value="adds data migration UI for bulk importing papers and PDFs, integrates progress tracking, file upload handling, and error reporting" />
+    <MESSAGE value="enhances the data migration UI with improved validation, logging, and error reporting; adds file match handling, live progress updates, and failure downloads" />
+    <option name="LAST_COMMIT_MESSAGE" value="enhances the data migration UI with improved validation, logging, and error reporting; adds file match handling, live progress updates, and failure downloads" />
   </component>
 </project>
