@@ -50,7 +50,7 @@ export async function generateMetadata({params}: { params: Promise<{ id: string 
     const description = getPaperDescription(paper);
 
     return {
-        title: paper.name,
+        title: `${paper.name} | JCT Journals`,
         description,
         keywords: paper.keywords,
         authors: authors.map(name => ({name})),
@@ -248,11 +248,13 @@ export default async function PaperPage({params}: { params: Promise<{ id: string
                                 <div className="space-y-3 text-sm pt-2">
                                     <div className="flex justify-between py-2 border-b border-border/50">
                                         <span className="text-muted-foreground">Publication Date</span>
-                                        <span className="font-medium">{new Date(paper.createdAt).toLocaleDateString()}</span>
+                                        <span
+                                            className="font-medium">{new Date(paper.createdAt).toLocaleDateString()}</span>
                                     </div>
                                     <div className="flex justify-between py-2 border-b border-border/50">
                                         <span className="text-muted-foreground">Submission ID</span>
-                                        <span className="font-mono text-xs bg-muted px-2 py-0.5 rounded">{paper.submissionId}</span>
+                                        <span
+                                            className="font-mono text-xs bg-muted px-2 py-0.5 rounded">{paper.submissionId}</span>
                                     </div>
                                     <div className="flex justify-between py-2">
                                         <span className="text-muted-foreground">License</span>

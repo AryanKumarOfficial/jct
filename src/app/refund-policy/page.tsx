@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/breadcrumb";
 
 export const metadata: Metadata = {
-    title: "Refund Policy | JCT Journals",
+    title: "Refund Policy",
     description: "Details regarding refunds, cancellations, and Article Processing Charges (APC).",
 };
 

@@ -1,12 +1,10 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { BookOpen, Globe, Target } from "lucide-react";
-import type { Metadata } from "next";
+import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
+import {BookOpen, Globe, Target} from "lucide-react";
+import type {Metadata} from "next";
 
-export async function generateMetadata(): Promise<Metadata> {
-    return {
-        title: "About JCT",
-        description: `Learn about the Journal of Computing Technologies, our mission, vision, and scope.`,
-    };
+export const metadata: Metadata = {
+    title: "About JCT",
+    description: `Learn about the Journal of Computing Technologies, our mission, vision, and scope.`,
 }
 
 const AboutPage = () => {
@@ -33,7 +31,7 @@ const AboutPage = () => {
                     <Card className="shadow-lg">
                         <CardHeader>
                             <div className="flex items-center gap-3 mb-2">
-                                <Target className="h-8 w-8 text-primary" />
+                                <Target className="h-8 w-8 text-primary"/>
                                 <CardTitle className="text-2xl">Our Mission</CardTitle>
                             </div>
                         </CardHeader>
@@ -57,7 +55,7 @@ const AboutPage = () => {
                     <Card className="shadow-lg">
                         <CardHeader>
                             <div className="flex items-center gap-3 mb-2">
-                                <Globe className="h-8 w-8 text-primary" />
+                                <Globe className="h-8 w-8 text-primary"/>
                                 <CardTitle className="text-2xl">Our Vision</CardTitle>
                             </div>
                         </CardHeader>
@@ -81,7 +79,7 @@ const AboutPage = () => {
                     <Card className="shadow-lg border-primary/20">
                         <CardHeader>
                             <div className="flex items-center gap-3 mb-2">
-                                <BookOpen className="h-8 w-8 text-primary" />
+                                <BookOpen className="h-8 w-8 text-primary"/>
                                 <CardTitle className="text-2xl">Scope of Our Journals</CardTitle>
                             </div>
                         </CardHeader>

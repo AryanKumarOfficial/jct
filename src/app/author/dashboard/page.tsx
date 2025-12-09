@@ -2,7 +2,6 @@
 
 import {useRouter} from "next/navigation";
 import useSWR from "swr";
-import Script from "next/script";
 import {Button} from "@/components/ui/button";
 import {Tabs, TabsList, TabsTrigger} from "@/components/ui/tabs";
 import {
