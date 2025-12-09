@@ -34,6 +34,7 @@ async function handleAcceptedPayment(paperId: string, submissionId: string, auth
     });
 
     let transaction;
+    let paymentLink;
     if (existingTx) {
         transaction = existingTx;
     } else {
@@ -72,10 +73,11 @@ async function handleAcceptedPayment(paperId: string, submissionId: string, auth
                 authorId: authorId,
             },
         });
+
+        paymentLink = res.short_url;
     }
 
     // 4. Generate Link (Direct to your website's payment page)
-    const paymentLink = `${process.env.NEXT_PUBLIC_APP_URL}/author/pay/${submissionId}`;
     return {transaction, paymentLink};
 }
 
