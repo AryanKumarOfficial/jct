@@ -37,6 +37,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
         // --- 1. Extract and Validate FormData ---
         const file = formData.get("file") as File | null;
         const paperName = formData.get("paperName") as string | null;
+        const abstract = formData.get("abstract") as string | null;
         const archiveId = formData.get("archiveId") as string | null;
         const authorsStr = formData.get("authors") as string | null;
         const keywordsStr = formData.get("keywords") as string | null;
@@ -195,6 +196,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
                     manuscriptUrl: fileUrl,
                     archiveId,
                     authors: {connect: authorIdsToConnect},
+                    abstract,
                 },
                 include: {
                     authors: true,

@@ -1,10 +1,10 @@
 // src/lib/schemas/submitSchema.ts
-import { z } from "zod";
+import {z} from "zod";
 
 const authorSchema = z.object({
     firstName: z.string().min(1, "First name is required"),
     lastName: z.string().optional(),
-    email: z.string().email("Invalid email"),
+    email: z.email("Invalid email"),
     phone: z.string().min(1, "Phone is required"),
     organisation: z.string().min(1, "Organisation is required"),
     country: z.string().min(1, "Country is required"),
@@ -18,7 +18,11 @@ export const submitSchema = z.object({
         .array(z.string().min(1))
         .optional()
         .default([]),
-    // file: we expect a single File; refine checks File type in browser
+    abstract: z
+        .string()
+        .min(50, "Abstract is required")
+        .max(5000, "Abstract must be less than 5000 characters")
+        .optional(),
     file: z
         .any()
         .refine((f) => f instanceof File, "A file is required")

@@ -52,6 +52,7 @@ model paper {
   name               String
   keywords           String[]            @default(["cse"])
   authors            author[]
+  abstract           String?             @db.Text
   manuscriptId       String?
   manuscriptUrl      String?
   publishId          String?

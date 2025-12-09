@@ -3,8 +3,7 @@
 import React, {useCallback, useEffect, useRef, useState} from "react";
 import {useForm, Controller, useFieldArray, Resolver} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {z} from "zod";
-import {submitSchema} from "@/schemas/submitSchema";
+import {submitSchema, SubmitSchema as SubmitForm} from "@/schemas/submitSchema";
 import {Button} from "@/components/ui/button";
 import {
     Card,
@@ -33,8 +32,8 @@ import {
 } from "lucide-react";
 import {motion, AnimatePresence} from "motion/react";
 import {toast} from "sonner";
+import {Textarea} from "@/components/ui/textarea"
 
-type SubmitForm = z.infer<typeof submitSchema>;
 type Author = SubmitForm["authors"][number];
 
 interface Archive {
@@ -72,6 +71,7 @@ const SubmitPage: React.FC = () => {
         resolver: zodResolver(submitSchema) as Resolver<SubmitForm>,
         defaultValues: {
             paperName: "",
+            abstract: "",
             archiveId: "",
             keywords: [],
             authors: [emptyAuthor],
@@ -167,6 +167,7 @@ const SubmitPage: React.FC = () => {
         const formData = new FormData();
         formData.append("file", fileVal);
         formData.append("paperName", data.paperName);
+        if (data.abstract) formData.append("abstract", data.abstract);
         formData.append("archiveId", data.archiveId);
         formData.append("authors", JSON.stringify(data.authors));
         formData.append("keywords", JSON.stringify(data.keywords ?? []));
@@ -225,6 +226,19 @@ const SubmitPage: React.FC = () => {
                                         className={"text-red-600"}>*</span></Label>
                                     <Input id="paperName" {...register("paperName")}
                                            placeholder="A Novel Approach to..."/>
+                                </div>
+
+                                <div className="space-y-2">
+                                    <Label htmlFor="abstract">Abstract<span className="text-red-600">*</span></Label>
+                                    <Textarea
+                                        id="abstract"
+                                        {...register("abstract")}
+                                        placeholder="Enter the paper abstract (min 50 characters)..."
+                                        className="min-h-[150px]"
+                                    />
+                                    <p className="text-muted-foreground text-sm">
+                                        Provide a concise summary of the research (approx. 150-250 words).
+                                    </p>
                                 </div>
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

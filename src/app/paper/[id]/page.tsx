@@ -1,10 +1,11 @@
+// src/app/paper/[id]/page.tsx
 import {prisma} from "@/lib/prisma";
 import {notFound} from "next/navigation";
 import {Metadata} from "next";
 import {Button} from "@/components/ui/button";
 import {Badge} from "@/components/ui/badge";
 import {Card, CardContent} from "@/components/ui/card";
-import {Download, User, Quote, BookOpen} from "lucide-react";
+import {Download, User, Quote, BookOpen, FileText, Calendar} from "lucide-react"; // Added Icons
 import Link from "next/link";
 import {
     Breadcrumb,
@@ -13,12 +14,24 @@ import {
     BreadcrumbList,
     BreadcrumbPage,
     BreadcrumbSeparator
-} from "@/components/ui/breadcrumb"; //
+} from "@/components/ui/breadcrumb";
+import {Prisma} from "@/generated/prisma";
 
-// ... (generateSummary and generateMetadata remain unchanged) ...
-const generateSummary = (paper: any) => {
-    const authorsText = paper.authors.map((a: any) => `${a.firstName} ${a.lastName || ""}`.trim()).join(", ");
-    return `This research paper, titled "${paper.name}", was authored by ${authorsText}. It explores topics including ${paper.keywords.join(", ")} and contributes to the field of Computing Technologies. Published in Volume ${paper.archive?.volume}, Issue ${paper.archive?.issue} (${paper.archive?.year}) of the JCT Journal.`;
+type PaperWithAuthors = Prisma.paperGetPayload<{
+    include: {
+        authors: true,
+        archive: true
+    }
+}>
+
+const getPaperDescription = (paper: PaperWithAuthors) => {
+    // 1. Use the real abstract if available
+    if (paper.abstract && paper.abstract.length > 10) {
+        return paper.abstract;
+    }
+    // 2. Fallback generator
+    const authorText = paper.authors.map((author: any) => author.firstName + " " + author.lastName).join(", ");
+    return `Research Paper titled "${paper.name}" by ${authorText}. Published in JCT Journal Vol ${paper.archive?.volume}, Issue ${paper.archive?.issue}.`
 };
 
 export async function generateMetadata({params}: { params: Promise<{ id: string }> }): Promise<Metadata> {
@@ -34,16 +47,16 @@ export async function generateMetadata({params}: { params: Promise<{ id: string 
     const authors = paper.authors.map(a => `${a.firstName} ${a.lastName || ""}`.trim());
     const publishedDate = new Date(paper.createdAt).toISOString().split('T')[0];
     const pdfUrl = paper.publishUrl || "";
-    const summary = generateSummary(paper);
+    const description = getPaperDescription(paper);
 
     return {
         title: paper.name,
-        description: summary,
+        description,
         keywords: paper.keywords,
         authors: authors.map(name => ({name})),
         openGraph: {
             title: paper.name,
-            description: "JCT Journal - International Research Publication",
+            description: description,
             type: "article",
             publishedTime: paper.createdAt.toISOString(),
             authors: authors,
@@ -59,8 +72,8 @@ export async function generateMetadata({params}: { params: Promise<{ id: string 
             "citation_issue": paper.archive?.issue.toString() ?? "",
             "citation_pdf_url": pdfUrl,
             "citation_keywords": paper.keywords.join("; "),
+            "citation_abstract": description, // <--- CRITICAL FOR GOOGLE SCHOLAR
             "citation_abstract_html_url": `${process.env.NEXT_PUBLIC_APP_URL}/paper/${paper.submissionId}`,
-            "description": summary
         }
     };
 }
@@ -74,7 +87,8 @@ export default async function PaperPage({params}: { params: Promise<{ id: string
 
     if (!paper) notFound();
 
-    const summary = generateSummary(paper);
+    const summary = getPaperDescription(paper);
+    const hasRealAbstract = paper.abstract && paper.abstract.length > 10;
 
     const jsonLd = {
         "@context": "https://schema.org",
@@ -125,7 +139,7 @@ export default async function PaperPage({params}: { params: Promise<{ id: string
                         <BreadcrumbSeparator/>
                         <BreadcrumbItem>
                             <BreadcrumbPage className="truncate max-w-[200px] md:max-w-[400px]">
-                                {paper.name}
+                                {paper.submissionId}
                             </BreadcrumbPage>
                         </BreadcrumbItem>
                     </BreadcrumbList>
@@ -143,7 +157,7 @@ export default async function PaperPage({params}: { params: Promise<{ id: string
                                 {paper.archive && (
                                     <Badge variant="secondary"
                                            className="bg-primary/10 text-primary hover:bg-primary/20">
-                                        Vol {paper.archive.volume}, Issue {paper.archive.issue}
+                                        Vol {paper.archive.volume}, Issue {paper.archive.issue} ({paper.archive.year})
                                     </Badge>
                                 )}
                             </div>
@@ -171,56 +185,74 @@ export default async function PaperPage({params}: { params: Promise<{ id: string
                             ))}
                         </div>
 
-                        {/* Summary / About (Replaces Abstract) */}
+                        {/* Abstract Section */}
                         <div className="space-y-4">
                             <div className="flex items-center gap-2 text-lg font-semibold text-foreground">
                                 <BookOpen className="h-5 w-5 text-primary"/>
-                                <h3>About this Paper</h3>
+                                <h3>{hasRealAbstract ? "Abstract" : "About this Paper"}</h3>
                             </div>
-                            <div className="bg-card/50 p-6 rounded-xl border border-border/60 shadow-sm">
+                            <div className="bg-card/50 p-6 rounded-xl border border-border/60 shadow-sm text-justify">
                                 <p className="text-muted-foreground leading-relaxed text-base">
                                     {summary}
                                 </p>
                             </div>
                         </div>
 
-                        {/* Topics / Keywords */}
-                        <div className="space-y-3 pt-2">
-                            <h4 className="text-xs font-bold uppercase tracking-wider text-muted-foreground/70">Topics &
-                                Keywords</h4>
-                            <div className="flex flex-wrap gap-2">
-                                {paper.keywords.map(kw => (
-                                    <Badge key={kw} variant="secondary"
-                                           className="px-3 py-1.5 text-sm font-normal bg-secondary/50 hover:bg-secondary">
-                                        {kw}
-                                    </Badge>
-                                ))}
+                        {/* Keywords */}
+                        {paper.keywords.length > 0 && (
+                            <div className="space-y-3 pt-2">
+                                <h4 className="text-xs font-bold uppercase tracking-wider text-muted-foreground/70">
+                                    Keywords
+                                </h4>
+                                <div className="flex flex-wrap gap-2">
+                                    {paper.keywords.map(kw => (
+                                        <Badge key={kw} variant="secondary"
+                                               className="px-3 py-1.5 text-sm font-normal bg-secondary/50 hover:bg-secondary cursor-default">
+                                            {kw}
+                                        </Badge>
+                                    ))}
+                                </div>
                             </div>
-                        </div>
+                        )}
                     </div>
 
                     {/* RIGHT COLUMN: Sidebar Actions */}
                     <div className="space-y-6">
                         {/* Download Card */}
                         <Card
-                            className="border-primary/20 shadow-xl shadow-primary/5 bg-gradient-to-b from-card to-muted/20">
+                            className="border-primary/20 shadow-xl shadow-primary/5 bg-gradient-to-b from-card to-muted/20 sticky top-24">
                             <CardContent className="p-6 space-y-6">
-                                <Button size="lg" className="w-full shadow-md text-base h-12" asChild>
-                                    <a href={paper.publishUrl || "#"} target="_blank">
-                                        <Download className="mr-2 h-5 w-5"/> Download Full PDF
-                                    </a>
-                                </Button>
+                                <div className="space-y-2">
+                                    <h3 className="font-semibold text-foreground flex items-center gap-2">
+                                        <FileText className="h-4 w-4"/> Full Text
+                                    </h3>
+                                    {/* IMPROVED DOWNLOAD BUTTON */}
+                                    <Button
+                                        size="lg"
+                                        className="w-full shadow-md text-base h-12"
+                                        disabled={!paper.publishUrl}
+                                        asChild={!!paper.publishUrl}
+                                    >
+                                        {paper.publishUrl ? (
+                                            <a href={paper.publishUrl} target="_blank" rel="noopener noreferrer">
+                                                <Download className="mr-2 h-5 w-5"/> Download PDF
+                                            </a>
+                                        ) : (
+                                            <span>
+                                                <Download className="mr-2 h-5 w-5"/> PDF Unavailable
+                                            </span>
+                                        )}
+                                    </Button>
+                                </div>
 
                                 <div className="space-y-3 text-sm pt-2">
                                     <div className="flex justify-between py-2 border-b border-border/50">
                                         <span className="text-muted-foreground">Publication Date</span>
-                                        <span
-                                            className="font-medium">{new Date(paper.createdAt).toLocaleDateString()}</span>
+                                        <span className="font-medium">{new Date(paper.createdAt).toLocaleDateString()}</span>
                                     </div>
                                     <div className="flex justify-between py-2 border-b border-border/50">
                                         <span className="text-muted-foreground">Submission ID</span>
-                                        <span
-                                            className="font-mono text-xs bg-muted px-2 py-0.5 rounded">{paper.submissionId}</span>
+                                        <span className="font-mono text-xs bg-muted px-2 py-0.5 rounded">{paper.submissionId}</span>
                                     </div>
                                     <div className="flex justify-between py-2">
                                         <span className="text-muted-foreground">License</span>

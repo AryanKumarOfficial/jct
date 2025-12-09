@@ -76,8 +76,12 @@ const Footer = () => {
                     <p>© {currentYear} JCT Journals. All rights reserved.</p>
                     <div className="flex gap-6">
                         {/* Placeholder links for static pages */}
-                        <Link href="#" className="hover:text-primary transition-colors">Privacy Policy</Link>
-                        <Link href="#" className="hover:text-primary transition-colors">Terms of Service</Link>
+                        <Link href="/privacy-policy" className="hover:text-primary transition-colors">Privacy
+                            Policy</Link>
+                        <Link href="/refund-policy" className="hover:text-primary transition-colors">Refund
+                            Policy</Link>
+                        <Link href="/terms-and-conditions" className="hover:text-primary transition-colors">Terms of
+                            Service</Link>
                         <Link href="/sitemap.xml" className="hover:text-primary transition-colors">Sitemap</Link>
                     </div>
                 </div>
