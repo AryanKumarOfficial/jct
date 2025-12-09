@@ -4,22 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3fbf7134-2adf-435b-806d-6f4c015e4c97" name="Changes" comment="adds a homepage route to sitemap, refines RSS feed with metadata updates, improves robots.txt exclusions, and links sitemap in the footer">
+    <list default="true" id="3fbf7134-2adf-435b-806d-6f4c015e4c97" name="Changes" comment="fixes typo in database migration, adds support for abstract submission and display, introduces `pdfkit` for handling PDFs, improves metadata description for Google Scholar, and updates dependencies">
       <change afterPath="$PROJECT_DIR$/public/fonts/inter/Inter-Italic-VariableFont_opsz/wght.ttf" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/public/fonts/inter/Inter-VariableFont_opsz/wght.ttf" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/app/api/invoice/[paymentId]/route.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/privacy-policy/page.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/terms-and-conditions/page.tsx" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/utils/system.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prisma/schema.prisma" beforeDir="false" afterPath="$PROJECT_DIR$/prisma/schema.prisma" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/author/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/author/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/paper/[id]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/paper/[id]/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/submit/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/submit/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/layout/footer/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layout/footer/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/schemas/submitSchema.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/schemas/submitSchema.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -279,7 +268,7 @@
       <workItem from="1764582988723" duration="20000" />
       <workItem from="1765043218179" duration="20258000" />
       <workItem from="1765068726325" duration="2557000" />
-      <workItem from="1765302890507" duration="11184000" />
+      <workItem from="1765302890507" duration="11513000" />
     </task>
     <task id="LOCAL-00001" summary="adds JSDoc comments across the codebase for improved documentation and readability">
       <option name="closed" value="true" />
@@ -433,7 +422,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765306041191</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="fixes typo in database migration, adds support for abstract submission and display, introduces `pdfkit` for handling PDFs, improves metadata description for Google Scholar, and updates dependencies">
+      <option name="closed" value="true" />
+      <created>1765315178645</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1765315178645</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -466,6 +463,7 @@
     <MESSAGE value="adds a breadcrumb component, dynamic routing for paper pages, sitemap, robots.txt, RSS feed, and improves navigation across the site" />
     <MESSAGE value="updates sitemap with additional routes, adjusts metadata generation for the latest issue, improves header usability with reading progress, and enables standalone Next.js output" />
     <MESSAGE value="adds a homepage route to sitemap, refines RSS feed with metadata updates, improves robots.txt exclusions, and links sitemap in the footer" />
-    <option name="LAST_COMMIT_MESSAGE" value="adds a homepage route to sitemap, refines RSS feed with metadata updates, improves robots.txt exclusions, and links sitemap in the footer" />
+    <MESSAGE value="fixes typo in database migration, adds support for abstract submission and display, introduces `pdfkit` for handling PDFs, improves metadata description for Google Scholar, and updates dependencies" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixes typo in database migration, adds support for abstract submission and display, introduces `pdfkit` for handling PDFs, improves metadata description for Google Scholar, and updates dependencies" />
   </component>
 </project>
