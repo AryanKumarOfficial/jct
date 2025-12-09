@@ -4,7 +4,6 @@ import {prisma} from "@/lib/prisma";
 import PDFDocument from "pdfkit";
 import {format} from "date-fns";
 import path from "path";
-import fs from "fs";
 import {fileExists} from "@/utils/system";
 
 export async function GET(
@@ -36,18 +35,18 @@ export async function GET(
             })
         }
 
-        const fontBuffer = fs.readFileSync(fontPath);
-        const doc = new PDFDocument({margin: 50});
+        const doc = new PDFDocument({
+            margin: 50,
+            font: fontPath
+        });
 
         const chunks: Uint8Array[] = [];
         doc.on("data", (chunk) => chunks.push(chunk));
         const endPromise = new Promise<void>((resolve) =>
             doc.on("end", resolve)
         );
-        doc.registerFont("Inter", fontBuffer);
-        doc.font("Inter");
 
-        const amountInr = (payment.amount / 100).toFixed(2);
+        const amountInr = (payment.amount).toFixed(2);
 
         // Header
         doc.fontSize(20).text("JCT Journal – Invoice", {align: "center"});

@@ -4,13 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3fbf7134-2adf-435b-806d-6f4c015e4c97" name="Changes" comment="introduces PDF invoice generation for payments, adds utility for file existence checks, and includes required Inter font files">
-      <change beforePath="$PROJECT_DIR$/src/app/about/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/about/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/admin/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/admin/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/author/dashboard/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/author/dashboard/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/paper/[id]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/paper/[id]/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/refund-policy/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/refund-policy/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/unauthorized/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/unauthorized/page.tsx" afterDir="false" />
+    <list default="true" id="3fbf7134-2adf-435b-806d-6f4c015e4c97" name="Changes" comment="refactors PDF generation logic by embedding font directly during initialization, simplifies the amount of formatting, and removes redundant font registration">
+      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/project.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/api/invoice/[paymentId]/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/invoice/[paymentId]/route.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -270,7 +267,7 @@
       <workItem from="1764582988723" duration="20000" />
       <workItem from="1765043218179" duration="20258000" />
       <workItem from="1765068726325" duration="2557000" />
-      <workItem from="1765302890507" duration="11912000" />
+      <workItem from="1765302890507" duration="12327000" />
     </task>
     <task id="LOCAL-00001" summary="adds JSDoc comments across the codebase for improved documentation and readability">
       <option name="closed" value="true" />
@@ -440,7 +437,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765315204085</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="refactors metadata definitions across pages for consistency, improves readability with formatting adjustments, and updates page titles and descriptions">
+      <option name="closed" value="true" />
+      <created>1765315786371</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1765315786371</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -475,6 +480,8 @@
     <MESSAGE value="adds a homepage route to sitemap, refines RSS feed with metadata updates, improves robots.txt exclusions, and links sitemap in the footer" />
     <MESSAGE value="fixes typo in database migration, adds support for abstract submission and display, introduces `pdfkit` for handling PDFs, improves metadata description for Google Scholar, and updates dependencies" />
     <MESSAGE value="introduces PDF invoice generation for payments, adds utility for file existence checks, and includes required Inter font files" />
-    <option name="LAST_COMMIT_MESSAGE" value="introduces PDF invoice generation for payments, adds utility for file existence checks, and includes required Inter font files" />
+    <MESSAGE value="refactors metadata definitions across pages for consistency, improves readability with formatting adjustments, and updates page titles and descriptions" />
+    <MESSAGE value="refactors PDF generation logic by embedding font directly during initialization, simplifies the amount of formatting, and removes redundant font registration" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactors PDF generation logic by embedding font directly during initialization, simplifies the amount of formatting, and removes redundant font registration" />
   </component>
 </project>

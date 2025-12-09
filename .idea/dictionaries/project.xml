@@ -3,7 +3,9 @@
     <words>
       <w>accountid</w>
       <w>cloudflarestorage</w>
+      <w>opsz</w>
       <w>txns</w>
+      <w>wght</w>
     </words>
   </dictionary>
 </component>
