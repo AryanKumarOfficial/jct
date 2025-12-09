@@ -78,7 +78,7 @@ const Footer = () => {
                         {/* Placeholder links for static pages */}
                         <Link href="#" className="hover:text-primary transition-colors">Privacy Policy</Link>
                         <Link href="#" className="hover:text-primary transition-colors">Terms of Service</Link>
-                        <Link href="#" className="hover:text-primary transition-colors">Sitemap</Link>
+                        <Link href="/sitemap.xml" className="hover:text-primary transition-colors">Sitemap</Link>
                     </div>
                 </div>
             </div>

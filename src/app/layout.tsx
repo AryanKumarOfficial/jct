@@ -30,8 +30,8 @@ const DEFAULT_OG = "/images/logo.jpg";
 export const metadata: Metadata = {
     metadataBase: new URL(SITE_URL),
     title: {
-        default: APP_NAME,
         template: `%s | ${APP_NAME}`,
+        default: APP_NAME,
     },
     description: APP_DESCRIPTION,
     keywords: [

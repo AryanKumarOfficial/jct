@@ -4,13 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3fbf7134-2adf-435b-806d-6f4c015e4c97" name="Changes" comment="adds a breadcrumb component, dynamic routing for paper pages, sitemap, robots.txt, RSS feed, and improves navigation across the site">
+    <list default="true" id="3fbf7134-2adf-435b-806d-6f4c015e4c97" name="Changes" comment="updates sitemap with additional routes, adjusts metadata generation for the latest issue, improves header usability with reading progress, and enables standalone Next.js output">
+      <change afterPath="$PROJECT_DIR$/src/app/manifest.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/next.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/layout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/feed.xml/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/feed.xml/route.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/robots.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/robots.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/sitemap.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/sitemap.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/layout/header/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layout/header/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/layout/footer/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layout/footer/index.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -270,7 +270,7 @@
       <workItem from="1764582988723" duration="20000" />
       <workItem from="1765043218179" duration="20258000" />
       <workItem from="1765068726325" duration="2557000" />
-      <workItem from="1765302890507" duration="1559000" />
+      <workItem from="1765302890507" duration="2898000" />
     </task>
     <task id="LOCAL-00001" summary="adds JSDoc comments across the codebase for improved documentation and readability">
       <option name="closed" value="true" />
@@ -408,7 +408,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765070443340</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="updates sitemap with additional routes, adjusts metadata generation for the latest issue, improves header usability with reading progress, and enables standalone Next.js output">
+      <option name="closed" value="true" />
+      <created>1765304725072</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1765304725072</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -439,6 +447,7 @@
     <MESSAGE value="enhances the data migration UI with improved validation, logging, and error reporting; adds file match handling, live progress updates, and failure downloads" />
     <MESSAGE value="chore(deps): upgrade Next.js to 16.0.7 - security patch for CVE-2025-66478" />
     <MESSAGE value="adds a breadcrumb component, dynamic routing for paper pages, sitemap, robots.txt, RSS feed, and improves navigation across the site" />
-    <option name="LAST_COMMIT_MESSAGE" value="adds a breadcrumb component, dynamic routing for paper pages, sitemap, robots.txt, RSS feed, and improves navigation across the site" />
+    <MESSAGE value="updates sitemap with additional routes, adjusts metadata generation for the latest issue, improves header usability with reading progress, and enables standalone Next.js output" />
+    <option name="LAST_COMMIT_MESSAGE" value="updates sitemap with additional routes, adjusts metadata generation for the latest issue, improves header usability with reading progress, and enables standalone Next.js output" />
   </component>
 </project>

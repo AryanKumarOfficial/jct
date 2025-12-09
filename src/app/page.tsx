@@ -20,7 +20,7 @@ export async function generateMetadata(): Promise<Metadata> {
     const latest = await fetchLatestArchive();
 
     return {
-        title: `Home | Vol ${latest.volume} Issue ${latest.issue}`,
+        title: `Home | Vol ${latest.volume} Issue ${latest.issue} | JCT Journals`,
         description: `Read the latest peer-reviewed research in Volume ${latest.volume}, Issue ${latest.issue} (${latest.month} ${latest.year}). JCT Journals publishes high-quality articles in Computer Science, Engineering, and Technology.`,
         openGraph: {
             title: `JCT Journals - Vol ${latest.volume} Issue ${latest.issue}`,

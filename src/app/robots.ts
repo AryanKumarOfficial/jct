@@ -1,4 +1,4 @@
-import { MetadataRoute } from "next";
+import {MetadataRoute} from "next";
 
 export default function robots(): MetadataRoute.Robots {
     const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || "https://jctjournals.com";
@@ -13,6 +13,8 @@ export default function robots(): MetadataRoute.Robots {
                 "/author/",
                 "/api/",
                 "/unauthorized",
+                "/_next/",
+                "/static/",
             ],
         },
         sitemap: `${BASE_URL}/sitemap.xml`,

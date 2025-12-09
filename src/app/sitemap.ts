@@ -4,9 +4,17 @@ import {prisma} from "@/lib/prisma";
 const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || "https://jctjournals.com";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+    // HOMEPAGE
+
+    const homeroute = {
+        url: BASE_URL,
+        lastModified: new Date(),
+        changeFrequency: "monthly" as const,
+        priority: 1.0,
+    }
+
     // 1. Static Routes
     const routes = [
-        "",
         "/about",
         "/contact",
         "/editorial-board",
@@ -41,5 +49,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         priority: 0.9,
     }));
 
-    return [...routes, ...paperRoutes];
+    return [homeroute,...routes, ...paperRoutes];
 }
