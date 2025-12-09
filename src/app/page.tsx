@@ -17,9 +17,15 @@ import {Metadata} from "next";
 export const revalidate = 3600;
 
 export async function generateMetadata(): Promise<Metadata> {
+    const latest = await fetchLatestArchive();
+
     return {
-        title: "Home",
-        description: `Access peer-reviewed research in Computer Science...`,
+        title: `Home | Vol ${latest.volume} Issue ${latest.issue}`,
+        description: `Read the latest peer-reviewed research in Volume ${latest.volume}, Issue ${latest.issue} (${latest.month} ${latest.year}). JCT Journals publishes high-quality articles in Computer Science, Engineering, and Technology.`,
+        openGraph: {
+            title: `JCT Journals - Vol ${latest.volume} Issue ${latest.issue}`,
+            description: `International peer-reviewed open access journal. Current Issue: ${latest.month} ${latest.year}.`,
+        }
     };
 }
 
@@ -89,8 +95,24 @@ export default async function Index() {
         fetchLatestPapers(),
     ]);
 
+    const websiteJsonLd = {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "JCT Journals",
+        "url": "https://jctjournals.com",
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://jctjournals.com/search?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+        }
+    };
+
     return (
         <>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{__html: JSON.stringify(websiteJsonLd)}}
+            />
             <Hero/>
             <AimsScope/>
             {latestPapers.length > 0 &&

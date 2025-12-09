@@ -42,6 +42,13 @@ export const metadata: Metadata = {
         "JCT",
         "Engineering Research",
         "Scientific Publishing",
+        "Artificial Intelligence",
+        "Machine Learning",
+        "Cloud Computing",
+        "Software Engineering",
+        "Data Science",
+        "Network Security",
+        "IoT Research",
     ],
     authors: [{name: "JCT Journals Editorial Board"}],
     creator: APP_NAME,
@@ -92,6 +99,10 @@ export const metadata: Metadata = {
     },
     alternates: {
         canonical: SITE_URL,
+    },
+    verification: {
+        // google: "google-site-verification=YOUR_VERIFICATION_CODE", // Get this from Google Search Console
+        // yandex: "yandex-verification-code",
     },
 };
 

@@ -13,6 +13,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         "/author-guidelines",
         "/journals/jct",
         "/submit",
+        "/track",
+        "/privacy-policy",
+        "/terms-and-conditions",
+        "/feed.xml",
     ].map((route) => ({
         url: `${BASE_URL}${route}`,
         lastModified: new Date(),
@@ -33,8 +37,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const paperRoutes = papers.map((paper) => ({
         url: `${BASE_URL}/paper/${paper.submissionId}`,
         lastModified: paper.updatedAt,
-        changeFrequency: "weekly" as const, // Research papers don't change often
-        priority: 1.0,
+        changeFrequency: "monthly" as const,
+        priority: 0.9,
     }));
 
     return [...routes, ...paperRoutes];
