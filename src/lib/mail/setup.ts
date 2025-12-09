@@ -1,4 +1,5 @@
-import { createTransport } from "nodemailer";
+import {createTransport} from "nodemailer";
+import {env} from "@/env";
 
 /**
  * An instance of a transporter created using the `createTransport` method of the nodemailer package.
@@ -13,9 +14,9 @@ import { createTransport } from "nodemailer";
  * This transporter is used to send emails through Gmail's SMTP servers.
  */
 export const transporter = createTransport({
-  service: "Gmail",
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASSWORD,
-  },
+    service: "Gmail",
+    auth: {
+        user: env.EMAIL_USER,
+        pass: env.EMAIL_PASSWORD,
+    },
 });

@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import type {NextRequest} from "next/server";
+import {env} from "@/env";
 
 /**
  * Interface representing a custom JWT payload that extends the default JwtPayload.
@@ -30,7 +31,7 @@ export const decodeJwtToken = async ({token}: { token: string }) => {
         return null;
     }
     try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY as string);
+        const decoded = jwt.verify(token, env.JWT_SECRET_KEY);
 
         if (typeof decoded === "object" && decoded !== null) {
             return decoded as CustomJwtPayload;

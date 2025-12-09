@@ -1,3 +1,5 @@
+import {env} from "@/env";
+
 /**
  * Generates a pre-signed URL for accessing an object in a storage bucket.
  *
@@ -5,5 +7,5 @@
  * @return {Promise<string>} A promise that resolves to the pre-signed URL for the specified object.
  */
 export async function getObjectUrl(key: string): Promise<string> {
-    return `${process.env.R2_PUBLIC_ACCESS_ENDPOINT}/${key}`
+    return `${env.R2_PUBLIC_ACCESS_ENDPOINT}/${key}`
 }

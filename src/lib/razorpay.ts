@@ -1,4 +1,5 @@
 import Razorpay from "razorpay";
+import {env} from "@/env";
 
 /**
  * Initializes and returns an instance of the Razorpay payment gateway.
@@ -14,11 +15,8 @@ import Razorpay from "razorpay";
  * @returns {Object} An instance of the Razorpay SDK configured with the provided credentials.
  */
 export const razorpay = (): Razorpay => {
-    const key_id = process.env.RAZORPAY_KEY!;
-    const key_secret = process.env.RAZORPAY_SECRET_KEY!;
-    if (!key_secret || !key_id) {
-        throw new Error("Invalid key secret");
-    }
+    const key_id = env.RAZORPAY_KEY;
+    const key_secret = env.RAZORPAY_SECRET_KEY;
 
     return new Razorpay({
         key_id,
