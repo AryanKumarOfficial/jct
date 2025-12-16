@@ -8,6 +8,7 @@ import Footer from "@/components/layout/footer/index";
 import {AnnouncementBar} from "@/components/layout/announcement-bar";
 import {cn} from "@/lib/utils";
 import Script from "next/script";
+import {useTopShellHeight} from "@/hooks/useTopShellHeight";
 
 const inter = Inter({subsets: ["latin"], variable: "--font-inter"});
 
@@ -121,6 +122,7 @@ export default function RootLayout({
                                    }: Readonly<{
     children: React.ReactNode;
 }>): JSX.Element {
+
     // JSON-LD for Organization Schema (prevents duplication and is easy to update)
     const jsonLd = {
         "@context": "https://schema.org",
@@ -143,7 +145,6 @@ export default function RootLayout({
 
     return (
         <html lang="en" className="scroll-smooth" suppressHydrationWarning style={{scrollBehavior: 'smooth'}}>
-        <head/>
         <body
             className={cn(
                 inter.className,
@@ -162,20 +163,18 @@ export default function RootLayout({
             strategy={"lazyOnload"}
         />
         <Providers>
-            {/* Announcement Bar */}
-            <AnnouncementBar/>
+            <div
+                id="top-shell"
+                className="fixed top-0 left-0 right-0 z-50 bg-transparent transition-colors duration-300 ease-in-out"
+            >
+                <AnnouncementBar/>
+                <Header/>
+            </div>
 
-            {/* Header stays outside main so it doesn't affect layout flow */}
-            <Header/>
-
-            {/* Main container: centered, responsive padding and max-width for readability */}
             <main className="flex-1 w-full mx-auto">
                 {children}
             </main>
-
             <Footer/>
-
-            {/* Global toasts (client component) — keep inside Providers so theme/context works */}
         </Providers>
         </body>
         </html>
