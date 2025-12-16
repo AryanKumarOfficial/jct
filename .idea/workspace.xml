@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3fbf7134-2adf-435b-806d-6f4c015e4c97" name="Changes" comment="adds dynamic payment link generation using API response, replaces a static link in payment workflow">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/layout/AnnouncementUI.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layout/AnnouncementUI.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/layout/header/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layout/header/index.tsx" afterDir="false" />
+    <list default="true" id="3fbf7134-2adf-435b-806d-6f4c015e4c97" name="Changes" comment="updates the announcement bar with sticky positioning, integrates dynamic height adjustment in the header for smoother transitions, and refines layout styles for consistency">
+      <change beforePath="$PROJECT_DIR$/src/components/Home/EditorialTeaser.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Home/EditorialTeaser.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -461,7 +459,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765316380136</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="updates the announcement bar with sticky positioning, integrates dynamic height adjustment in the header for smoother transitions, and refines layout styles for consistency">
+      <option name="closed" value="true" />
+      <created>1765878424097</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1765878424097</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -474,8 +480,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="adds an API documentation page and example endpoint details" />
-    <MESSAGE value="updates the UI" />
     <MESSAGE value="removes the useless files" />
     <MESSAGE value="sync pnpm" />
     <MESSAGE value="removes the archive page and updates the navlink" />
@@ -499,6 +503,8 @@
     <MESSAGE value="refactors PDF generation logic by embedding font directly during initialization, simplifies the amount of formatting, and removes redundant font registration" />
     <MESSAGE value="refactors PDF generation logic by embedding font during initialization, removes redundant font registration, and simplifies formatting" />
     <MESSAGE value="adds dynamic payment link generation using API response, replaces a static link in payment workflow" />
-    <option name="LAST_COMMIT_MESSAGE" value="adds dynamic payment link generation using API response, replaces a static link in payment workflow" />
+    <MESSAGE value="renames `api-docs` route for better structure, cleans up unused image configuration in `next.config.ts`, and adjusts workspace settings" />
+    <MESSAGE value="updates the announcement bar with sticky positioning, integrates dynamic height adjustment in the header for smoother transitions, and refines layout styles for consistency" />
+    <option name="LAST_COMMIT_MESSAGE" value="updates the announcement bar with sticky positioning, integrates dynamic height adjustment in the header for smoother transitions, and refines layout styles for consistency" />
   </component>
 </project>

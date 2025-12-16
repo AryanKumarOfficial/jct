@@ -4,10 +4,10 @@ import { motion } from "motion/react";
 import Link from "next/link";
 
 const TEAM = [
-  { role: "Editor-in-Chief", name: "Dr. A. N. Sharma" },
-  { role: "Managing Editor", name: "Prof. S. K. Verma" },
-  { role: "Associate Editor", name: "Dr. R. Patel" },
-  { role: "Section Editor (AI)", name: "Dr. L. Fernandes" },
+  { role: "Editor-in-Chief", name: "Dr. Mohd Nazri Ismail (MALAYSIA)" },
+  { role: "Associate Editor", name: "Dr. M V Ragahavendra (INDIA)" },
+  { role: "Associate Editor", name: "Er. Gaurav Tejpal (INDIA)" },
+  { role: "Section Editor (AI)", name: "Dr. Tanu Preet Singh (INDIA)" },
 ];
 
 const EditorialTeaser = () => {
@@ -30,7 +30,7 @@ const EditorialTeaser = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {TEAM.map((m, i) => (
             <motion.div
-              key={m.role}
+              key={i}
               initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-80px" }}
