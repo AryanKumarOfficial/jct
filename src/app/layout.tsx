@@ -144,7 +144,7 @@ export default function RootLayout({
     };
 
     return (
-        <html lang="en" className="scroll-smooth" suppressHydrationWarning style={{scrollBehavior: 'smooth'}}>
+        <html lang="en" className="scroll-smooth font-sans" suppressHydrationWarning style={{scrollBehavior: 'smooth'}}>
         <body
             className={cn(
                 inter.className,
@@ -165,7 +165,10 @@ export default function RootLayout({
         <Providers>
             <div
                 id="top-shell"
-                className="fixed top-0 left-0 right-0 z-50 bg-transparent transition-colors duration-300 ease-in-out"
+                className="fixed top-0 left-0 right-0 z-50 bg-transparent"
+                style={{
+                    paddingTop: "var(--safe-top)",
+                }}
             >
                 <AnnouncementBar/>
                 <Header/>

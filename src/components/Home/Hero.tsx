@@ -37,7 +37,7 @@ const Hero = () => {
 
     return (
         <section
-            className="relative overflow-hidden bg-gradient-to-br from-primary/5 via-background to-primary/5 pt-24 pb-20 md:pt-32 md:pb-28">
+            className="relative overflow-hidden bg-gradient-to-br from-primary/5 via-background to-primary/5 pt-24 pb-20 md:pt-32 md:pb-28 lg:pt-32">
             {/* Modern Gradient Orbs */}
             <div className="absolute top-20 -left-40 w-96 h-96 bg-primary/10 rounded-full blur-3xl"></div>
             <div className="absolute bottom-20 -right-40 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl"></div>

@@ -40,7 +40,9 @@ export const MobileNav = () => {
 
                 <div className="flex flex-col h-full">
                     {/* Mobile Header */}
-                    <div className="p-6 border-b border-border/50">
+                    <div className="p-6 border-t border-border/50"
+                         style={{paddingBottom: "calc(1.5rem + var(--safe-bottom))"}}
+                    >
                         <Logo/>
                     </div>
 
