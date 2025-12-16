@@ -8,7 +8,6 @@ import Footer from "@/components/layout/footer/index";
 import {AnnouncementBar} from "@/components/layout/announcement-bar";
 import {cn} from "@/lib/utils";
 import Script from "next/script";
-import {useTopShellHeight} from "@/hooks/useTopShellHeight";
 
 const inter = Inter({subsets: ["latin"], variable: "--font-inter"});
 
@@ -148,7 +147,7 @@ export default function RootLayout({
         <body
             className={cn(
                 inter.className,
-                "antialiased min-h-screen flex flex-col bg-background text-foreground"
+                "antialiased min-h-screen flex flex-col gap-10 bg-background text-foreground"
             )}
         >
         {/* Structured data for SEO */}
@@ -174,7 +173,7 @@ export default function RootLayout({
                 <Header/>
             </div>
 
-            <main className="flex-1 w-full mx-auto">
+            <main className="flex-1 w-full mx-auto h-full my-10">
                 {children}
             </main>
             <Footer/>

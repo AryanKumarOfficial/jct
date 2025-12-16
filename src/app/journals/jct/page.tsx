@@ -164,7 +164,7 @@ export default async function JournalPage({
     };
 
     return (
-        <div className="min-h-screen bg-background">
+        <div className="min-h-screen bg-background my-12">
             {/* Inject JSON-LD for SEO */}
             <script
                 type="application/ld+json"

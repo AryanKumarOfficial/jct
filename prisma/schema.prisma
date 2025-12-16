@@ -38,6 +38,7 @@ enum ActivityType {
   PAPER_PUBLISHED
   EDITOR_ASSIGNED
   EMPLOYEE_ADDED
+  SUBMISSION_JOB_COMPLETED
 }
 
 enum WalletTransactionType {

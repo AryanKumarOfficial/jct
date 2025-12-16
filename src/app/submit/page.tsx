@@ -33,6 +33,7 @@ import {
 import {motion, AnimatePresence} from "motion/react";
 import {toast} from "sonner";
 import {Textarea} from "@/components/ui/textarea"
+import {uploadFormDataWithProgress} from "@/utils/upload";
 
 type Author = SubmitForm["authors"][number];
 
@@ -88,6 +89,7 @@ const SubmitPage: React.FC = () => {
     const [archives, setArchives] = useState<Archive[]>([]);
     const [archivesLoading, setArchivesLoading] = useState(false);
     const [archivesError, setArchivesError] = useState<string | null>(null);
+    const [uploadProgress, setUploadProgress] = useState<number | null>(null);
 
     const fetchArchives = useCallback(async () => {
         setArchivesLoading(true);
@@ -173,21 +175,18 @@ const SubmitPage: React.FC = () => {
         formData.append("keywords", JSON.stringify(data.keywords ?? []));
 
         try {
-            const res = await fetch("/api/author", {
-                method: "POST",
-                body: formData,
+            setUploadProgress(1);
+            const result = await uploadFormDataWithProgress("/api/author", formData, (p) => {
+                setUploadProgress(p);
             });
-            const result = await res.json();
-            if (!res.ok) {
-                throw new Error(result?.error || "Submission failed");
-            }
-            const successMsg = `Paper submitted successfully! Submission ID: ${result.submissionId ?? "N/A"}`;
-            toast.success(successMsg);
+            toast.success(`Submitted — ID: ${result.submissionId ?? "N/A"}`);
             reset();
             if (fileInputRef.current) fileInputRef.current.value = "";
         } catch (err: any) {
             console.error("submit error:", err);
             toast.error(err?.message || "Submission failed");
+        } finally {
+            setUploadProgress(null);
         }
     };
 
@@ -469,6 +468,18 @@ const SubmitPage: React.FC = () => {
                                     </motion.div>
                                 )}
                             </AnimatePresence>
+
+                            {uploadProgress !== null && (
+                                <div className="w-full">
+                                    <div className="h-2 w-full bg-muted rounded-full overflow-hidden">
+                                        <div
+                                            style={{width: `${uploadProgress}%`}}
+                                            className="h-full bg-primary transition-all duration-300"
+                                        />
+                                    </div>
+                                    <div className="text-xs mt-1 text-muted-foreground">{uploadProgress}%</div>
+                                </div>
+                            )}
 
                             <Button type="submit" size="lg" className="w-full" disabled={isSubmitting}>
                                 {isSubmitting ? "Submitting..." : "Submit Manuscript"}
