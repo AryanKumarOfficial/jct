@@ -15,10 +15,11 @@ export const AnnouncementUI = ({archive}: { archive: Archive }) => {
         <AnimatePresence>
             {(
                 <motion.div
+                    id={"announcement-bar"}
                     initial={{height: 0, opacity: 0}}
                     animate={{height: "auto", opacity: 1}}
                     exit={{height: 0, opacity: 0}}
-                    className="bg-primary text-primary-foreground relative z-10 overflow-hidden shadow-sm"
+                    className="sticky top-0 z-50 bg-primary text-primary-foreground relative overflow-hidden shadow-sm"
                 >
                     <div
                         className="container max-w-screen-2xl mx-auto px-4 py-2.5 text-xs md:text-sm font-medium flex items-center justify-between gap-4">
@@ -28,7 +29,8 @@ export const AnnouncementUI = ({archive}: { archive: Archive }) => {
                                 New
                             </span>
                             <p>
-                                Call for Papers: Volume {archive.volume}, Issue {archive.issue} is now open for submissions.
+                                Call for Papers: Volume {archive.volume}, Issue {archive.issue} is now open for
+                                submissions.
                             </p>
                             <Link
                                 href="/submit"

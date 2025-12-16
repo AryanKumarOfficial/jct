@@ -12,8 +12,8 @@ import {usePathname} from "next/navigation";
 const Header = () => {
     const [scrolled, setScrolled] = useState(false);
     const [rightPadding, setRightPadding] = useState("0px");
+    const [announcementHeight, setAnnouncementHeight] = useState(0);
     const pathname = usePathname();
-
     // Show reading progress mainly on Paper or Journal pages
     const isReadingPage = pathname?.startsWith("/paper/") || pathname?.startsWith("/journals/");
 
@@ -52,15 +52,42 @@ const Header = () => {
         return () => observer.disconnect();
     }, []);
 
+    useEffect(() => {
+        const measure = () => {
+            const el = document.getElementById("announcement-bar");
+            setAnnouncementHeight(el ? el.offsetHeight : 0);
+        };
+
+        // initial measure
+        measure();
+
+        // update on resize
+        window.addEventListener("resize", measure);
+
+        // observe DOM changes (announcement open/close animations change height)
+        const observer = new MutationObserver(measure);
+        const el = document.getElementById("announcement-bar");
+        if (el) observer.observe(el, {attributes: true, childList: true, subtree: true});
+
+        return () => {
+            window.removeEventListener("resize", measure);
+            observer.disconnect();
+        };
+    }, []);
+
+
     return (
         <motion.header
-            style={{paddingRight: rightPadding}}
+            style={{
+                paddingRight: rightPadding,
+                top: `${announcementHeight}px`,
+                transition: "top 180ms ease", // smooth movement when announcement collapses
+            }}
             className={cn(
                 // Sticky positioning
-                "sticky top-0 z-50 w-full border-b transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]",
-                // Conditional styling based on the 'scrolled' state
+                "sticky z-40 w-full border-b transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]",
                 scrolled
-                    ? "bg-background/95 backdrop-blur-md border-border/40 shadow-sm py-2" // Increased opacity to 95 for better visibility
+                    ? "bg-background/95 backdrop-blur-md border-border/40 shadow-sm py-2"
                     : "bg-transparent border-transparent py-4"
             )}
         >
