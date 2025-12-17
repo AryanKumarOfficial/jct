@@ -1,4 +1,4 @@
-// app/api/paper/route.ts
+// src/app/api/author/route.ts
 import {$Enums, Prisma} from "@/generated/prisma";
 import bcrypt from "bcryptjs";
 import {lookup} from "mime-types";
@@ -7,12 +7,14 @@ import {prisma} from "@/lib/prisma";
 import {fileUpload} from "@/utils/operations";
 import {getObjectUrl} from "@/utils/cloudflare";
 import {submissionQueue} from "@/lib/queue";
-import ActivityType = $Enums.ActivityType;
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
+    let objectKey: string | null = null;
+
     try {
         const formData = await req.formData();
 
+        // 1. Validate Form Data
         const file = formData.get("file") as File | null;
         const paperName = formData.get("paperName") as string | null;
         const abstract = formData.get("abstract") as string | null;
@@ -21,96 +23,104 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
         const keywordsStr = formData.get("keywords") as string | null;
 
         if (!file || !paperName || !archiveId || !authorsStr) {
-            return NextResponse.json({error: "File, paper name, archive, and authors are required."}, {status: 400});
+            return NextResponse.json(
+                {error: "Missing required fields: file, paperName, archiveId, or authors."},
+                {status: 400}
+            );
         }
 
-        // parse authors
-        let authors: any[];
+        // 2. Parse & Deduplicate Authors
+        let rawAuthors: any[];
         try {
-            authors = JSON.parse(authorsStr);
-            if (!Array.isArray(authors) || authors.length === 0) {
+            rawAuthors = JSON.parse(authorsStr);
+            if (!Array.isArray(rawAuthors) || rawAuthors.length === 0) {
                 return NextResponse.json({error: "Authors must be a non-empty array"}, {status: 400});
             }
         } catch (e) {
             return NextResponse.json({error: "Invalid authors JSON"}, {status: 400});
         }
 
-        // parse keywords (optional)
-        let keywords: string[] | undefined;
-        if (keywordsStr) {
-            try {
-                const parsed = JSON.parse(keywordsStr);
-                if (Array.isArray(parsed) && parsed.length > 0) keywords = parsed;
-            } catch {
-                // ignore
+        const uniqueAuthorsMap = new Map();
+        for (const auth of rawAuthors) {
+            if (auth.email) {
+                uniqueAuthorsMap.set(auth.email.trim().toLowerCase(), auth);
             }
         }
+        const uniqueAuthors = Array.from(uniqueAuthorsMap.values());
 
-        // Ensure archive exists
-        const archiveExists = await prisma.archive.findUnique({where: {id: archiveId}});
-        if (!archiveExists) return NextResponse.json({message: `Archive ${archiveId} not found`}, {status: 404});
-
-        // Upload file BEFORE transaction
-        const fileName = file.name;
-        const objectKey = `${Date.now()}-${fileName}`;
+        // 3. Upload File (Sanitized)
+        const fileName = file.name.replace(/\s+/g, '_');
+        objectKey = `${Date.now()}-${fileName}`;
         const buffer = Buffer.from(await file.arrayBuffer());
         const contentType = lookup(fileName) || "application/octet-stream";
+
         await fileUpload({key: objectKey, buffer, contentType});
         const fileUrl = await getObjectUrl(objectKey);
 
-        // Prepare author email payloads + async upsert authors OUTSIDE tx (faster)
+        // 4. Upsert Authors (Outside Transaction)
         const authorEmailData: { firstName: string; email: string; password: string }[] = [];
+        const upsertedAuthors = await Promise.all(uniqueAuthors.map(async (author: any) => {
+            const email = author.email.trim().toLowerCase();
+            const firstName = author.firstName?.trim() || "Unknown";
+            const lastName = author.lastName?.trim() || "";
+            const full = `${firstName} ${lastName}`.trim();
+            const rawPassword = `${(full.slice(0, 4) || email.slice(0, 4)).toUpperCase()}${(author.phone || "0000").toString().slice(-4)}`;
+            const hashedPassword = await bcrypt.hash(rawPassword, 10);
 
-        const upsertPromises = authors.map(async (author: any) => {
-            // generate a temporary password (or use another flow)
-            const full = `${author.firstName?.trim() || ""} ${author.lastName?.trim() || ""}`.trim();
-            const generatedPassword = `${(full.slice(0, 4) || author.email.slice(0, 4)).toUpperCase()}${(author.phone || "0000").toString().slice(-4)}`;
-            const hashedPassword = await bcrypt.hash(generatedPassword, 10);
+            authorEmailData.push({firstName, email, password: rawPassword});
 
-            // collect email payload
-            authorEmailData.push({firstName: author.firstName, email: author.email, password: generatedPassword});
-
-            // upsert (concurrent)
-            const upserted = await prisma.author.upsert({
-                where: {email: author.email},
+            return prisma.author.upsert({
+                where: {email},
                 update: {
-                    firstName: author.firstName,
-                    lastName: author.lastName,
+                    firstName,
+                    lastName,
                     phone: author.phone,
                     organisation: author.organisation,
-                    country: author.country,
+                    country: author.country
                 },
                 create: {
-                    firstName: author.firstName,
-                    lastName: author.lastName,
-                    email: author.email,
+                    firstName,
+                    lastName,
+                    email,
                     password: hashedPassword,
                     country: author.country,
                     organisation: author.organisation,
-                    phone: author.phone,
+                    phone: author.phone
                 },
             });
-            return upserted;
-        });
+        }));
 
-        const upsertedAuthors = await Promise.all(upsertPromises);
         const authorIdsToConnect = upsertedAuthors.map(a => ({id: a.id}));
 
-        // Minimal, fast transaction: use Postgres sequence for number and create paper + status + logs
+        // 5. Database Transaction (With Increased Timeout)
         const newPaper = await prisma.$transaction(async (tx) => {
-            // Get next sequence value (Postgres)
-            const seqRows  = await tx.$queryRawUnsafe<{ nextval: bigint }[]>(`SELECT nextval('paper_submission_seq')`);
             const currentYear = new Date().getFullYear();
+
+            // ID Counter Logic (Replaces raw SQL sequence)
+            let counter = await tx.idCounter.findUnique({where: {id: "paperCounter"}});
+            if (!counter || counter.year !== currentYear) {
+                counter = await tx.idCounter.upsert({
+                    where: {id: "paperCounter"},
+                    create: {id: "paperCounter", year: currentYear, count: 101},
+                    update: {year: currentYear, count: 101}
+                });
+            } else {
+                counter = await tx.idCounter.update({
+                    where: {id: "paperCounter"},
+                    data: {count: {increment: 1}}
+                });
+            }
+
             const monthNumber = new Date().getMonth() + 1;
             const yearDecade = currentYear.toString().slice(-2);
-            const seqNumber = Number(seqRows[0].nextval);
-            const submissionId = `JCT_${yearDecade}${monthNumber}${seqNumber.toString().padStart(3, "0")}`;
+            const submissionId = `JCT_${yearDecade}${monthNumber}${counter.count.toString().padStart(3, "0")}`;
 
+            // Create Paper
             const paper = await tx.paper.create({
                 data: {
                     submissionId,
                     name: paperName,
-                    keywords,
+                    keywords: keywordsStr ? JSON.parse(keywordsStr) : [],
                     manuscriptId: objectKey,
                     manuscriptUrl: fileUrl,
                     archiveId,
@@ -120,6 +130,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
                 include: {authors: true},
             });
 
+            // Initial Status
             await tx.status.create({
                 data: {
                     status: "SUBMITTED",
@@ -129,31 +140,27 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
                 },
             });
 
-            // batch activity logs
-            if (authorIdsToConnect.length > 0) {
-                const logs = authorIdsToConnect.map(aid => ({
-                    authorId: aid.id,
-                    paperId: paper.id,
-                    activity: ActivityType.PAPER_SUBMITTED,
-                    details: "A Paper Submitted by Author(s)",
-                }));
-                // use createMany to be faster
-                await tx.activityLog.createMany({data: logs});
-            }
-
             return paper;
+        }, {
+            timeout: 20000,
+            maxWait: 5000
         });
 
-        // Push background job to queue and return 201 quickly
-        await submissionQueue.add("process-submission", {
-            submissionId: newPaper.submissionId,
-            paperId: newPaper.id,
-            authors: authorEmailData,
-            manuscriptKey: objectKey,
-            manuscriptUrl: fileUrl,
-        });
+        // 6. Background Job (Wrapped in try/catch to ignore Redis errors)
+        try {
+            await submissionQueue.add("process-submission", {
+                submissionId: newPaper.submissionId,
+                paperId: newPaper.id,
+                authors: authorEmailData,
+                manuscriptKey: objectKey,
+                manuscriptUrl: fileUrl,
+            });
+        } catch (queueErr) {
+            console.warn("⚠️ Background job failed (Redis down?), but submission was saved.", queueErr);
+        }
 
         return NextResponse.json(newPaper, {status: 201});
+
     } catch (err: any) {
         console.error("Create Paper Error:", err);
         if (err instanceof Prisma.PrismaClientKnownRequestError) {

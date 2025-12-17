@@ -9,6 +9,32 @@ services:
     environment:
       NODE_ENV: production
       DATABASE_URL: ${DATABASE_URL}
+      REDIS_HOST: redis_cache
+      REDIS_PORT: 6379
     ports:
       - "3000:3000"
     restart: always
+    depends_on:
+      - redis_cache
+
+  redis_cache:
+    image: redis:alpine
+    container_name: jct_redis
+    restart: always
+    ports:
+      - "6379:6379"
+    # Optional: Add persistence so jobs aren't lost on restart
+    volumes:
+      - redis_data:/data
+
+  worker:
+    build: .
+    command: npm run worker
+    environment:
+      # Same envs as app
+      REDIS_HOST: redis_cache
+    depends_on:
+      - redis_cache
+
+volumes:
+  redis_data:

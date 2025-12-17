@@ -4,20 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3fbf7134-2adf-435b-806d-6f4c015e4c97" name="Changes" comment="introduces cookie-based dismissal to the announcement bar, adds safe-area support, updates header and layout for better user experience, and refines styles for consistency">
-      <change afterPath="$PROJECT_DIR$/src/lib/queue.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/lib/redis.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/upload.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/worker/submit-worker.ts" afterDir="false" />
+    <list default="true" id="3fbf7134-2adf-435b-806d-6f4c015e4c97" name="Changes" comment="removes `useTopShellHeight` hook, adds `SUBMISSION_JOB_COMPLETED` value to `ActivityType` enum, and updates dependencies in `pnpm-lock.yaml` including `bullmq` and `ioredis`">
+      <change afterPath="$PROJECT_DIR$/src/instrumentation.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prisma/schema.prisma" beforeDir="false" afterPath="$PROJECT_DIR$/prisma/schema.prisma" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/api/author/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/author/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/author/login/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/author/login/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/journals/jct/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/journals/jct/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/layout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/submit/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/submit/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lib/redis.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/redis.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -503,7 +496,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765880858884</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="removes `useTopShellHeight` hook, adds `SUBMISSION_JOB_COMPLETED` value to `ActivityType` enum, and updates dependencies in `pnpm-lock.yaml` including `bullmq` and `ioredis`">
+      <option name="closed" value="true" />
+      <created>1765884850228</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1765884850228</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -516,7 +517,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="dynamically redirects admin users to their destination" />
     <MESSAGE value="adds webhook for razorpay" />
     <MESSAGE value="handles the payment via a payment link in webhook" />
     <MESSAGE value="optimises the webhook" />
@@ -541,6 +541,7 @@
     <MESSAGE value="updates the EditorialTeaser.tsx" />
     <MESSAGE value="refactors header structure for consistency, removes redundant state management, introduces `useTopShellHeight` hook, and adjusts layout for better encapsulation" />
     <MESSAGE value="introduces cookie-based dismissal to the announcement bar, adds safe-area support, updates header and layout for better user experience, and refines styles for consistency" />
-    <option name="LAST_COMMIT_MESSAGE" value="introduces cookie-based dismissal to the announcement bar, adds safe-area support, updates header and layout for better user experience, and refines styles for consistency" />
+    <MESSAGE value="removes `useTopShellHeight` hook, adds `SUBMISSION_JOB_COMPLETED` value to `ActivityType` enum, and updates dependencies in `pnpm-lock.yaml` including `bullmq` and `ioredis`" />
+    <option name="LAST_COMMIT_MESSAGE" value="removes `useTopShellHeight` hook, adds `SUBMISSION_JOB_COMPLETED` value to `ActivityType` enum, and updates dependencies in `pnpm-lock.yaml` including `bullmq` and `ioredis`" />
   </component>
 </project>
