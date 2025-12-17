@@ -156,19 +156,25 @@ model transaction {
 }
 
 model ActivityLog {
-  id        String       @id @default(uuid(7))
-  paper     paper?       @relation(fields: [paperId], references: [id])
-  paperId   String?
-  actor     employee?    @relation(fields: [actorId], references: [id])
-  actorId   String?
-  author    author?      @relation(fields: [authorId], references: [id])
-  authorId  String?
-  activity  ActivityType
-  details   String?
-  createdAt DateTime     @default(now())
+  id       String       @id @default(uuid(7))
+  paper    paper?       @relation(fields: [paperId], references: [id])
+  paperId  String?
+  actor    employee?    @relation(fields: [actorId], references: [id])
+  actorId  String?
+  author   author?      @relation(fields: [authorId], references: [id])
+  authorId String?
+  activity ActivityType
+  details  String?
+
+  // ✅ Relation to JobRun
+  jobRun   JobRun? @relation("JobRunActivityLogs", fields: [jobRunId], references: [id])
+  jobRunId String?
+
+  createdAt DateTime @default(now())
 
   @@index([paperId])
   @@index([actorId])
+  @@index([jobRunId])
 }
 
 model WalletTransaction {
@@ -184,6 +190,48 @@ model WalletTransaction {
   createdAt DateTime @default(now())
 
   @@index([employeeId])
+}
+
+model SubmissionEmailLog {
+  id           String      @id @default(uuid())
+  submissionId String
+  email        String
+  status       EmailStatus @default(PENDING)
+  attemptCount Int         @default(0)
+  lastAttempt  DateTime?
+  sentAt       DateTime?
+  error        String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([submissionId, email])
+  @@index([submissionId])
+}
+
+model JobRun {
+  id           String    @id @default(uuid())
+  jobId        String    @unique
+  submissionId String?
+  paperId      String?
+  status       String    @default("PENDING") // PENDING | IN_PROGRESS | COMPLETED | FAILED
+  attempts     Int       @default(0)
+  lastError    String?
+  completedAt  DateTime?
+
+  activityLogs ActivityLog[] @relation("JobRunActivityLogs")
+
+  createdAt DateTime @default(now())
+
+  @@index([submissionId])
+  @@index([paperId])
+}
+
+enum EmailStatus {
+  PENDING
+  SENDING
+  SENT
+  FAILED
 }
 
 model IdCounter {

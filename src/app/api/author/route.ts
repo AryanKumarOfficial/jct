@@ -146,14 +146,29 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
             maxWait: 5000
         });
 
+        await prisma.submissionEmailLog.createMany({
+            data: authorEmailData.map(a => ({
+                submissionId: newPaper.submissionId,
+                email: a.email,
+            })),
+            skipDuplicates: true,
+        });
+
+
         // 6. Background Job (Wrapped in try/catch to ignore Redis errors)
         try {
-            await submissionQueue.add("process-submission", {
+            const job = await submissionQueue.add("process-submission", {
                 submissionId: newPaper.submissionId,
                 paperId: newPaper.id,
                 authors: authorEmailData,
                 manuscriptKey: objectKey,
                 manuscriptUrl: fileUrl,
+            }, {
+                attempts: 3,
+                backoff: {
+                    type: "exponential",
+                    delay: 5000
+                }
             });
         } catch (queueErr) {
             console.warn("⚠️ Background job failed (Redis down?), but submission was saved.", queueErr);
