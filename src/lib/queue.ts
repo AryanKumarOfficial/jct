@@ -2,8 +2,8 @@
 import {Queue} from "bullmq";
 import {redisConnection} from "@/lib/redis";
 
-
-export const submissionQueue = new Queue("submission-queue", {
+const globalForQueue = global as unknown as { submissionQueue: Queue };
+export const submissionQueue = globalForQueue.submissionQueue || new Queue("submission-queue", {
     connection: redisConnection,
     defaultJobOptions: {
         removeOnComplete: true,
@@ -12,3 +12,4 @@ export const submissionQueue = new Queue("submission-queue", {
         backoff: {type: "exponential", delay: 5000}
     }
 });
+if (process.env.NODE_ENV !== "production") globalForQueue.submissionQueue = submissionQueue;

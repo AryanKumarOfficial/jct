@@ -28,32 +28,36 @@ export const GET = async (req: NextRequest): Promise<NextResponse> => {
             });
             return NextResponse.json([latestArchive]);
         }
-        const archives = await prisma.archive.findMany({
-            where: {
-                papers: {
-                    some: {
-                        paperStatuses: {
-                            some: {
-                                status: `PUBLISHED`
+        if (mode === `published`) {
+            const archives = await prisma.archive.findMany({
+                where: {
+                    papers: {
+                        some: {
+                            paperStatuses: {
+                                some: {
+                                    status: `PUBLISHED`
+                                }
                             }
                         }
                     }
-                }
-            },
-            orderBy: [
-                {year: "desc"}, // 1. first, by the most recent year
-                {volume: "desc"}, // 2. Then, by the highest volume number
-                {issue: "desc"}, // 3. finally, order by the highest issue number
-            ],
-            include: {
-                papers: {
-                    include: {
-                        authors: true
-                    }
                 },
-                _count: true,
-            },
-        });
+                orderBy: [
+                    {year: "desc"}, // 1. first, by the most recent year
+                    {volume: "desc"}, // 2. Then, by the highest volume number
+                    {issue: "desc"}, // 3. finally, order by the highest issue number
+                ],
+                include: {
+                    papers: {
+                        include: {
+                            authors: true
+                        }
+                    },
+                    _count: true,
+                },
+            });
+            return NextResponse.json(archives);
+        }
+        const archives = await prisma.archive.findMany()
         return NextResponse.json(archives);
     } catch (err) {
         return NextResponse.json({error: `Failed to fetch`}, {status: 500});

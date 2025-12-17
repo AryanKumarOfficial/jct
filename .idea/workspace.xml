@@ -4,13 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3fbf7134-2adf-435b-806d-6f4c015e4c97" name="Changes" comment="removes `useTopShellHeight` hook, adds `SUBMISSION_JOB_COMPLETED` value to `ActivityType` enum, and updates dependencies in `pnpm-lock.yaml` including `bullmq` and `ioredis`">
-      <change afterPath="$PROJECT_DIR$/src/instrumentation.ts" afterDir="false" />
+    <list default="true" id="3fbf7134-2adf-435b-806d-6f4c015e4c97" name="Changes" comment="adds a dedicated Redis service in `docker-compose.yml`, introduces a worker for processing submissions, updates Redis connection logic, and improves input validation and transaction handling in the submission API">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/author/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/author/route.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/api/archive/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/archive/route.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/env.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/env.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lib/queue.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/queue.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/lib/redis.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/redis.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/worker/submit-worker.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/worker/submit-worker.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -271,6 +271,7 @@
       <workItem from="1765043218179" duration="20258000" />
       <workItem from="1765068726325" duration="2557000" />
       <workItem from="1765302890507" duration="13728000" />
+      <workItem from="1766002537406" duration="3079000" />
     </task>
     <task id="LOCAL-00001" summary="adds JSDoc comments across the codebase for improved documentation and readability">
       <option name="closed" value="true" />
@@ -504,7 +505,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765884850228</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="adds a dedicated Redis service in `docker-compose.yml`, introduces a worker for processing submissions, updates Redis connection logic, and improves input validation and transaction handling in the submission API">
+      <option name="closed" value="true" />
+      <created>1766002670709</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1766002670709</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -517,8 +526,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="adds webhook for razorpay" />
-    <MESSAGE value="handles the payment via a payment link in webhook" />
     <MESSAGE value="optimises the webhook" />
     <MESSAGE value="records payment failure event in webhook and removes obsolete console logs" />
     <MESSAGE value="implements bulk migration API for importing papers and authors, adds schema validation, and improves utility functions" />
@@ -542,6 +549,8 @@
     <MESSAGE value="refactors header structure for consistency, removes redundant state management, introduces `useTopShellHeight` hook, and adjusts layout for better encapsulation" />
     <MESSAGE value="introduces cookie-based dismissal to the announcement bar, adds safe-area support, updates header and layout for better user experience, and refines styles for consistency" />
     <MESSAGE value="removes `useTopShellHeight` hook, adds `SUBMISSION_JOB_COMPLETED` value to `ActivityType` enum, and updates dependencies in `pnpm-lock.yaml` including `bullmq` and `ioredis`" />
-    <option name="LAST_COMMIT_MESSAGE" value="removes `useTopShellHeight` hook, adds `SUBMISSION_JOB_COMPLETED` value to `ActivityType` enum, and updates dependencies in `pnpm-lock.yaml` including `bullmq` and `ioredis`" />
+    <MESSAGE value="adds `worker` command in `package.json`, refactors Redis connection logic with TLS support, updates `docker-compose.yml` to include Redis and worker services, and enhances paper submission flow with error handling and optimizations" />
+    <MESSAGE value="adds a dedicated Redis service in `docker-compose.yml`, introduces a worker for processing submissions, updates Redis connection logic, and improves input validation and transaction handling in the submission API" />
+    <option name="LAST_COMMIT_MESSAGE" value="adds a dedicated Redis service in `docker-compose.yml`, introduces a worker for processing submissions, updates Redis connection logic, and improves input validation and transaction handling in the submission API" />
   </component>
 </project>

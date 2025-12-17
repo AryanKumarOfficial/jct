@@ -1,16 +1,14 @@
 // src/lib/redis.ts
 import IORedis from "ioredis";
+import {env} from "@/env";
 
 const getRedisConnection = () => {
-    const useTls = process.env.REDIS_USE_TLS === "true";
-
-    return new IORedis({
-        host: process.env.REDIS_HOST || "localhost",
-        port: Number(process.env.REDIS_PORT) || 6379,
-        password: process.env.REDIS_PASSWORD || undefined,
-        ...(useTls ? { tls: {} } : {}),
-        maxRetriesPerRequest: null, // Required by BullMQ
+    return new IORedis(env.REDIS_URL, {
+        maxRetriesPerRequest: null,
     });
 };
 
-export const redisConnection = getRedisConnection();
+const globalForRedis = global as unknown as { redis: IORedis };
+
+export const redisConnection = globalForRedis.redis || getRedisConnection();
+if (process.env.NODE_ENV !== "production") globalForRedis.redis = redisConnection;

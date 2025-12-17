@@ -1,4 +1,4 @@
-import { z } from "zod";
+import {z} from "zod";
 
 const envSchema = z.object({
     // --- Database ---
@@ -30,6 +30,10 @@ const envSchema = z.object({
     // --- Public Variables (Client-side) ---
     // Note: These must also be accessed via process.env in the schema for Zod to pick them up
     NEXT_PUBLIC_RAZORPAY_KEY_ID: z.string().min(1).describe("Client-side Razorpay Key ID"),
+
+    // REDIS (for background jobs)
+    REDIS_URL: z.url().describe("Redis connection string"),
+    REDIS_TLS: z.string(),
 });
 
 // Validate `process.env` against the schema
