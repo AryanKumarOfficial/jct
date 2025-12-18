@@ -41,8 +41,7 @@ __mocks__
 *~
 
 # Environment variable files - NEVER include these in a Docker image
-.env
-.env
+#.env
 !.env.example
 
 # Log files

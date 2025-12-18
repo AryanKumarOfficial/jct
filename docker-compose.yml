@@ -15,8 +15,10 @@ services:
     ports:
       - "3000:3000"
     depends_on:
-      - redis
-      - postgres
+      redis:
+        condition: service_healthy
+      postgres:
+        condition: service_started
     restart: unless-stopped
     command: pnpm start
 
@@ -30,19 +32,16 @@ services:
       DATABASE_URL: ${DATABASE_URL}
       REDIS_URL: redis://redis:6379
     depends_on:
-      - redis
-      - postgres
+      redis:
+        condition: service_healthy
+      postgres:
+        condition: service_started
     restart: unless-stopped
-    command: pnpm start:worker
+    command: pnpm start:worker:prod
 
   redis:
     image: redis:7
     container_name: redis
-    healthcheck:
-      test: [ "CMD", "redis-cli", "ping" ]
-      interval: 10s
-      timeout: 5s
-      retries: 5
     command: >
       redis-server
       --appendonly yes
@@ -51,6 +50,11 @@ services:
       --maxmemory-policy allkeys-lru
     volumes:
       - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     restart: unless-stopped
 
   postgres:

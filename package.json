@@ -2,7 +2,7 @@
   "name": "jct",
   "version": "0.1.0",
   "private": true,
-  "packageManager": "pnpm@10.24.0+sha512.01ff8ae71b4419903b65c60fb2dc9d34cf8bb6e06d03bde112ef38f7a34d6904c424ba66bea5cdcf12890230bf39f9580473140ed9c946fef328b6e5238a345a",
+  "packageManager": "pnpm@10.26.0+sha512.3b3f6c725ebe712506c0ab1ad4133cf86b1f4b687effce62a9b38b4d72e3954242e643190fc51fa1642949c735f403debd44f5cb0edd657abe63a8b6a7e1e402",
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
@@ -14,7 +14,9 @@
     "postinstall": "prisma generate || true",
     "dev:email": "email dev --port 8080",
     "worker": "ts-node src/worker/submit-worker.ts",
-    "start:worker": "ts-node src/worker/submit-worker.ts"
+    "start:worker": "ts-node src/worker/submit-worker.ts",
+    "build:worker": "tsc -p tsconfig.worker.json --outDir dist/worker",
+    "start:worker:prod": "node dist/worker/index.js"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.890.0",
