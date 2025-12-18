@@ -4,8 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3fbf7134-2adf-435b-806d-6f4c015e4c97" name="Changes" comment="updates Next.js to 16.0.10 and associated dependencies in `pnpm-lock.yaml` and `package.json`">
+    <list default="true" id="3fbf7134-2adf-435b-806d-6f4c015e4c97" name="Changes" comment="refactors `submit-worker.ts` to separate `ActivityLog` creation from `JobRun` update, ensuring clearer logic for logging submission job completion">
+      <change afterPath="$PROJECT_DIR$/src/app/admin/dashboard/components/AdminJobProgressTable.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/admin/dashboard/components/EmailStatusBadge.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/admin/dashboard/components/EmailStatusModal.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/admin/dashboard/components/JobProgressBar.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/admin/dashboard/components/StatusBadge.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/admin/jobs/[submissionId]/emails/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/admin/jobs/[submissionId]/retry-emails/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/admin/jobs/route.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/prisma/schema.prisma" beforeDir="false" afterPath="$PROJECT_DIR$/prisma/schema.prisma" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/admin/dashboard/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/admin/dashboard/page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/worker/submit-worker.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/worker/submit-worker.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -17,8 +27,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="tsconfig.json" />
-        <option value="TypeScript JSX File" />
         <option value="TypeScript File" />
+        <option value="TypeScript JSX File" />
       </list>
     </option>
   </component>
@@ -267,7 +277,7 @@
       <workItem from="1765043218179" duration="20258000" />
       <workItem from="1765068726325" duration="2557000" />
       <workItem from="1765302890507" duration="13728000" />
-      <workItem from="1766002537406" duration="13730000" />
+      <workItem from="1766002537406" duration="16217000" />
     </task>
     <task id="LOCAL-00001" summary="adds JSDoc comments across the codebase for improved documentation and readability">
       <option name="closed" value="true" />
@@ -541,7 +551,15 @@
       <option name="project" value="LOCAL" />
       <updated>1766017943073</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="refactors `submit-worker.ts` to separate `ActivityLog` creation from `JobRun` update, ensuring clearer logic for logging submission job completion">
+      <option name="closed" value="true" />
+      <created>1766019948506</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1766019948506</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -554,7 +572,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="adds activity log UI and API for improved system event tracking" />
     <MESSAGE value="adds data migration UI for bulk importing papers and PDFs, integrates progress tracking, file upload handling, and error reporting" />
     <MESSAGE value="enhances the data migration UI with improved validation, logging, and error reporting; adds file match handling, live progress updates, and failure downloads" />
     <MESSAGE value="chore(deps): upgrade Next.js to 16.0.7 - security patch for CVE-2025-66478" />
@@ -579,6 +596,7 @@
     <MESSAGE value="introduces `JobRun` and `SubmissionEmailLog` models with associated indices and enums, adds background email processing with retry and progress updates, integrates email logging into the submission flow, and updates email template to include `logo.svg` and refined design" />
     <MESSAGE value="adds `start:worker` command in `package.json`, updates Docker Compose to use newer Redis and PostgresSQL services with health checks, improves paper query sorting for editors, and refines database relations in the admin paper status route" />
     <MESSAGE value="updates Next.js to 16.0.10 and associated dependencies in `pnpm-lock.yaml` and `package.json`" />
-    <option name="LAST_COMMIT_MESSAGE" value="updates Next.js to 16.0.10 and associated dependencies in `pnpm-lock.yaml` and `package.json`" />
+    <MESSAGE value="refactors `submit-worker.ts` to separate `ActivityLog` creation from `JobRun` update, ensuring clearer logic for logging submission job completion" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactors `submit-worker.ts` to separate `ActivityLog` creation from `JobRun` update, ensuring clearer logic for logging submission job completion" />
   </component>
 </project>

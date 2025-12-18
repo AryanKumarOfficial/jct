@@ -1,0 +1,2 @@
+-- AddForeignKey
+ALTER TABLE "JobRun" ADD CONSTRAINT "JobRun_paperId_fkey" FOREIGN KEY ("paperId") REFERENCES "paper"("id") ON DELETE SET NULL ON UPDATE CASCADE;

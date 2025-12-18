@@ -1,6 +1,6 @@
 "use client";
 
-import React, {useEffect,  useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Button} from "@/components/ui/button";
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
 import {Input} from "@/components/ui/input";
@@ -23,6 +23,7 @@ import ManagePapersTab from "@/app/admin/dashboard/components/ManagePapersTab";
 import ManageUsersTab from "@/app/admin/dashboard/ManageUsersTab";
 import ActivityLogTab from "@/app/admin/dashboard/components/ActivityLogTab";
 import DataMigrationTab from "@/app/admin/dashboard/components/DataMigrationTab";
+import AdminJobProgressTable from "@/app/admin/dashboard/components/AdminJobProgressTable";
 
 type Archive = {
     id: string;
@@ -387,7 +388,7 @@ export default function AdminDashboard() {
             <h1 className="text-4xl font-bold mb-8">Admin Dashboard</h1>
 
             <Tabs defaultValue="papers" className="w-full">
-                <TabsList className="grid w-full grid-cols-5 gap-4">
+                <TabsList className="grid w-full grid-cols-6 gap-4">
                     <TabsTrigger value="papers">
                         <FileText className="mr-2 h-4 w-4"/>
                         Manage Papers
@@ -403,6 +404,10 @@ export default function AdminDashboard() {
                     <TabsTrigger value="activity">
                         <Activity className="mr-2 h-4 w-4"/>
                         Activity
+                    </TabsTrigger>
+                    <TabsTrigger value="jobs">
+                        <Activity className="mr-2 h-4 w-4"/>
+                        Background Jobs
                     </TabsTrigger>
                     <TabsTrigger value="bulk-upload">
                         <FileUp className="mr-2 h-4 w-4"/>
@@ -445,6 +450,9 @@ export default function AdminDashboard() {
                 </TabsContent>
                 <TabsContent value="activity" className="mt-6">
                     <ActivityLogTab/>
+                </TabsContent>
+                <TabsContent value="jobs" className="mt-6">
+                    <AdminJobProgressTable/>
                 </TabsContent>
                 <TabsContent value="bulk-upload" className="mt-6">
                     <DataMigrationTab/>

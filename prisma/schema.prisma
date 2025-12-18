@@ -72,6 +72,7 @@ model paper {
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
   Copyright Copyright?
+  JobRun    JobRun[]
 }
 
 model author {
@@ -214,10 +215,12 @@ model JobRun {
   jobId        String    @unique
   submissionId String?
   paperId      String?
+  paper        paper?    @relation(fields: [paperId], references: [id])
   status       String    @default("PENDING") // PENDING | IN_PROGRESS | COMPLETED | FAILED
   attempts     Int       @default(0)
   lastError    String?
   completedAt  DateTime?
+  progress     Json?
 
   activityLogs ActivityLog[] @relation("JobRunActivityLogs")
 

@@ -33,6 +33,12 @@ const worker = globalForWorker.submissionWorker ||
                 done += 1;
                 const pct = Math.round((done / total) * 100);
                 await job.updateProgress({pct, step: stepDesc, done, total});
+                await prisma.jobRun.update({
+                    where: {jobId: jobIdStr},
+                    data: {
+                        progress: {pct, step: stepDesc, done, total},
+                    },
+                })
             };
 
             const jobIdStr = String(job.id);
@@ -47,7 +53,7 @@ const worker = globalForWorker.submissionWorker ||
                 create: {
                     jobId: jobIdStr,
                     submissionId,
-                    paperId,
+                    paper:{connect:{id:paperId}},
                     status: "IN_PROGRESS",
                     attempts: job.attemptsMade ?? 0,
                 },
