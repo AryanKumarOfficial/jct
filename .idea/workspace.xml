@@ -4,12 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3fbf7134-2adf-435b-806d-6f4c015e4c97" name="Changes" comment="introduces `JobRun` and `SubmissionEmailLog` models with associated indices and enums, adds background email processing with retry and progress updates, integrates email logging into the submission flow, and updates email template to include `logo.svg` and refined design">
+    <list default="true" id="3fbf7134-2adf-435b-806d-6f4c015e4c97" name="Changes" comment="updates Next.js to 16.0.10 and associated dependencies in `pnpm-lock.yaml` and `package.json`">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/admin/paper/status/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/admin/paper/status/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/editor/papers/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/editor/papers/route.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/worker/submit-worker.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/worker/submit-worker.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -270,7 +267,7 @@
       <workItem from="1765043218179" duration="20258000" />
       <workItem from="1765068726325" duration="2557000" />
       <workItem from="1765302890507" duration="13728000" />
-      <workItem from="1766002537406" duration="11474000" />
+      <workItem from="1766002537406" duration="13730000" />
     </task>
     <task id="LOCAL-00001" summary="adds JSDoc comments across the codebase for improved documentation and readability">
       <option name="closed" value="true" />
@@ -528,7 +525,23 @@
       <option name="project" value="LOCAL" />
       <updated>1766012899053</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="adds `start:worker` command in `package.json`, updates Docker Compose to use newer Redis and PostgresSQL services with health checks, improves paper query sorting for editors, and refines database relations in the admin paper status route">
+      <option name="closed" value="true" />
+      <created>1766017711643</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1766017711643</updated>
+    </task>
+    <task id="LOCAL-00034" summary="updates Next.js to 16.0.10 and associated dependencies in `pnpm-lock.yaml` and `package.json`">
+      <option name="closed" value="true" />
+      <created>1766017943073</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1766017943073</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -541,8 +554,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="implements bulk migration API for importing papers and authors, adds schema validation, and improves utility functions" />
-    <MESSAGE value="adds activity log support for papers and updates types for improved data handling" />
     <MESSAGE value="adds activity log UI and API for improved system event tracking" />
     <MESSAGE value="adds data migration UI for bulk importing papers and PDFs, integrates progress tracking, file upload handling, and error reporting" />
     <MESSAGE value="enhances the data migration UI with improved validation, logging, and error reporting; adds file match handling, live progress updates, and failure downloads" />
@@ -566,6 +577,8 @@
     <MESSAGE value="adds a dedicated Redis service in `docker-compose.yml`, introduces a worker for processing submissions, updates Redis connection logic, and improves input validation and transaction handling in the submission API" />
     <MESSAGE value="deduplicates global instances for Redis, Queue, and Worker, updates Redis connection to use environment URLs, refactors background job processing for submissions, and improves archive fetching logic" />
     <MESSAGE value="introduces `JobRun` and `SubmissionEmailLog` models with associated indices and enums, adds background email processing with retry and progress updates, integrates email logging into the submission flow, and updates email template to include `logo.svg` and refined design" />
-    <option name="LAST_COMMIT_MESSAGE" value="introduces `JobRun` and `SubmissionEmailLog` models with associated indices and enums, adds background email processing with retry and progress updates, integrates email logging into the submission flow, and updates email template to include `logo.svg` and refined design" />
+    <MESSAGE value="adds `start:worker` command in `package.json`, updates Docker Compose to use newer Redis and PostgresSQL services with health checks, improves paper query sorting for editors, and refines database relations in the admin paper status route" />
+    <MESSAGE value="updates Next.js to 16.0.10 and associated dependencies in `pnpm-lock.yaml` and `package.json`" />
+    <option name="LAST_COMMIT_MESSAGE" value="updates Next.js to 16.0.10 and associated dependencies in `pnpm-lock.yaml` and `package.json`" />
   </component>
 </project>

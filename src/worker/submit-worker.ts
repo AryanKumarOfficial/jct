@@ -1,6 +1,6 @@
 // src/worker/submit-worker.ts
 import {Worker, Job} from "bullmq";
-import { ActivityType, EmailStatus} from "@/generated/prisma";
+import {ActivityType, EmailStatus} from "@/generated/prisma";
 import {sendSubmissionMail} from "@/lib/mail/methods/sendSubmissionMail";
 import {redisConnection} from "@/lib/redis";
 import {prisma} from "@/lib/prisma";
@@ -121,29 +121,27 @@ const worker = globalForWorker.submissionWorker ||
             }
 
             // 3) Upsert JobRun to COMPLETED and create ActivityLog only once (nested create on creation)
-            await prisma.jobRun.upsert({
+            await prisma.jobRun.update({
                 where: {jobId: jobIdStr},
-                update: {
+                data: {
                     status: "COMPLETED",
                     completedAt: new Date(),
                     attempts: job.attemptsMade ?? 0,
-                },
-                create: {
-                    jobId: jobIdStr,
-                    submissionId,
-                    paperId,
-                    status: "COMPLETED",
-                    attempts: job.attemptsMade ?? 0,
-                    completedAt: new Date(),
-                    activityLogs: {
-                        create: {
-                            paper: {connect: {id: paperId}},
-                            activity: ActivityType.SUBMISSION_JOB_COMPLETED,
-                            details: `Background processing of submission ${submissionId} completed.`,
-                        },
-                    },
                 },
             });
+
+            await prisma.activityLog.create({
+                data: {
+                    jobRun: {
+                        connect: {
+                            jobId: jobIdStr
+                        }
+                    },
+                    paper: {connect: {id: paperId}},
+                    activity: ActivityType.SUBMISSION_JOB_COMPLETED,
+                    details: `Background processing of submission ${submissionId} completed successfully.`
+                }
+            })
 
             await updateProgress("created activity log");
 
