@@ -26,7 +26,9 @@ async function handleAcceptedPayment(paperId: string, submissionId: string, auth
     // 1. Check if the transaction already exists
     const existingTx = await prisma.transaction.findFirst({
         where: {
-            paperId: paperId,
+            paper: {
+                id: paperId,
+            },
             status: {
                 in: [PaymentStatus.PENDING, PaymentStatus.SUCCESS]
             }
@@ -69,8 +71,16 @@ async function handleAcceptedPayment(paperId: string, submissionId: string, auth
                 razorpayOrderId: order.id,
                 amount: AMOUNT_IN_RUPEES,
                 status: PaymentStatus.PENDING,
-                paperId: paperId,
-                authorId: authorId,
+                paper: {
+                    connect: {
+                        submissionId: paperId
+                    }
+                },
+                author: {
+                    connect: {
+                        id: authorId
+                    }
+                },
             },
         });
 

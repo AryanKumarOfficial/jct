@@ -1,7 +1,7 @@
-import { type NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
-import { authorize } from "@/utils/authorize";
-import { getTokenData } from "@/utils/token";
+import {type NextRequest, NextResponse} from "next/server";
+import {prisma} from "@/lib/prisma";
+import {authorize} from "@/utils/authorize";
+import {getTokenData} from "@/utils/token";
 
 /**
  * Handles an HTTP GET request to retrieve data related to assigned paper for an authorized editor.
@@ -17,31 +17,36 @@ import { getTokenData } from "@/utils/token";
  * @returns {Promise<NextResponse>} - A response containing the assigned paper in JSON format, or an error message with the appropriate HTTP status code.
  */
 export const GET = async (req: NextRequest): Promise<NextResponse> => {
-  try {
-    await authorize(req, "EDITOR");
-    const tokenResult = await getTokenData(req);
-    if (!tokenResult.success) {
-      return NextResponse.json({ error: tokenResult.error }, { status: 401 });
-    }
-    const employeeExists = await prisma.employee.findUnique({
-      where: { id: tokenResult.data.id },
-    });
+    try {
+        await authorize(req, "EDITOR");
+        const tokenResult = await getTokenData(req);
+        if (!tokenResult.success) {
+            return NextResponse.json({error: tokenResult.error}, {status: 401});
+        }
+        const employeeExists = await prisma.employee.findUnique({
+            where: {id: tokenResult.data.id},
+        });
 
-    if (!employeeExists) {
-      return NextResponse.json(
-        { error: `Employee doesn't exist` },
-        { status: 400 },
-      );
-    }
+        if (!employeeExists) {
+            return NextResponse.json(
+                {error: `Employee doesn't exist`},
+                {status: 400},
+            );
+        }
 
-    const papers = await prisma.paper.findMany({
-      where: {
-        editorId: employeeExists.id,
-      },
-    });
-    return NextResponse.json(papers);
-  } catch (error) {
-    console.error(`Failed to Fetch Assigned Papers`, error);
-    return NextResponse.json({ error: "Internal Server" }, { status: 500 });
-  }
+        const papers = await prisma.paper.findMany({
+            where: {
+                editorId: employeeExists.id,
+            },
+            orderBy: [{
+                createdAt: "desc"
+            }, {
+                submissionId: "desc"
+            }]
+        });
+        return NextResponse.json(papers);
+    } catch (error) {
+        console.error(`Failed to Fetch Assigned Papers`, error);
+        return NextResponse.json({error: "Internal Server"}, {status: 500});
+    }
 };

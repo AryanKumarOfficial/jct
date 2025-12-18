@@ -13,7 +13,8 @@
     "lint:fix": "biome check --write",
     "postinstall": "prisma generate || true",
     "dev:email": "email dev --port 8080",
-    "worker": "ts-node src/worker/submit-worker.ts"
+    "worker": "ts-node src/worker/submit-worker.ts",
+    "start:worker": "ts-node src/worker/submit-worker.ts"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.890.0",
