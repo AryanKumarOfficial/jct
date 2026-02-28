@@ -1,12 +1,18 @@
 {
+  "extends": "./tsconfig.json",
   "compilerOptions": {
-    "target": "ES2022",
-    "module": "CommonJS",
     "outDir": "dist/worker",
-    "rootDir": "src",
-    "esModuleInterop": true,
-    "strict": true,
-    "skipLibCheck": true
+    "moduleResolution": "node",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+    }
   },
-  "include": ["src/worker/**/*.ts"]
+  "include": [
+//    "src/worker/**/*.ts",
+    "src/**/*",
+    "src/generated/prisma/**/*"
+  ]
 }
